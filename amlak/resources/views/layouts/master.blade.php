@@ -4,7 +4,7 @@
     <!-- Title Meta -->
     <meta charset="utf-8"/>
     <title>
-        @yield('title', 'مای املاک')
+        @yield('title', 'My Club')
     </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta content="A fully responsive premium admin dashboard template, Real Estate Management Admin Template" name="description"/>
