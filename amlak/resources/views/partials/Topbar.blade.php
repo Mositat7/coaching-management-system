@@ -58,17 +58,17 @@
                             </a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="property-list.html">
+                            <a class="sub-nav-link" href="{{route('properties.list')}}">
                                 لیست املاک
                             </a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="property-details.html">
+                            <a class="sub-nav-link" href="{{route('properties.details')}}">
                                 جزئیات املاک
                             </a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="property-add.html">
+                            <a class="sub-nav-link" href="{{route('properties.add')}}">
                                 اضافه کردن املاک
                             </a>
                         </li>
