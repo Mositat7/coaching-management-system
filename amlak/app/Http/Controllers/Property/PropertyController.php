@@ -29,6 +29,9 @@ class PropertyController extends Controller
     public function list(){
         return view('Property.property-list');
     }
+    public function grid(){
+        return view('Property.property-grid');
+    }
     public function destroy(string $id)
     {
         //
