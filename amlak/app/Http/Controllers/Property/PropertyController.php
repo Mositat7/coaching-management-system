@@ -10,7 +10,7 @@ class PropertyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function add()
     {
         return view('Property.property-add');
     }
@@ -18,9 +18,9 @@ class PropertyController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function details()
     {
-
+        return view('Property.property-details');
     }
 
     /**
