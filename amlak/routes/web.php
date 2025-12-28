@@ -10,4 +10,5 @@ Route::get('/', function () {
 Route::get('/property-add', [PropertyController::class, 'add'])->name('properties.add');
 Route::get('/property-details', [PropertyController::class, 'details'])->name('properties.details');
 Route::get('/property-list', [PropertyController::class, 'list'])->name('properties.list');
+Route::get('/property-grid', [PropertyController::class, 'grid'])->name('properties.grid');
 
