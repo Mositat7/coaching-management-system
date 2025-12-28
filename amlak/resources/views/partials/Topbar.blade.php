@@ -53,7 +53,7 @@
                 <div class="collapse" id="sidebarProperty">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="property-grid.html">
+                            <a class="sub-nav-link" href="{{route('properties.grid')}}">
                                 گرید املاک
                             </a>
                         </li>
@@ -125,22 +125,22 @@
                 <div class="collapse" id="sidebarCustomers">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="customers-list.html">
+                            <a class="sub-nav-link" href="{{route('customers.list')}}">
                                 لیست ویو
                             </a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="customers-grid.html">
+                            <a class="sub-nav-link" href="{{route('customers.grid')}}">
                                 گرید ویو
                             </a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="customers-details.html">
+                            <a class="sub-nav-link" href="{{route('customers.details')}}">
                                 جزئیات مشتری
                             </a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="customers-add.html">
+                            <a class="sub-nav-link" href="{{route('customers.add')}}">
                                 اضافه کردن مشتری
                             </a>
                         </li>
