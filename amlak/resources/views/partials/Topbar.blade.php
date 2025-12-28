@@ -33,18 +33,8 @@
                 <div class="collapse" id="sidebarDashboards">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="index.html">
-                                آنالیزها
-                            </a>
-                        </li>
-                        <li class="sub-nav-item">
                             <a class="sub-nav-link" href="dashboard-agent.html">
                                 نمایندگان
-                            </a>
-                        </li>
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="dashboard-customer.html">
-                                مشتری
                             </a>
                         </li>
                     </ul>
