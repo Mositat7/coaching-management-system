@@ -474,65 +474,67 @@
 
 @section('scripts')
     <script>
-        // برای نمایش اعلان‌های مهم
-        document.addEventListener('DOMContentLoaded', function () {
-            // محاسبه تاریخ تسویه
-            const expiryDate = new Date('2024-04-15');
-            const today = new Date();
-            const daysLeft = Math.ceil((expiryDate - today) / (1000 * 60 * 60 * 24));
 
-            if (daysLeft <= 5) {
-                showAlert(`توجه: ${daysLeft} روز تا انقضای اشتراک باقی مانده است.`, 'warning');
-            }
-        });
-
-        function showAlert(message, type) {
+        function showAlert(message, type = 'info', duration = 5000) {
             const alertDiv = document.createElement('div');
-            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
-            alertDiv.innerHTML = `
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                animation: fadeIn 0.3s;
             `;
-            document.querySelector('.container-fluid').prepend(alertDiv);
+            
+            alertDiv.innerHTML = `
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <i class="ri-information-line me-2"></i>
+                        ${message}
+                    </div>
+                    <button type="button" class="btn-close" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            // بسته شدن خودکار
+            if (duration > 0) {
+                setTimeout(() => {
+                    if (alertDiv.parentNode) {
+                        alertDiv.remove();
+                    }
+                }, duration);
+            }
         }
     </script>
 
     <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .alert {
+            animation: fadeIn 0.3s ease-out !important;
+        }
+        
+        /* استایل‌های دیگر را نگه دار */
         .member-header-bg {
             border-radius: 0.375rem 0.375rem 0 0;
         }
-
         .avatar-xxl {
             width: 110px;
             height: 110px;
         }
-
-        .bg-soft-primary {
-            background-color: rgba(85, 110, 230, 0.1);
-        }
-
-        .bg-soft-info {
-            background-color: rgba(45, 206, 137, 0.1);
-        }
-
-        .bg-soft-warning {
-            background-color: rgba(247, 184, 75, 0.1);
-        }
-
-        .bg-soft-success {
-            background-color: rgba(45, 206, 137, 0.1);
-        }
-
-        .bg-success-subtle {
-            background-color: rgba(45, 206, 137, 0.15);
-        }
-
-        .bg-info-subtle {
-            background-color: rgba(85, 110, 230, 0.15);
-        }
-
-        .bg-warning-subtle {
-            background-color: rgba(247, 184, 75, 0.15);
-        }
+        .bg-soft-primary { background-color: rgba(85, 110, 230, 0.1); }
+        .bg-soft-info { background-color: rgba(45, 206, 137, 0.1); }
+        .bg-soft-warning { background-color: rgba(247, 184, 75, 0.1); }
+        .bg-soft-success { background-color: rgba(45, 206, 137, 0.1); }
+        .bg-success-subtle { background-color: rgba(45, 206, 137, 0.15); }
+        .bg-info-subtle { background-color: rgba(85, 110, 230, 0.15); }
+        .bg-warning-subtle { background-color: rgba(247, 184, 75, 0.15); }
     </style>
 @endsection
