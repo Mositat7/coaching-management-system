@@ -7,5 +7,6 @@ Route::get('/', function () {
     return view('dashboard-agent');
 });
 //بخش املاک
-Route::get('/property-add', [PropertyController::class, 'create'])->name('properties.create');
+Route::get('/property-add', [PropertyController::class, 'add'])->name('properties.add');
+Route::get('/property-details', [PropertyController::class, 'details'])->name('properties.details');
 
