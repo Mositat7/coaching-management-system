@@ -1,23 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\workouts;
+namespace App\Http\Controllers\plans;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class WorkoutsController extends Controller
+class PlanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function add()
-    {
-        return view('plans.create');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function assign()
     {
         return view('plans.assign');
@@ -31,9 +20,5 @@ class WorkoutsController extends Controller
     }
     public function library(){
         return view('plans.library');
-    }
-    public function destroy(string $id)
-    {
-        //
     }
 }

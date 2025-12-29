@@ -2,12 +2,12 @@
     <!-- Sidebar Logo -->
     <div class="logo-box">
         <a class="logo-dark" href="index.html">
-            <img alt="logo sm" class="logo-sm" src="{{asset('assets/images/logo-sm.png')}}"/>
-            <img alt="logo dark" class="logo-lg" src="{{asset('assets/images/logo-dark.png')}}"/>
+{{--            <img alt="logo sm" class="logo-sm" src="{{asset('assets/images/logo-sm.png')}}"/>--}}
+{{--            <img alt="logo dark" class="logo-lg" src="{{asset('assets/images/logo-dark.png')}}"/>--}}
         </a>
         <a class="logo-light" href="index.html">
-            <img alt="logo sm" class="logo-sm" src="{{asset('assets/images/logo-sm.png')}}"/>
-            <img alt="logo light" class="logo-lg" src="{{asset('assets/images/logo-light.png')}}"/>
+{{--            <img alt="logo sm" class="logo-sm" src="{{asset('assets/images/logo-sm.png')}}"/>--}}
+{{--            <img alt="logo light" class="logo-lg" src="{{asset('assets/images/logo-light.png')}}"/>--}}
         </a>
     </div>
 
@@ -34,50 +34,71 @@
                 </div>
             </li>
 
-            <!-- Properties -->
-            <li class="nav-item">
-                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarProperty">
-                    <span class="nav-icon"><i class="ri-community-line"></i></span>
-                    <span class="nav-text">املاک</span>
-                </a>
-                <div class="collapse" id="sidebarProperty">
-                    <ul class="nav sub-navbar-nav">
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('properties.grid')}}">گرید املاک</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('properties.list')}}">لیست املاک</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('properties.details')}}">جزئیات املاک</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('properties.add')}}">اضافه کردن املاک</a></li>
-                    </ul>
-                </div>
-            </li>
-
             <!-- Agents -->
             <li class="nav-item">
                 <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarAgents">
                     <span class="nav-icon"><i class="ri-group-line"></i></span>
-                    <span class="nav-text">نمایندگان</span>
+                    <span class="nav-text">اطلاعات مربی</span>
                 </a>
                 <div class="collapse" id="sidebarAgents">
                     <ul class="nav sub-navbar-nav">
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="agents-list.html">لیست ویو</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="agents-grid.html">گرید ویو</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="agents-details.html">جزئیات نمایندگان</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="agents-add.html">اضافه کردن</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Coach.add')}}">اضافه کردن مربی</a></li>
                     </ul>
                 </div>
             </li>
-
+ <!-- Properties -->
+            <li class="nav-item">
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarProperty">
+                    <span class="nav-icon"><i class="ri-community-line"></i></span>
+                    <span class="nav-text">برنامه ورزشی </span>
+                </a>
+                <div class="collapse" id="sidebarProperty">
+                    <ul class="nav sub-navbar-nav">
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Workouts.edit')}}">ادیت برنامه</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Workouts.show')}}">نمایش برنامه</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('plans.create')}}">اضافه کردن برنامه</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarProperty">
+                    <span class="nav-icon"><i class="ri-community-line"></i></span>
+                    <span class="nav-text"> منطق عمومی </span>
+                </a>
+                <div class="collapse" id="sidebarProperty">
+                    <ul class="nav sub-navbar-nav">
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('plans.library')}}">کتابخانه برنامه ها</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('plans.list')}}">لیست</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('plans.assign')}}">ارسال برای شاگرد</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarProperty">
+                    <span class="nav-icon"><i class="ri-community-line"></i></span>
+                    <span class="nav-text">برنامه تغذیه </span>
+                </a>
+                <div class="collapse" id="sidebarProperty">
+                    <ul class="nav sub-navbar-nav">
+{{--                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Workouts.library')}}">کتابخانه برنامه ها</a></li>--}}
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('nutrition.show')}}">نمایش </a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('nutrition.edit')}}">تغییر برنامه غذایی</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('nutrition.create')}}">اضافه کردن برنامه</a></li>
+                    </ul>
+                </div>
+            </li>
             <!-- Customers -->
             <li class="nav-item">
                 <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarCustomers">
                     <span class="nav-icon"><i class="ri-contacts-book-3-line"></i></span>
-                    <span class="nav-text">مشتریان</span>
+                    <span class="nav-text">اعضای باشگاه</span>
                 </a>
                 <div class="collapse" id="sidebarCustomers">
                     <ul class="nav sub-navbar-nav">
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('customers.list')}}">لیست ویو</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('customers.grid')}}">گرید ویو</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('customers.details')}}">جزئیات مشتری</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('customers.add')}}">اضافه کردن مشتری</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('members.list')}}">لیست عضو</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('members.grid')}}">گرید عضو</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('members.details')}}">جزئیات عضو</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('members.add')}}">اضافه کردن عضو</a></li>
                     </ul>
                 </div>
             </li>
