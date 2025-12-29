@@ -2,17 +2,17 @@
 
 use App\Http\Controllers\Coach\CoachController;
 use App\Http\Controllers\Members\MemberController;
-use App\Http\Controllers\Property\PropertyController;
+use App\Http\Controllers\workouts\WorkoutsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('dashboard-agent');
 });
-//بخش املاک
-Route::get('/property-add', [PropertyController::class, 'add'])->name('properties.add');
-Route::get('/property-details', [PropertyController::class, 'details'])->name('properties.details');
-Route::get('/property-list', [PropertyController::class, 'list'])->name('properties.list');
-Route::get('/property-grid', [PropertyController::class, 'grid'])->name('properties.grid');
+//بخش برنامه
+Route::get('/Workouts-add', [WorkoutsController::class, 'add'])->name('plans.create');
+Route::get('/Workouts-assign', [WorkoutsController::class, 'assign'])->name('Workouts.assign');
+Route::get('/Workouts-list', [WorkoutsController::class, 'list'])->name('Workouts.list');
+Route::get('/Workouts-library', [WorkoutsController::class, 'library'])->name('Workouts.library');
 //بحش عضو ها
 Route::get('/members-add', [MemberController::class, 'add'])->name('members.add');
 Route::get('/members-details', [MemberController::class, 'details'])->name('members.details');
