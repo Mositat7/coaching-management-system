@@ -1,13 +1,9 @@
 <div class="main-nav">
     <!-- Sidebar Logo -->
     <div class="logo-box">
-        <a class="logo-dark" href="index.html">
-{{--            <img alt="logo sm" class="logo-sm" src="{{asset('assets/images/logo-sm.png')}}"/>--}}
-{{--            <img alt="logo dark" class="logo-lg" src="{{asset('assets/images/logo-dark.png')}}"/>--}}
+        <a class="logo-dark" href="{{route('dashboard.index')}}">
         </a>
-        <a class="logo-light" href="index.html">
-{{--            <img alt="logo sm" class="logo-sm" src="{{asset('assets/images/logo-sm.png')}}"/>--}}
-{{--            <img alt="logo light" class="logo-lg" src="{{asset('assets/images/logo-light.png')}}"/>--}}
+        <a class="logo-light" href="{{route('dashboard.index')}}">
         </a>
     </div>
 
@@ -21,14 +17,14 @@
 
             <!-- Dashboards -->
             <li class="nav-item">
-                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarDashboards">
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="{{route('dashboard.index')}}">
                     <span class="nav-icon"><i class="ri-dashboard-2-line"></i></span>
                     <span class="nav-text">داشبوردها</span>
                 </a>
                 <div class="collapse" id="sidebarDashboards">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="dashboard-agent.html">نمایندگان</a>
+                            <a class="sub-nav-link" href="{{route('dashboard.index')}}">صفحه نخست</a>
                         </li>
                     </ul>
                 </div>

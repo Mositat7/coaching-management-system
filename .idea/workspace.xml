@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5129b0d6-d18e-4f87-8fdd-75ed37deb822" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/Coach/CoachController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/coaching/app/Http/Controllers/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/members/MemberController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/nutrition/NutritionController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/plans/PlanController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/workouts/WorkoutsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/auth-lock-screen.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/auth-password.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/auth-signin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/auth-signup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-area.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-bar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-boxplot.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-bubble.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-candlestick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-column.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-heatmap.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-line.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-mixed.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-pie.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-polar-area.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-radar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-radialbar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-scatter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-timeline.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-treemap.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/dashboard-agent.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/dashboard-customer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/extended-ratings.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/extended-scrollbar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/extended-sweetalert.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/extended-swiper-silder.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/extended-toastify.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-basic.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-checkbox-radio.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-choices.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-clipboard.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-editors.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-fileuploads.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-flatepicker.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-input-mask.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-range-slider.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-validation.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-wizard.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/icons-remix.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/icons-solar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/inbox.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-dark-sidenav.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-dark-topnav.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-dark.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-hidden-sidenav.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-simple-sidenav.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-small-hover-active.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-small-hover.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-small-sidenav.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/maps-google.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/maps-vector.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/messages.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/orders.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-404-alt.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-calendar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-comingsoon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-faqs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-invoice.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-maintenance.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-pricing.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-starter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-timeline.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/partials/Topbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/coaching/resources/views/partials/Topbar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/post-create.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/post-details.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/post.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/reviews.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/tables-basic.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/tables-gridjs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/transactions.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-accordion.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-alerts.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-avatar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-badge.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-breadcrumb.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-buttons.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-card.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-carousel.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-collapse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-dropdown.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-list-group.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-modal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-offcanvas.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-pagination.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-placeholders.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-popovers.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-progress.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-scrollspy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-spinners.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-tabs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-toasts.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-tooltips.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/resources/views/widgets.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/coaching/routes/web.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/amlak/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/amlak/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/amlak/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/amlak/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/amlak/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/amlak/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/amlak/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/amlak/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/amlak/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/amlak/vendor/brick/math" />
+      <path value="$PROJECT_DIR$/amlak/vendor/voku/portable-ascii" />
+      <path value="$PROJECT_DIR$/amlak/vendor/filp/whoops" />
+      <path value="$PROJECT_DIR$/amlak/vendor/psy/psysh" />
+      <path value="$PROJECT_DIR$/amlak/vendor/league/commonmark" />
+      <path value="$PROJECT_DIR$/amlak/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/amlak/vendor/nette/utils" />
+      <path value="$PROJECT_DIR$/amlak/vendor/nette/schema" />
+      <path value="$PROJECT_DIR$/amlak/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/amlak/vendor/league/flysystem-local" />
+      <path value="$PROJECT_DIR$/amlak/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/amlak/vendor/league/config" />
+      <path value="$PROJECT_DIR$/amlak/vendor/ramsey/collection" />
+      <path value="$PROJECT_DIR$/amlak/vendor/nesbot/carbon" />
+      <path value="$PROJECT_DIR$/amlak/vendor/league/uri-interfaces" />
+      <path value="$PROJECT_DIR$/amlak/vendor/league/uri" />
+      <path value="$PROJECT_DIR$/amlak/vendor/dflydev/dot-access-data" />
+      <path value="$PROJECT_DIR$/amlak/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/amlak/vendor/staabm/side-effects-detector" />
+      <path value="$PROJECT_DIR$/amlak/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/amlak/vendor/laravel/pint" />
+      <path value="$PROJECT_DIR$/amlak/vendor/laravel/pail" />
+      <path value="$PROJECT_DIR$/amlak/vendor/laravel/framework" />
+      <path value="$PROJECT_DIR$/amlak/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/amlak/vendor/laravel/tinker" />
+      <path value="$PROJECT_DIR$/amlak/vendor/laravel/serializable-closure" />
+      <path value="$PROJECT_DIR$/amlak/vendor/laravel/sail" />
+      <path value="$PROJECT_DIR$/amlak/vendor/laravel/prompts" />
+      <path value="$PROJECT_DIR$/amlak/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/amlak/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/amlak/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/amlak/vendor/mockery/mockery" />
+      <path value="$PROJECT_DIR$/amlak/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/amlak/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/amlak/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/amlak/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/clock" />
+      <path value="$PROJECT_DIR$/amlak/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/amlak/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/amlak/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/polyfill-php85" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/polyfill-php84" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/polyfill-uuid" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/uid" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/amlak/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/amlak/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/amlak/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/amlak/vendor/carbonphp/carbon-doctrine-types" />
+      <path value="$PROJECT_DIR$/amlak/vendor/hamcrest/hamcrest-php" />
+      <path value="$PROJECT_DIR$/amlak/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/amlak/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/amlak/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/amlak/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/amlak/vendor/fruitcake/php-cors" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/amlak/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/amlak/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/amlak/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/amlak/vendor/nunomaduro/termwind" />
+      <path value="$PROJECT_DIR$/amlak/vendor/nunomaduro/collision" />
+      <path value="$PROJECT_DIR$/amlak/vendor/guzzlehttp/uri-template" />
+      <path value="$PROJECT_DIR$/amlak/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/amlak/vendor/graham-campbell/result-type" />
+      <path value="$PROJECT_DIR$/amlak/vendor/dragonmantank/cron-expression" />
+      <path value="$PROJECT_DIR$/amlak/vendor/tijsverkoyen/css-to-inline-styles" />
+      <path value="$PROJECT_DIR$/amlak/vendor/composer" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="37Sos3pGeejf0LnulkXdBVAAMDp" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/management-system&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\real estate\amlak\public\assets\images\fit_logo" />
+      <recent name="C:\xampp\htdocs\real estate\amlak\public" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\management-system\coaching\app\Http\Controllers\admin\workouts" />
+      <recent name="C:\xampp\htdocs\real estate\amlak\resources\views\customers" />
+      <recent name="C:\xampp\htdocs\real estate\amlak\resources\views\Property" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5129b0d6-d18e-4f87-8fdd-75ed37deb822" name="Changes" comment="" />
+      <created>1766906036743</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1766906036743</updated>
+      <workItem from="1766906038223" duration="293000" />
+      <workItem from="1766906542785" duration="2886000" />
+      <workItem from="1766909734409" duration="1277000" />
+      <workItem from="1766911521869" duration="2780000" />
+      <workItem from="1766914538466" duration="1792000" />
+      <workItem from="1766916638592" duration="6058000" />
+      <workItem from="1766948564082" duration="6450000" />
+      <workItem from="1766993522361" duration="13927000" />
+      <workItem from="1767012227303" duration="871000" />
+      <workItem from="1767013477121" duration="1294000" />
+      <workItem from="1767032556385" duration="1001000" />
+      <workItem from="1767034055272" duration="2646000" />
+      <workItem from="1767183234960" duration="2266000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
