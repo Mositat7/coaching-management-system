@@ -3,7 +3,7 @@
 @section('content')
     <div class="page-content">
         <div class="container-fluid">
-            
+
             {{-- Page Title --}}
             <div class="row">
                 <div class="col-12">
@@ -23,14 +23,14 @@
                     <div class="card">
                         <div class="card-body text-center">
                             <div class="mb-3">
-                                <img src="{{ asset('assets/images/users/coach-default.jpg') }}" 
+                                <img src="{{ asset('assets/images/users/coach-default.jpg') }}"
                                      class="rounded-circle border border-3 border-primary"
                                      id="previewAvatar"
                                      style="width: 120px; height: 120px; object-fit: cover;">
                             </div>
                             <h5>مربی جدید</h5>
                             <p class="text-muted">اطلاعات پس از ثبت نمایش داده می‌شود</p>
-                            
+
                             <div class="mt-4">
                                 <p><strong>کد مربی:</strong> CO-001</p>
                                 <p><strong>وضعیت:</strong> <span class="badge bg-success">فعال</span></p>
@@ -49,7 +49,7 @@
                         </div>
                         <div class="card-body text-center">
                             <div class="mb-3">
-                                <img src="{{ asset('assets/images/users/coach-default.jpg') }}" 
+                                <img src="{{ asset('assets/images/users/coach-default.jpg') }}"
                                      class="rounded-circle border border-3 border-light"
                                      id="avatarPreview"
                                      style="width: 100px; height: 100px; object-fit: cover;">
@@ -101,21 +101,21 @@
                     <small class="text-muted">این توضیحات در پروفایل مربی نمایش داده می‌شود.</small>
                 </div>
             </div>
-            
+
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">مدارک و گواهینامه‌ها</label>
                     <textarea class="form-control" rows="2" placeholder="مدرک بدنسازی، CPR، تغذیه ورزشی..."></textarea>
                 </div>
             </div>
-            
+
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">سابقه کاری (سال)</label>
                     <input type="number" class="form-control" placeholder="5">
                 </div>
             </div>
-            
+
             <div class="col-12">
                 <div class="mb-3">
                     <label class="form-label">تخصص‌های ویژه</label>
@@ -147,7 +147,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-12">
                 <div class="mb-3">
                     <label class="form-label">روش تمرین</label>
@@ -204,14 +204,14 @@
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-            
+
             reader.onload = function(e) {
                 // به روزرسانی عکس در فرم
                 document.getElementById('avatarPreview').src = e.target.result;
                 // به روزرسانی عکس در پیش‌نمایش سمت چپ
                 document.getElementById('previewAvatar').src = e.target.result;
             }
-            
+
             reader.readAsDataURL(file);
         }
     });
