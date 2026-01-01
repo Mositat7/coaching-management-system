@@ -42,6 +42,17 @@
                     </ul>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarAgents">
+                    <span class="nav-icon"><i class="ri-group-line"></i></span>
+                    <span class="nav-text"> عضلات</span>
+                </a>
+                <div class="collapse" id="sidebarAgents">
+                    <ul class="nav sub-navbar-nav">
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Workouts.category')}}">اضافه کردن عضلات</a></li>
+                    </ul>
+                </div>
+            </li>
  <!-- Properties -->
             <li class="nav-item">
                 <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarProperty">
@@ -148,7 +159,17 @@
                     </ul>
                 </div>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarAuthentication">
+                    <span class="nav-icon"><i class="ri-lock-password-line"></i></span>
+                    <span class="nav-text">تنظیمات ورود</span>
+                </a>
+                <div class="collapse" id="sidebarAuthentication">
+                    <ul class="nav sub-navbar-nav">
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="auth-password.html"> تعریف رمز</a></li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
 </div>
