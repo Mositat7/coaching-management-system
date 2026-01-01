@@ -31,7 +31,7 @@ Route::get('/members-list', [MemberController::class, 'list'])->name('members.li
 Route::get('/members-grid', [MemberController::class, 'grid'])->name('members.grid');
 // بخش مربی
 Route::get('/Coach-add', [CoachController::class, 'add'])->name('Coach.add');
-
-
+//تنظیمات ورود
+Route::get('/Coach-add', [CoachController::class, 'add'])->name('Coach.add');
 //داشبورد عضویت ها
 Route::get('/dashboard', [\App\Http\Controllers\member\DashboardController::class, 'index'])->name('dashboard.member');
