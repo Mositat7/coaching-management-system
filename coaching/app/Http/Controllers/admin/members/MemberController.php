@@ -13,17 +13,17 @@ class MemberController extends Controller
      */
     public function add()
     {
-        return view('members.members-add');
+        return view('admin.members.members-add');
     }
     public function details()
     {
-        return view('members.members-details');
+        return view('admin.members.members-details');
     }
     public function list(){
-        return view('members.members-list');
+        return view('admin.members.members-list');
     }
     public function grid(){
-        return view('members.members-grid');
+        return view('admin.members.members-grid');
     }
     public function destroy(string $id)
     {

@@ -12,15 +12,15 @@ class WorkoutsController extends Controller
      */
     public function add()
     {
-        return view('plans.workout.create');
+        return view('admin.plans.workout.create');
     }
     public function edit()
     {
-        return view('plans.workout.edit');
+        return view('admin.plans.workout.edit');
     }
     public function show()
     {
-        return view('plans.workout.show');
+        return view('admin.plans.workout.show');
     }
     public function destroy(string $id)
     {

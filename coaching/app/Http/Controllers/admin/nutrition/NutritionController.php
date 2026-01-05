@@ -9,12 +9,12 @@ class NutritionController extends Controller
 {
     public function create()
     {
-        return view('plans.nutrition.create');
+        return view('admin.plans.nutrition.create');
     }
     public function edit(){
-        return view('plans.nutrition.edit');
+        return view('admin.plans.nutrition.edit');
     }
     public function show(){
-        return view('plans.nutrition.show');
+        return view('admin.plans.nutrition.show');
     }
 }

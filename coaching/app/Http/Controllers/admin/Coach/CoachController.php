@@ -9,7 +9,7 @@ class CoachController extends Controller
 {
       public function add()
     {
-        return view('coaches.coach-add');
+        return view('admin.coaches.coach-add');
     }
     public function destroy(string $id)
     {

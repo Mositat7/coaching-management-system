@@ -9,16 +9,16 @@ class PlanController extends Controller
 {
     public function assign()
     {
-        return view('plans.assign');
+        return view('admin.plans.assign');
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function list(){
-        return view('plans.list');
+        return view('admin.plans.list');
     }
     public function library(){
-        return view('plans.library');
+        return view('admin.plans.library');
     }
 }
