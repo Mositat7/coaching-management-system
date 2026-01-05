@@ -132,6 +132,7 @@ Route::middleware('auth.coach')->group(function () {
     
     // بخش مربی
     Route::get('/Coach-add', [CoachController::class, 'add'])->name('Coach.add');
+    Route::post('/Coach-store', [CoachController::class, 'store'])->name('Coach.store');
 });
 
 // ======================
