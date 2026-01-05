@@ -17,7 +17,7 @@
 
             <!-- Dashboards -->
             <li class="nav-item">
-                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="{{route('dashboard.index')}}">
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarDashboards">
                     <span class="nav-icon"><i class="ri-dashboard-2-line"></i></span>
                     <span class="nav-text">داشبوردها</span>
                 </a>
@@ -33,7 +33,7 @@
             <!-- Agents -->
             <li class="nav-item">
                 <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarAgents">
-                    <span class="nav-icon"><i class="ri-group-line"></i></span>
+                    <span class="nav-icon"><i class="ri-user-star-line"></i></span>
                     <span class="nav-text">اطلاعات مربی</span>
                 </a>
                 <div class="collapse" id="sidebarAgents">
@@ -43,23 +43,23 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarAgents">
-                    <span class="nav-icon"><i class="ri-group-line"></i></span>
-                    <span class="nav-text"> عضلات</span>
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarMuscles">
+                    <span class="nav-icon"><i class="ri-body-scan-line"></i></span>
+                    <span class="nav-text">عضلات</span>
                 </a>
-                <div class="collapse" id="sidebarAgents">
+                <div class="collapse" id="sidebarMuscles">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Workouts.category')}}">اضافه کردن عضلات</a></li>
                     </ul>
                 </div>
             </li>
- <!-- Properties -->
+            <!-- Workout Plans -->
             <li class="nav-item">
-                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarProperty">
-                    <span class="nav-icon"><i class="ri-community-line"></i></span>
-                    <span class="nav-text">برنامه ورزشی </span>
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarWorkoutPlans">
+                    <span class="nav-icon"><i class="ri-run-line"></i></span>
+                    <span class="nav-text">برنامه ورزشی</span>
                 </a>
-                <div class="collapse" id="sidebarProperty">
+                <div class="collapse" id="sidebarWorkoutPlans">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Workouts.edit')}}">ادیت برنامه</a></li>
                         <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Workouts.show')}}">نمایش برنامه</a></li>
@@ -67,12 +67,13 @@
                     </ul>
                 </div>
             </li>
+            <!-- General Logic -->
             <li class="nav-item">
-                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarProperty">
-                    <span class="nav-icon"><i class="ri-community-line"></i></span>
-                    <span class="nav-text"> منطق عمومی </span>
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarGeneralLogic">
+                    <span class="nav-icon"><i class="ri-file-list-3-line"></i></span>
+                    <span class="nav-text">منطق عمومی</span>
                 </a>
-                <div class="collapse" id="sidebarProperty">
+                <div class="collapse" id="sidebarGeneralLogic">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('plans.library')}}">کتابخانه برنامه ها</a></li>
                         <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('plans.list')}}">لیست</a></li>
@@ -80,27 +81,27 @@
                     </ul>
                 </div>
             </li>
+            <!-- Nutrition Plans -->
             <li class="nav-item">
-                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarProperty">
-                    <span class="nav-icon"><i class="ri-community-line"></i></span>
-                    <span class="nav-text">برنامه تغذیه </span>
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarNutrition">
+                    <span class="nav-icon"><i class="ri-restaurant-line"></i></span>
+                    <span class="nav-text">برنامه تغذیه</span>
                 </a>
-                <div class="collapse" id="sidebarProperty">
+                <div class="collapse" id="sidebarNutrition">
                     <ul class="nav sub-navbar-nav">
-{{--                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Workouts.library')}}">کتابخانه برنامه ها</a></li>--}}
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('nutrition.show')}}">نمایش </a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('nutrition.show')}}">نمایش</a></li>
                         <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('nutrition.edit')}}">تغییر برنامه غذایی</a></li>
                         <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('nutrition.create')}}">اضافه کردن برنامه</a></li>
                     </ul>
                 </div>
             </li>
-            <!-- Customers -->
+            <!-- Members -->
             <li class="nav-item">
-                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarCustomers">
-                    <span class="nav-icon"><i class="ri-contacts-book-3-line"></i></span>
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarMembers">
+                    <span class="nav-icon"><i class="ri-team-line"></i></span>
                     <span class="nav-text">اعضای باشگاه</span>
                 </a>
-                <div class="collapse" id="sidebarCustomers">
+                <div class="collapse" id="sidebarMembers">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('members.list')}}">لیست عضو</a></li>
                         <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('members.grid')}}">گرید عضو</a></li>
@@ -113,7 +114,7 @@
             <!-- Orders -->
             <li class="nav-item">
                 <a class="nav-link" href="orders.html">
-                    <span class="nav-icon"><i class="ri-home-office-line"></i></span>
+                    <span class="nav-icon"><i class="ri-shopping-cart-line"></i></span>
                     <span class="nav-text">سفارشات</span>
                 </a>
             </li>
@@ -121,7 +122,7 @@
             <!-- Transactions -->
             <li class="nav-item">
                 <a class="nav-link" href="transactions.html">
-                    <span class="nav-icon"><i class="ri-arrow-left-right-line"></i></span>
+                    <span class="nav-icon"><i class="ri-exchange-dollar-line"></i></span>
                     <span class="nav-text">تراکنش ها</span>
                 </a>
             </li>
@@ -148,7 +149,7 @@
             <!-- Authentication -->
             <li class="nav-item">
                 <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarAuthentication">
-                    <span class="nav-icon"><i class="ri-lock-password-line"></i></span>
+                    <span class="nav-icon"><i class="ri-shield-user-line"></i></span>
                     <span class="nav-text">احراز هویت</span>
                 </a>
                 <div class="collapse" id="sidebarAuthentication">
@@ -159,17 +160,29 @@
                     </ul>
                 </div>
             </li>
+            <!-- Login Settings -->
             <li class="nav-item">
-                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarAuthentication">
-                    <span class="nav-icon"><i class="ri-lock-password-line"></i></span>
+                <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#sidebarLoginSettings">
+                    <span class="nav-icon"><i class="ri-settings-3-line"></i></span>
                     <span class="nav-text">تنظیمات ورود</span>
                 </a>
-                <div class="collapse" id="sidebarAuthentication">
+                <div class="collapse" id="sidebarLoginSettings">
                     <ul class="nav sub-navbar-nav">
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="auth-password.html"> تعریف رمز</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="auth-password.html">تعریف رمز</a></li>
                     </ul>
                 </div>
             </li>
         </ul>
+    </div>
+    
+    <!-- Logout Button -->
+    <div class="sidebar-footer" style="padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <form method="POST" action="{{ route('coach.logout') }}" id="logoutForm">
+            @csrf
+            <button type="submit" class="nav-link w-100 text-start" style="background: transparent; border: none; color: inherit; padding: 12px 20px; border-radius: 8px; transition: all 0.3s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.1)'" onmouseout="this.style.background='transparent'">
+                <span class="nav-icon"><i class="ri-logout-box-line"></i></span>
+                <span class="nav-text">خروج از حساب</span>
+            </button>
+        </form>
     </div>
 </div>

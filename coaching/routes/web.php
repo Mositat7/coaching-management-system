@@ -82,6 +82,7 @@ Route::prefix('coach')->name('coach.')->group(function () {
     Route::post('/send-otp', [CoachAuthController::class, 'sendOtp'])->name('send-otp');
     Route::get('/verify', [CoachAuthController::class, 'showVerifyForm'])->name('verify');
     Route::post('/verify-otp', [CoachAuthController::class, 'verifyOtp'])->name('verify-otp');
+    Route::post('/logout', [CoachAuthController::class, 'logout'])->name('logout');
 });
 
 // ======================
