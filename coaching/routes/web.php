@@ -131,8 +131,11 @@ Route::middleware('auth.coach')->group(function () {
     Route::get('/members-grid', [MemberController::class, 'grid'])->name('members.grid');
     
     // بخش مربی
+    Route::get('/Coach-list', [CoachController::class, 'index'])->name('Coach.list');
+    Route::get('/Coach-show/{id}', [CoachController::class, 'show'])->name('Coach.show');
     Route::get('/Coach-add', [CoachController::class, 'add'])->name('Coach.add');
     Route::post('/Coach-store', [CoachController::class, 'store'])->name('Coach.store');
+    Route::delete('/Coach-delete/{id}', [CoachController::class, 'destroy'])->name('Coach.destroy');
 });
 
 // ======================

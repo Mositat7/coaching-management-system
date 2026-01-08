@@ -46,8 +46,13 @@ class Coach extends Model
      */
     public function getAvatarUrlAttribute(): string
     {
-        if ($this->avatar) {
-            return asset('storage/' . $this->avatar);
+        if ($this->avatar && $this->avatar !== '') {
+            // Check if file exists in storage
+            $storage = \Illuminate\Support\Facades\Storage::disk('public');
+            if ($storage->exists($this->avatar)) {
+                return $storage->url($this->avatar);
+            }
+            // If file doesn't exist, return default
         }
         return asset('assets/images/users/coach-default.jpg');
     }
@@ -56,4 +61,32 @@ class Coach extends Model
     {
         return $this->hasOne(CoachAuth::class, 'coach_id');
     }
+    public function scopeSearch($query, ?string $term)
+{
+    if (empty($term = trim($term))) {
+        return $query;
+    }
+
+    return $query->where(function ($q) use ($term) {
+        $q->where('full_name', 'like', "%{$term}%")
+          ->orWhere('mobile', 'like', "%{$term}%")
+          ->orWhere('code', 'like', "%{$term}%");
+    });
+}
+
+public function scopeWhenStatus($query, ?string $status)
+{
+    if (!$status) {
+        return $query;
+    }
+
+    // فقط مقادیر مجاز انگلیسی رو بپذیر
+    $allowed = ['active', 'inactive', 'suspended'];
+
+    if (in_array($status, $allowed, true)) {
+        return $query->where('status', $status);
+    }
+
+    return $query;
+}
 }
