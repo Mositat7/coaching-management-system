@@ -38,6 +38,7 @@
                 </a>
                 <div class="collapse" id="sidebarAgents">
                     <ul class="nav sub-navbar-nav">
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Coach.list')}}">لیست مربیان</a></li>
                         <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Coach.add')}}">اضافه کردن مربی</a></li>
                     </ul>
                 </div>
