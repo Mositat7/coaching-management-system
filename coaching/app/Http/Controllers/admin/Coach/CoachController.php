@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Http\Requests\Coach\StoreCoachRequest;
 use App\Services\Coach\CoachService;
+use Illuminate\Support\Facades\Log;
 class CoachController extends Controller
 {
     /**
@@ -17,9 +18,9 @@ class CoachController extends Controller
     public function index(Request $request)
     {
         $coaches = Coach::search($request->get('search'))
-                        ->whenStatus($request->get('status'))
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(15);
+            ->whenStatus($request->get('status'))
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
 
         return view('admin.coaches.coach-list', compact('coaches'));
     }
@@ -46,39 +47,31 @@ class CoachController extends Controller
      * Store a newly created coach
      */
 
-     public function store(StoreCoachRequest $request, CoachService $coachService)
-     {
-         try {
-             $coach = $coachService->createFromRequest($request->validated());
- 
-             return redirect()->route('Coach.add')
-                 ->with('success', "مربی با کد {$coach->code} با موفقیت ثبت شد.");
-         } catch (\Exception $e) {
-             \Log::error('خطا در ثبت مربی: ' . $e->getMessage());
-             return back()->withInput()->withErrors(['error' => 'خطا در ثبت مربی.']);
-         }
-     }
+    public function store(StoreCoachRequest $request, CoachService $coachService)
+    {
+        try {
+            $coach = $coachService->createFromRequest($request->validated());
+
+            return redirect()->route('Coach.add')
+                ->with('success', "مربی با کد {$coach->code} با موفقیت ثبت شد.");
+        } catch (\Exception $e) {
+            Log::error('خطا در ثبت مربی: ' . $e->getMessage());
+            return back()->withInput()->withErrors(['error' => 'خطا در ثبت مربی.']);
+        }
+    }
     /**
      * Remove the specified coach
      */
-    public function destroy(string $id)
+    public function destroy($id, CoachService $coachService)
     {
         try {
-            $coach = Coach::findOrFail($id);
+            $coachService->destroyCoach($id);
 
-            // Delete avatar if exists
-            if ($coach->avatar && Storage::exists('public/' . $coach->avatar)) {
-                Storage::delete('public/' . $coach->avatar);
-            }
-
-            $coach->delete();
-
-            return redirect()->back()
-                ->with('success', 'مربی با موفقیت حذف شد.');
-
+            return back()->with('success', 'مربی با موفقیت حذف شد.');
         } catch (\Exception $e) {
-            return redirect()->back()
-                ->withErrors(['error' => 'خطا در حذف مربی: ' . $e->getMessage()]);
+            return back()->withErrors([
+                'error' => 'خطا در حذف مربی: ' . $e->getMessage()
+            ]);
         }
     }
 }

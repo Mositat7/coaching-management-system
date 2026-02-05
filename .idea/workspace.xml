@@ -5,108 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5129b0d6-d18e-4f87-8fdd-75ed37deb822" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/Coach/CoachController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/coaching/app/Http/Controllers/Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/members/MemberController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/nutrition/NutritionController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/plans/PlanController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/workouts/WorkoutsController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/auth-lock-screen.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/auth-password.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/auth-signin.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/auth-signup.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-area.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-bar.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-boxplot.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-bubble.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-candlestick.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-column.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-heatmap.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-line.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-mixed.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-pie.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-polar-area.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-radar.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-radialbar.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-scatter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-timeline.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/charts-apex-treemap.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/dashboard-agent.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/dashboard-customer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/extended-ratings.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/extended-scrollbar.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/extended-sweetalert.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/extended-swiper-silder.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/extended-toastify.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-basic.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-checkbox-radio.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-choices.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-clipboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-editors.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-fileuploads.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-flatepicker.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-input-mask.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-range-slider.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-validation.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/forms-wizard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/icons-remix.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/icons-solar.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/inbox.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-dark-sidenav.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-dark-topnav.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-dark.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-hidden-sidenav.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-simple-sidenav.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-small-hover-active.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-small-hover.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/layouts-small-sidenav.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/maps-google.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/maps-vector.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/messages.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/orders.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-404-alt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-404.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-calendar.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-comingsoon.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-faqs.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-invoice.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-maintenance.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-pricing.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-starter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/pages-timeline.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/partials/Topbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/coaching/resources/views/partials/Topbar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/post-create.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/post-details.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/post.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/reviews.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/tables-basic.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/tables-gridjs.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/transactions.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-accordion.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-alerts.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-avatar.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-badge.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-breadcrumb.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-buttons.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-card.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-carousel.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-collapse.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-dropdown.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-list-group.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-modal.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-offcanvas.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-pagination.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-placeholders.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-popovers.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-progress.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-scrollspy.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-spinners.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-tabs.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-toasts.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/ui-tooltips.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/resources/views/widgets.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coaching/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/coaching/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/app/Http/Controllers/admin/Coach/CoachController.php" beforeDir="false" afterPath="$PROJECT_DIR$/coaching/app/Http/Controllers/admin/Coach/CoachController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/coaching/app/Services/Coach/CoachService.php" beforeDir="false" afterPath="$PROJECT_DIR$/coaching/app/Services/Coach/CoachService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,9 +167,11 @@
       <recent name="C:\xampp\htdocs\real estate\amlak\public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\management-system\coaching\app\Models" />
+      <recent name="C:\xampp\htdocs\management-system\coaching\resources\views\admin\auth" />
+      <recent name="C:\xampp\htdocs\management-system\coaching\resources\views\admin" />
+      <recent name="C:\xampp\htdocs\management-system\coaching\resources\views" />
       <recent name="C:\xampp\htdocs\management-system\coaching\app\Http\Controllers\admin\workouts" />
-      <recent name="C:\xampp\htdocs\real estate\amlak\resources\views\customers" />
-      <recent name="C:\xampp\htdocs\real estate\amlak\resources\views\Property" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -292,6 +195,20 @@
       <workItem from="1767032556385" duration="1001000" />
       <workItem from="1767034055272" duration="2646000" />
       <workItem from="1767183234960" duration="2266000" />
+      <workItem from="1767247646620" duration="1755000" />
+      <workItem from="1767253656147" duration="10523000" />
+      <workItem from="1767288992905" duration="472000" />
+      <workItem from="1767430666519" duration="605000" />
+      <workItem from="1767608571149" duration="6792000" />
+      <workItem from="1767617245146" duration="629000" />
+      <workItem from="1767619295000" duration="2520000" />
+      <workItem from="1767729794196" duration="329000" />
+      <workItem from="1767730388745" duration="1003000" />
+      <workItem from="1767783126306" duration="342000" />
+      <workItem from="1767807795838" duration="31000" />
+      <workItem from="1767869053016" duration="16000" />
+      <workItem from="1768129569438" duration="150000" />
+      <workItem from="1768664536897" duration="918000" />
     </task>
     <servers />
   </component>

@@ -13,8 +13,8 @@ class CoachService
     {
         // آپلود آواتار (فقط اگر فایل ارسال شده باشد)
         if (isset($validated['avatar']) && $validated['avatar'] instanceof UploadedFile) {
-            $avatarName = 'coaches/' . Str::random(20) . '.' . $validated['avatar']->extension();
-            $validated['avatar']->storeAs('public', $avatarName);
+            $avatar = $validated['avatar'];
+            $avatarName = $avatar->store('coaches', 'public');
             $validated['avatar'] = $avatarName;
         }
 
@@ -39,5 +39,16 @@ class CoachService
         $coachData = array_merge($validated, $coachData);
 
         return Coach::create($coachData);
+    }
+    
+    public function destroyCoach(int $id): void
+    {
+        $coach = Coach::findOrFail($id);
+
+        if ($coach->avatar && Storage::disk('public')->exists($coach->avatar)) {
+            Storage::disk('public')->delete($coach->avatar);
+        }
+
+        $coach->delete();
     }
 }

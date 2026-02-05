@@ -12,31 +12,6 @@ use Illuminate\Support\Facades\Route;
 // ======================
 // Auth Routes for Coaches
 // ======================
-// تست سیستم
-Route::get('/test-system', function() {
-    try {
-        // تست Coach model
-        $coachCount = \App\Models\admin\Coach::count();
-        $coachAuthCount = \App\Models\admin\CoachAuth::count();
-
-        return response()->json([
-            'status' => 'OK',
-            'coach_table_exists' => $coachCount !== null,
-            'coach_auth_table_exists' => $coachAuthCount !== null,
-            'coach_count' => $coachCount,
-            'coach_auth_count' => $coachAuthCount,
-            'php_version' => PHP_VERSION,
-            'laravel_version' => app()->version()
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'ERROR',
-            'message' => $e->getMessage(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine()
-        ], 500);
-    }
-});
 Route::prefix('coach')->name('coach.')->group(function () {
     Route::get('/login', [CoachAuthController::class, 'showLoginForm'])->name('login');
     Route::post('/send-otp', [CoachAuthController::class, 'sendOtp'])->name('send-otp');

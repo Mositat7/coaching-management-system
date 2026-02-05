@@ -111,7 +111,7 @@
                                                 <tr>
                                                     <td>{{ $coaches->firstItem() + $index }}</td>
                                                     <td>
-                                                        <img src="{{ $coach->avatar_url }}" 
+                                                        <img src="{{ asset('storage/'.$coach->avatar) }}" 
                                                              alt="{{ $coach->full_name }}"
                                                              class="rounded-circle"
                                                              style="width: 40px; height: 40px; object-fit: cover;"
@@ -158,13 +158,13 @@
                                                                class="btn btn-light btn-sm"
                                                                data-bs-toggle="tooltip" 
                                                                title="مشاهده جزئیات">
-                                                                <iconify-icon class="align-middle fs-16" icon="solar:eye-broken"></iconify-icon>
+                                                                <i class="ri-eye-line"></i>
                                                             </a>
                                                             <a href="{{ route('Coach.add') }}" 
                                                                class="btn btn-soft-primary btn-sm"
                                                                data-bs-toggle="tooltip" 
                                                                title="ویرایش">
-                                                                <iconify-icon class="align-middle fs-16" icon="solar:pen-2-broken"></iconify-icon>
+                                                                <i class="ri-pencil-line"></i>
                                                             </a>
                                                             <form action="{{ route('Coach.destroy', $coach->id) }}" 
                                                                   method="POST" 
@@ -176,7 +176,7 @@
                                                                         class="btn btn-soft-danger btn-sm"
                                                                         data-bs-toggle="tooltip" 
                                                                         title="حذف">
-                                                                    <iconify-icon class="align-middle fs-16" icon="solar:trash-bin-minimalistic-broken"></iconify-icon>
+                                                                    <i class="ri-delete-bin-line"></i>
                                                                 </button>
                                                             </form>
                                                         </div>
@@ -218,13 +218,6 @@
                 bsAlert.close();
             });
         }, 5000);
-
-        // Initialize tooltips
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
     });
 </script>
 @endsection
-
