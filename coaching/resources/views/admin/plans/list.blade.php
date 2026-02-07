@@ -374,7 +374,7 @@
                             <td>
                                 <div class="d-flex align-items-center gap-2">
                                     <div>
-                                        <img src="https://ui-avatars.com/api/?name=محمد+رضایی&background=3b82f6&color=fff&size=40"
+                                        <img src="{{ asset('assets/images/users/dummy-avatar.jpg') }}"
                                              class="member-avatar" alt="محمد رضایی">
                                     </div>
                                     <div>
@@ -450,7 +450,7 @@
                             <td>
                                 <div class="d-flex align-items-center gap-2">
                                     <div>
-                                        <img src="https://ui-avatars.com/api/?name=فاطمه+احمدی&background=10b981&color=fff&size=40"
+                                        <img src="{{ asset('assets/images/users/dummy-avatar.jpg') }}"
                                              class="member-avatar" alt="فاطمه احمدی">
                                     </div>
                                     <div>
@@ -526,7 +526,7 @@
                             <td>
                                 <div class="d-flex align-items-center gap-2">
                                     <div>
-                                        <img src="https://ui-avatars.com/api/?name=علی+محمدی&background=ef4444&color=fff&size=40"
+                                        <img src="{{ asset('assets/images/users/dummy-avatar.jpg') }}"
                                              class="member-avatar" alt="علی محمدی">
                                     </div>
                                     <div>
@@ -679,7 +679,7 @@
                             <td>
                                 <div class="d-flex align-items-center gap-2">
                                     <div>
-                                        <img src="https://ui-avatars.com/api/?name=رضا+نوروزی&background=8b5cf6&color=fff&size=40"
+                                        <img src="{{ asset('assets/images/users/dummy-avatar.jpg') }}"
                                              class="member-avatar" alt="رضا نوروزی">
                                     </div>
                                     <div>
