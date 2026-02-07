@@ -122,7 +122,7 @@
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
-                                                    <img src="https://ui-avatars.com/api/?name=محمد+رضایی&background=3b82f6&color=fff&size=64"
+                                                    <img src="{{ asset('assets/images/users/dummy-avatar.jpg') }}"
                                                          class="rounded-circle" width="64" height="64">
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
@@ -158,7 +158,7 @@
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
-                                                    <img src="https://ui-avatars.com/api/?name=فاطمه+احمدی&background=10b981&color=fff&size=64"
+                                                    <img src="{{ asset('assets/images/users/dummy-avatar.jpg') }}"
                                                          class="rounded-circle" width="64" height="64">
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
@@ -194,7 +194,7 @@
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
-                                                    <img src="https://ui-avatars.com/api/?name=علی+محمدی&background=ef4444&color=fff&size=64"
+                                                    <img src="{{ asset('assets/images/users/dummy-avatar.jpg') }}"
                                                          class="rounded-circle" width="64" height="64">
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
@@ -268,7 +268,7 @@
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
-                                                    <img src="https://ui-avatars.com/api/?name=رضا+نوروزی&background=8b5cf6&color=fff&size=64"
+                                                    <img src="{{ asset('assets/images/users/dummy-avatar.jpg') }}"
                                                          class="rounded-circle" width="64" height="64">
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
