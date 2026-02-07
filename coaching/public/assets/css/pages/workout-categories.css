@@ -1,0 +1,339 @@
+/**
+ * صفحه دسته‌بندی تمرین‌ها (Workouts Category)
+ * فقط استایل‌های مخصوص این صفحه - بدون وابستگی به اینترنت
+ */
+
+:root {
+    --wc-card-radius: 16px;
+    --wc-card-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    --wc-card-shadow-hover: 0 12px 40px rgba(0,0,0,0.08);
+    --wc-transition: 0.25s ease;
+}
+
+.workout-categories-page {
+    padding: 0 0 2rem;
+    min-height: 100%;
+}
+
+.workout-categories-page .page-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.workout-categories-page .page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 0.25rem 0;
+    letter-spacing: -0.02em;
+}
+
+.workout-categories-page .page-desc {
+    color: #64748b;
+    font-size: 0.9375rem;
+    margin: 0;
+}
+
+.workout-categories-page .btn-add-muscle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+    transition: transform var(--wc-transition), box-shadow var(--wc-transition);
+}
+
+.workout-categories-page .btn-add-muscle:hover {
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+}
+
+.workout-categories-page .category-card {
+    background: #fff;
+    border-radius: var(--wc-card-radius);
+    box-shadow: var(--wc-card-shadow);
+    border: 1px solid rgba(0,0,0,0.04);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow var(--wc-transition), transform var(--wc-transition);
+}
+
+.workout-categories-page .category-card:hover {
+    box-shadow: var(--wc-card-shadow-hover);
+}
+
+.workout-categories-page .category-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    position: relative;
+}
+
+.workout-categories-page .category-card__header::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 4px 0 0 4px;
+}
+
+.workout-categories-page .category-card--primary .category-card__header::before { background: linear-gradient(180deg, #3b82f6, #2563eb); }
+.workout-categories-page .category-card--success .category-card__header::before { background: linear-gradient(180deg, #10b981, #059669); }
+.workout-categories-page .category-card--warning .category-card__header::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
+.workout-categories-page .category-card--danger .category-card__header::before { background: linear-gradient(180deg, #ef4444, #dc2626); }
+.workout-categories-page .category-card--info .category-card__header::before { background: linear-gradient(180deg, #06b6d4, #0891b2); }
+
+.workout-categories-page .category-card__title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.workout-categories-page .category-card__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.workout-categories-page .category-card--primary .category-card__icon { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.workout-categories-page .category-card--success .category-card__icon { background: linear-gradient(135deg, #10b981, #059669); }
+.workout-categories-page .category-card--warning .category-card__icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.workout-categories-page .category-card--danger .category-card__icon { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.workout-categories-page .category-card--info .category-card__icon { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+
+.workout-categories-page .category-card__title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
+
+.workout-categories-page .category-card__menu {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, background 0.2s;
+}
+
+.workout-categories-page .category-card__menu:hover {
+    color: #475569;
+    background: rgba(0,0,0,0.05);
+}
+
+.workout-categories-page .category-card__body {
+    padding: 0 1.25rem 1.25rem;
+    flex: 1;
+}
+
+.workout-categories-page .accordion-item {
+    border: none;
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+    background: #f8fafc;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.workout-categories-page .accordion-item:last-child {
+    margin-bottom: 0;
+}
+
+.workout-categories-page .accordion-button {
+    background: transparent !important;
+    border: none !important;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #334155;
+    padding: 0.875rem 1rem;
+    box-shadow: none !important;
+    border-radius: 12px;
+    transition: background 0.2s;
+}
+
+.workout-categories-page .accordion-button:not(.collapsed) {
+    color: #1e293b;
+    background: rgba(255,255,255,0.8) !important;
+}
+
+.workout-categories-page .accordion-button::after {
+    margin-right: auto;
+    margin-left: 0.5rem;
+    transition: transform 0.25s ease;
+}
+
+.workout-categories-page .accordion-button:not(.collapsed)::after {
+    transform: rotate(-180deg);
+}
+
+.workout-categories-page .accordion-body {
+    padding: 0 1rem 1rem;
+    background: #fff;
+    border-radius: 0 0 12px 12px;
+}
+
+.workout-categories-page .exercise-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.75rem 0;
+}
+
+.workout-categories-page .exercise-list__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.625rem 0.875rem;
+    margin-bottom: 0.5rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.9375rem;
+    color: #334155;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.workout-categories-page .exercise-list__item:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.workout-categories-page .exercise-list__item:last-child {
+    margin-bottom: 0;
+}
+
+.workout-categories-page .btn-exercise-delete {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+}
+
+.workout-categories-page .btn-exercise-delete:hover {
+    background: #ef4444;
+    color: #fff;
+}
+
+.workout-categories-page .btn-add-exercise {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 10px;
+    border: 1px dashed #cbd5e1;
+    background: #f8fafc;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.workout-categories-page .btn-add-exercise:hover {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.06);
+    color: #2563eb;
+}
+
+.workout-categories-page .btn-add-sub {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    border-radius: 12px;
+    border: 1px dashed #cbd5e1;
+    background: #f8fafc;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.workout-categories-page .btn-add-sub:hover {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.06);
+    color: #059669;
+}
+
+.workout-categories-page .empty-state {
+    text-align: center;
+    padding: 2rem 1.5rem;
+}
+
+.workout-categories-page .empty-state__icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1rem;
+    border-radius: 16px;
+    background: #f1f5f9;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+}
+
+.workout-categories-page .empty-state__text {
+    color: #64748b;
+    font-size: 0.9375rem;
+    margin-bottom: 1rem;
+}
+
+.workout-categories-page .grid-categories {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+}
+
+@media (min-width: 576px) {
+    .workout-categories-page .grid-categories {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .workout-categories-page .grid-categories {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.75rem;
+    }
+}
