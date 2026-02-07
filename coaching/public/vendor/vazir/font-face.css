@@ -1,0 +1,16 @@
+/* فونت فارسی - بدون وابستگی به اینترنت (استفاده از فونت لوکال پروژه) */
+@font-face {
+  font-family: Vazir;
+  src: url('../../assets/fonts/ModamFaNumWeb-Medium.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('../../assets/fonts/ModamFaNumWeb-Medium.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
