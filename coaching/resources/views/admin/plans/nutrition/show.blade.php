@@ -719,7 +719,7 @@
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
-                                    <img src="https://ui-avatars.com/api/?name=مربی+تغذیه&background=10b981&color=fff&size=64"
+                                    <img src="{{ asset('assets/images/users/dummy-avatar.jpg') }}"
                                          class="rounded-circle" width="64" height="64" alt="مربی تغذیه">
                                 </div>
                                 <div class="flex-grow-1 ms-3">
