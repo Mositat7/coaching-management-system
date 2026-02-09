@@ -59,8 +59,6 @@
 <!-- App Javascript (Require in all Page) -->
 <script src="{{asset('assets/js/app.js')}}">
 </script>
-<script src="{{asset('assets/js/vendor.js')}}">
-</script>
 <!-- Vector Map Js -->
 <script src="{{asset('assets/vendor/jsvectormap/js/jsvectormap.min.js')}}">
 </script>
