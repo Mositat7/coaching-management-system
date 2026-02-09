@@ -48,6 +48,11 @@ Route::middleware('auth.coach')->group(function () {
     
     // کتگوری عضلات
     Route::get('/Workouts-category', [CategoryController::class, 'index'])->name('Workouts.category');
+    Route::post('/Workouts-category', [CategoryController::class, 'store'])->name('workouts.category.store');
+    Route::post('/Workouts-category/exercise', [CategoryController::class, 'storeExercise'])->name('workouts.category.exercise.store');
+    Route::post('/Workouts-category/subgroup', [CategoryController::class, 'storeSubGroup'])->name('workouts.category.subgroup.store');
+    Route::delete('/Workouts-category/muscle/{muscleGroup}', [CategoryController::class, 'destroyMuscleGroup'])->name('workouts.category.muscle.destroy');
+    Route::delete('/Workouts-category/exercise/{exercise}', [CategoryController::class, 'destroyExercise'])->name('workouts.category.exercise.destroy');
     
     // بخش برنامه تمرینی
     Route::get('/Workouts-add', [WorkoutsController::class, 'add'])->name('plans.create');
