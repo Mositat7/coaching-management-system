@@ -21,5 +21,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // دادهٔ اولیه دسته‌بندی تمرین‌ها (عضلات، زیرمجموعه، حرکات)
+        $this->call(MuscleGroupSeeder::class);
     }
 }
