@@ -58,7 +58,8 @@ Route::middleware('auth.coach')->group(function () {
     Route::get('/Workouts-add', [WorkoutsController::class, 'add'])->name('plans.create');
     Route::post('/Workouts-add', [WorkoutsController::class, 'store'])->name('plans.store');
     Route::get('/Workouts-edit', [WorkoutsController::class, 'edit'])->name('Workouts.edit');
-    Route::get('/Workouts-show', [WorkoutsController::class, 'show'])->name('Workouts.show');
+    Route::put('/Workouts-edit/{plan}', [WorkoutsController::class, 'update'])->name('Workouts.update');
+    Route::get('/Workouts-show/{plan}', [WorkoutsController::class, 'show'])->name('Workouts.show');
     
     // منطق عمومی مدیریت برنامه‌ها
     Route::get('/Plan-list', [PlanController::class, 'list'])->name('plans.list');
