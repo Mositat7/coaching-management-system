@@ -67,3 +67,44 @@
 - **ویو:** کتابخانه از `window.exerciseLibraryFromServer`؛ state روزها با `saveCurrentDayToState` / `loadDayExercises` / `loadDaySettings`
 - **ذخیره:** `POST plans.store` با JSON (name, description, days با exercises). ریدایرکت با پیام موفقیت یا پاسخ JSON در صورت `Accept: application/json`.
 - **استاب توابع:** showHelp, clearCurrentDay, showExerciseModal, filterExercises, addSet, handleDragOver/handleDrop و بقیه برای جلوگیری از خطای JS.
+
+---
+
+## اعتبارسنجی و ساختار تمیز کنترلر
+
+- **Form Request:** برای ساده‌تر شدن کد کنترلر، اعتبارسنجی ورودی ساخت برنامه در کلاس  
+  `App\Http\Requests\WorkoutPlan\StoreWorkoutPlanRequest` قرار داده شده است:
+
+  - قوانین اصلی:
+    - `name`: اجباری، حداکثر ۲۵۵ کاراکتر.
+    - `description`: اختیاری، متن تا ۵۰۰۰ کاراکتر.
+    - `days`: آرایهٔ روزها (۰ تا ۳۱)، با فیلدهای اختیاری عنوان، focus، مدت، سطح، notes.
+    - `days.*.exercises`: آرایهٔ تمرین‌ها برای هر روز، شامل `workout_exercise_id` (از کتابخانه) یا `custom_name`، به‌علاوه تعداد ست، تکرار، استراحت و یادداشت.
+
+- **متد `store` در کنترلر:**
+
+  ```php
+  public function store(StoreWorkoutPlanRequest $request): RedirectResponse|JsonResponse
+  {
+      $data = $request->validated();
+
+      $plan = WorkoutPlan::create([
+          'name'        => $data['name'],
+          'description' => $data['description'] ?? null,
+          'coach_id'    => Session::get('coach_id'),
+      ]);
+
+      foreach ($data['days'] ?? [] as $sortOrder => $dayData) {
+          $day = $plan->days()->create([...]);
+
+          foreach ($dayData['exercises'] ?? [] as $exOrder => $exerciseData) {
+              $day->exercises()->create([...]);
+          }
+      }
+
+      // JSON response یا redirect با پیام موفقیت
+  }
+  ```
+
+- این ساختار باعث شده منطق کنترلر کوتاه‌تر، خواناتر و تست‌پذیرتر باشد و در عین حال تمام جزئیات ولیدیشن جای درست خودش (Form Request) باشد.
+
