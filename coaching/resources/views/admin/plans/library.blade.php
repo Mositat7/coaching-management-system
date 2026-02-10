@@ -165,7 +165,12 @@
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li><a class="dropdown-item" href="#"><i class="ri-send-plane-line me-2"></i>ارسال</a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="ri-pencil-line me-2"></i>ویرایش</a></li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('Workouts.edit') }}?plan={{ $plan->id }}">
+                                                    <i class="ri-pencil-line me-2"></i>ویرایش
+                                                </a>
+                                            </li>
+                                            
                                             <li><a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2"></i>کپی</a></li>
                                             <li><hr class="dropdown-divider"></li>
                                             <li><a class="dropdown-item text-danger" href="#"><i class="ri-delete-bin-line me-2"></i>حذف</a></li>
@@ -199,10 +204,14 @@
                                         <div>{{ $plan->updated_at?->format('Y/m/d') }}</div>
                                     </div>
                                     <div class="d-flex gap-2">
-                                        <button class="btn btn-sm btn-soft-primary">
+                                        <a href="{{ route('Workouts.show', ['plan' => $plan->id]) }}" class="btn btn-sm btn-soft-primary">
                                             <i class="ri-eye-line me-1"></i>
                                             مشاهده
-                                        </button>
+                                        </a>
+                                        <a href="{{ route('Workouts.edit') }}?plan={{ $plan->id }}" class="btn btn-sm btn-outline-secondary">
+                                            <i class="ri-pencil-line me-1"></i>
+                                            ویرایش
+                                        </a>
                                         <button class="btn btn-sm btn-primary">
                                             <i class="ri-send-plane-line me-1"></i>
                                             ارسال
