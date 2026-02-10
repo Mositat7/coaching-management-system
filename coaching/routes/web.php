@@ -56,6 +56,7 @@ Route::middleware('auth.coach')->group(function () {
     
     // بخش برنامه تمرینی
     Route::get('/Workouts-add', [WorkoutsController::class, 'add'])->name('plans.create');
+    Route::post('/Workouts-add', [WorkoutsController::class, 'store'])->name('plans.store');
     Route::get('/Workouts-edit', [WorkoutsController::class, 'edit'])->name('Workouts.edit');
     Route::get('/Workouts-show', [WorkoutsController::class, 'show'])->name('Workouts.show');
     
