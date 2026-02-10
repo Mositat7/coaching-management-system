@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin\plans;
 
 use App\Http\Controllers\Controller;
+use App\Models\WorkoutPlan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PlanController extends Controller
 {
@@ -13,12 +15,27 @@ class PlanController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * لیست برنامه‌ها (نمایش فقط‌خواندنی)
      */
-    public function list(){
+    public function list()
+    {
         return view('admin.plans.list');
     }
-    public function library(){
-        return view('admin.plans.library');
+
+    /**
+     * کتابخانه برنامه‌ها: نمایش برنامه‌های ذخیره‌شده مربی
+     */
+    public function library()
+    {
+        $coachId = Session::get('coach_id');
+
+        $plans = WorkoutPlan::with(['days.exercises'])
+            ->when($coachId, fn ($q) => $q->where('coach_id', $coachId))
+            ->latest()
+            ->get();
+
+        return view('admin.plans.library', [
+            'plans' => $plans,
+        ]);
     }
 }
