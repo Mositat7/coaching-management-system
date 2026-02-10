@@ -11,10 +11,10 @@
 
         .exercise-card {
             border-left: 4px solid #3b82f6;
-            padding: 25px;
-            margin-bottom: 25px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
             background: #ffffff;
-            border-radius: 12px;
+            border-radius: 10px;
             box-shadow: var(--card-shadow);
             transition: var(--transition-smooth);
             position: relative;
@@ -49,9 +49,9 @@
 
         .set-row {
             background: rgba(241, 245, 249, 0.7);
-            border-radius: 10px;
-            padding: 18px;
-            margin: 12px 0;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin: 8px 0;
             border: 1px solid rgba(226, 232, 240, 0.5);
         }
 
@@ -61,9 +61,9 @@
         }
 
         .day-tab {
-            padding: 12px 20px;
-            border-radius: 10px;
-            margin: 5px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 3px;
             cursor: pointer;
             transition: var(--transition-smooth);
             border: 2px solid transparent;
@@ -107,13 +107,13 @@
 
         .add-exercise-area {
             border: 2px dashed #94a3b8;
-            border-radius: 16px;
-            padding: 40px 20px;
+            border-radius: 12px;
+            padding: 20px 16px;
             text-align: center;
             background: rgba(248, 250, 252, 0.5);
             cursor: pointer;
             transition: var(--transition-smooth);
-            margin: 20px 0;
+            margin: 12px 0;
         }
 
         .add-exercise-area:hover {
@@ -128,9 +128,9 @@
         }
 
         .exercise-library-item {
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin-bottom: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 5px;
             background: white;
             border: 1px solid #e2e8f0;
             cursor: move;
@@ -153,8 +153,8 @@
 
         .stat-card {
             background: white;
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 12px 10px;
             text-align: center;
             border: 1px solid #e2e8f0;
             transition: var(--transition-smooth);
@@ -229,6 +229,19 @@
             transform-origin: 50% 50%;
         }
 
+        #exercise-library {
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .workout-create-page .card-body {
+            padding: 0.75rem 1rem;
+        }
+
+        .workout-create-page .card-header {
+            padding: 0.5rem 1rem;
+        }
+
         /* انیمیشن‌ها */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -251,59 +264,55 @@
         /* ریسپانسیو */
         @media (max-width: 768px) {
             .exercise-card {
-                padding: 18px;
-                margin-bottom: 18px;
+                padding: 12px;
+                margin-bottom: 10px;
             }
 
             .set-row .row {
                 flex-direction: column;
-                gap: 10px;
+                gap: 6px;
             }
 
             .day-tab {
-                padding: 10px 14px;
-                font-size: 14px;
-                margin: 3px;
+                padding: 6px 10px;
+                font-size: 0.85rem;
+                margin: 2px;
             }
 
             .floating-actions {
-                bottom: 20px;
-                right: 20px;
+                bottom: 16px;
+                right: 16px;
             }
 
             .floating-btn {
-                width: 48px;
-                height: 48px;
-            }
-
-            .page-title-box h4 {
-                font-size: 1.3rem;
+                width: 44px;
+                height: 44px;
             }
         }
 
         @media (max-width: 576px) {
             .exercise-card {
                 border-left-width: 3px;
-                border-radius: 10px;
+                border-radius: 8px;
             }
 
             .add-exercise-area {
-                padding: 30px 15px;
+                padding: 16px 12px;
             }
 
             .stat-card {
-                padding: 15px;
+                padding: 10px 8px;
             }
 
             .muscle-badge {
-                padding: 5px 12px;
-                font-size: 12px;
+                padding: 4px 10px;
+                font-size: 0.75rem;
             }
 
             .floating-actions {
-                bottom: 15px;
-                right: 15px;
-                gap: 8px;
+                bottom: 12px;
+                right: 12px;
+                gap: 6px;
             }
         }
 
@@ -338,206 +347,148 @@
 @endsection
 
 @section('content')
-    <div class="page-content">
+    <div class="page-content workout-create-page">
         <div class="container-fluid">
-            <!-- ========== Page Title Start ========== -->
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+                    <i class="ri-checkbox-circle-line me-2"></i>{{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="بستن"></button>
+                </div>
+            @endif
+            @if($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+                    <i class="ri-error-warning-line me-2"></i>{{ $errors->first() }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="بستن"></button>
+                </div>
+            @endif
+            <!-- Page Title + Header compact -->
             <div class="row animate-fade-in">
                 <div class="col-12">
-                    <div class="page-title-box d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between">
-                        <div class="mb-3 mb-md-0">
-                            <h4 class="mb-1 fw-semibold text-gradient">
-                                <i class="ri-add-circle-fill me-2"></i>
-                                ساخت برنامه ورزشی جدید
-                            </h4>
-                            <p class="text-muted mb-0">برنامه خود را به سادگی طراحی و شخصی‌سازی کنید</p>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-outline-primary d-none d-md-flex" onclick="showHelp()">
-                                <i class="ri-question-line me-1"></i>
-                                راهنما
-                            </button>
-                            <button class="btn btn-primary" onclick="saveProgram()">
-                                <i class="ri-save-3-line me-1"></i>
-                                ذخیره برنامه
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Header Card -->
-            <div class="row animate-fade-in" style="animation-delay: 0.1s;">
-                <div class="col-12">
-                    <!-- طراحی مینیمال و تمیز -->
-                    <div class="card border-0 bg-white shadow-sm">
-                        <div class="card-body p-4 p-lg-5">
-                            <div class="row align-items-center">
-                                <div class="col-lg-12">
-                                    <!-- فقط یک Input بزرگ و ساده -->
-                                    <div class="text-center mb-4">
-                                        <i class="ri-add-circle-line text-primary fs-48 mb-3 d-block"></i>
-                                        <h2 class="mb-3">برنامه ورزشی جدید</h2>
-                                        <p class="text-muted mb-4">یک برنامه اختصاصی برای خودت بساز</p>
-                                    </div>
-
-                                    <!-- فیلد اصلی نام برنامه -->
-                                    <div class="mb-4">
+                    <div class="card border-0 bg-white shadow-sm mb-3">
+                        <div class="card-body py-3 px-3 px-md-4">
+                            <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-3 gap-lg-4">
+                                <div class="d-flex align-items-center gap-3 flex-grow-1 min-w-0">
+                                    <i class="ri-add-circle-line text-primary fs-2 d-none d-md-block"></i>
+                                    <div class="min-w-0 flex-grow-1">
                                         <input type="text"
-                                               class="form-control form-control-lg border-1 border-primary-subtle text-center py-3"
+                                               class="form-control form-control-lg border-1 border-primary-subtle"
                                                placeholder="نام برنامه خود را اینجا بنویسید..."
-                                               style="
-                                        font-size: 1.5rem;
-                                        font-weight: 600;
-                                        border-radius: 12px;
-                                   "
+                                               style="font-size: 1.15rem; font-weight: 600; border-radius: 10px;"
                                                oninput="updateProgramName(this.value)">
                                     </div>
-
-                                    <!-- فیلد توضیحات (اختیاری) -->
-                                    <div class="mb-3">
-                            <textarea class="form-control border-0 bg-light"
-                                      rows="3"
-                                      placeholder="توضیحات اختیاری..."
-                                      style="
-                                        border-radius: 12px;
-                                        resize: none;
-                                        padding: 1rem 1.25rem;
-                                      "
-                                      oninput="updateProgramDescription(this.value)"></textarea>
-                                        <small class="text-muted mt-1 d-block text-center">
-                                            این فیلد اختیاری است - می‌توانید بعداً پر کنید
-                                        </small>
-                                    </div>
-
-                                    <!-- راهنمای سریع -->
-                                    <div class="alert alert-light border mt-4" role="alert">
-                                        <div class="d-flex align-items-center">
-                                            <i class="ri-lightbulb-line text-warning fs-20 me-3"></i>
-                                            <div>
-                                                <small class="text-muted">
-                                                    بعد از انتخاب نام، می‌توانید روزهای تمرین و ورزش‌ها را اضافه کنید
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
+                                <div class="d-flex flex-wrap gap-2 flex-shrink-0">
+                                    <button type="button" class="btn btn-outline-primary btn-sm d-none d-md-inline-flex" onclick="sendProgram()">
+                                        <i class="ri-send-plane-line me-1"></i>ارسال
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" onclick="saveProgram()">
+                                        <i class="ri-save-3-line me-1"></i>ذخیره برنامه
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <textarea class="form-control form-control-sm border-0 bg-light"
+                                          rows="2"
+                                          placeholder="توضیحات اختیاری..."
+                                          style="border-radius: 8px; resize: none; padding: 0.5rem 0.75rem; font-size: 0.9rem;"
+                                          oninput="updateProgramDescription(this.value)"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row mt-4">
+            <div class="row mt-2">
                 <!-- سایدبار -->
                 <div class="col-xl-3 col-lg-4">
-                    <!-- انتخاب روزها -->
-                    <div class="card shadow-sm mb-4 animate-slide-in" style="animation-delay: 0.2s;">
-                        <div class="card-header bg-transparent border-bottom">
-                            <h5 class="card-title mb-0 d-flex align-items-center">
+                    <div class="card shadow-sm mb-3 animate-slide-in" style="animation-delay: 0.2s;">
+                        <div class="card-header bg-transparent border-bottom py-2">
+                            <h5 class="card-title mb-0 small d-flex align-items-center">
                                 <i class="ri-calendar-schedule-line me-2 text-primary"></i>
                                 روزهای تمرین
                             </h5>
                         </div>
-                        <div class="card-body">
-                            <div class="row g-2" id="days-container">
+                        <div class="card-body py-2">
+                            <div class="row g-1" id="days-container">
                                 @foreach(['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه'] as $index => $day)
                                     <div class="col-6 col-md-4 col-lg-6 col-xl-12">
                                         <div class="day-tab text-center"
                                              data-day="{{ $index }}"
                                              onclick="selectDay({{ $index }}, '{{ $day }}')">
-                                            <div class="fw-medium mb-1">{{ $day }}</div>
+                                            <div class="fw-medium" style="font-size: 0.9rem;">{{ $day }}</div>
                                             <small class="text-muted day-count" data-day="{{ $index }}">۰ تمرین</small>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
-
-                            <hr class="my-3">
-
-                            <button class="btn btn-outline-primary w-100" onclick="addCustomDay()">
-                                <i class="ri-add-circle-line me-2"></i>
-                                روز سفارشی
+                            <hr class="my-2">
+                            <button class="btn btn-outline-primary btn-sm w-100" onclick="addCustomDay()">
+                                <i class="ri-add-circle-line me-1"></i>روز سفارشی
                             </button>
                         </div>
                     </div>
 
-                    <!-- کتابخانه تمرینات -->
-                    <div class="card shadow-sm mb-4 animate-slide-in" style="animation-delay: 0.3s;">
-                        <div class="card-header bg-transparent border-bottom">
+                    <div class="card shadow-sm mb-3 animate-slide-in" style="animation-delay: 0.3s;">
+                        <div class="card-header bg-transparent border-bottom py-2">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0 d-flex align-items-center">
+                                <h5 class="card-title mb-0 small d-flex align-items-center">
                                     <i class="ri-database-2-line me-2 text-success"></i>
                                     کتابخانه تمرینات
                                 </h5>
-                                <button class="btn btn-sm btn-light" onclick="refreshLibrary()">
+                                <button class="btn btn-sm btn-light p-1" onclick="refreshLibrary()">
                                     <i class="ri-refresh-line"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="input-group mb-3">
-                            <span class="input-group-text bg-light border-end-0">
-                                <i class="ri-search-line"></i>
-                            </span>
-                                <input type="text"
-                                       class="form-control border-start-0"
-                                       placeholder="جستجوی تمرین..."
-                                       oninput="filterExercises(this.value)">
+                        <div class="card-body py-2">
+                            <div class="input-group input-group-sm mb-2">
+                                <span class="input-group-text bg-light border-end-0 py-1"><i class="ri-search-line"></i></span>
+                                <input type="text" class="form-control border-start-0 py-1" placeholder="جستجو..." oninput="filterExercises(this.value)">
                             </div>
-
-                            <div class="vstack gap-2" id="exercise-library">
-                                <!-- تمرینات به صورت دینامیک -->
-                            </div>
-
-                            <div class="text-center mt-3">
-                                <button class="btn btn-sm btn-outline-secondary" onclick="showAllExercises()">
-                                    نمایش همه تمرینات
-                                </button>
+                            <div class="vstack gap-1" id="exercise-library"></div>
+                            <div class="text-center mt-2">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="showAllExercises()">نمایش همه</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- آمار و خلاصه -->
-                    <div class="card shadow-sm animate-slide-in" style="animation-delay: 0.4s;">
-                        <div class="card-header bg-transparent border-bottom">
-                            <h5 class="card-title mb-0 d-flex align-items-center">
+                    <div class="card shadow-sm mb-3 animate-slide-in" style="animation-delay: 0.4s;">
+                        <div class="card-header bg-transparent border-bottom py-2">
+                            <h5 class="card-title mb-0 small d-flex align-items-center">
                                 <i class="ri-bar-chart-line me-2 text-info"></i>
                                 آمار برنامه
                             </h5>
                         </div>
-                        <div class="card-body">
-                            <div class="row g-3">
+                        <div class="card-body py-2">
+                            <div class="row g-2">
                                 <div class="col-6">
-                                    <div class="stat-card">
-                                        <div class="fs-24 fw-bold text-primary" id="stat-days">۰</div>
-                                        <small class="text-muted">روز فعال</small>
+                                    <div class="stat-card py-2">
+                                        <div class="fs-18 fw-bold text-primary" id="stat-days">۰</div>
+                                        <small class="text-muted" style="font-size: 0.7rem;">روز فعال</small>
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="stat-card">
-                                        <div class="fs-24 fw-bold text-success" id="stat-exercises">۰</div>
-                                        <small class="text-muted">کل تمرینات</small>
+                                    <div class="stat-card py-2">
+                                        <div class="fs-18 fw-bold text-success" id="stat-exercises">۰</div>
+                                        <small class="text-muted" style="font-size: 0.7rem;">تمرینات</small>
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="stat-card">
-                                        <div class="fs-24 fw-bold text-warning" id="stat-sets">۰</div>
-                                        <small class="text-muted">ست کل</small>
+                                    <div class="stat-card py-2">
+                                        <div class="fs-18 fw-bold text-warning" id="stat-sets">۰</div>
+                                        <small class="text-muted" style="font-size: 0.7rem;">ست</small>
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="stat-card">
-                                        <div class="fs-24 fw-bold text-danger" id="stat-time">۰</div>
-                                        <small class="text-muted">دقیقه</small>
+                                    <div class="stat-card py-2">
+                                        <div class="fs-18 fw-bold text-danger" id="stat-time">۰</div>
+                                        <small class="text-muted" style="font-size: 0.7rem;">دقیقه</small>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="mt-4">
-                                <h6 class="mb-3">گروه‌های عضلانی:</h6>
-                                <div class="d-flex flex-wrap gap-2" id="muscle-groups">
-                                    <!-- به صورت دینامیک -->
-                                </div>
+                            <div class="mt-2">
+                                <h6 class="mb-2 small">گروه‌های عضلانی</h6>
+                                <div class="d-flex flex-wrap gap-1" id="muscle-groups"></div>
                             </div>
                         </div>
                     </div>
@@ -545,126 +496,77 @@
 
                 <!-- محتوای اصلی -->
                 <div class="col-xl-9 col-lg-8">
-                    <!-- هدر روز جاری -->
-                    <div class="card shadow-sm mb-4 animate-fade-in" id="current-day-header" style="display: none;">
-                        <div class="card-body">
-                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
-                                <div>
-                                    <h4 class="mb-2" id="current-day-title">شنبه</h4>
-                                    <div class="d-flex flex-wrap gap-3">
-                                        <div class="input-group input-group-sm" style="width: 200px;">
-                                        <span class="input-group-text">
-                                            <i class="ri-focus-3-line"></i>
-                                        </span>
-                                            <select class="form-select" id="day-focus" onchange="updateDayFocus()">
-                                                <option>تمرینات سینه و پشت بازو</option>
-                                                <option>تمرینات پا</option>
-                                                <option>تمرینات شانه</option>
-                                                <option>تمرینات کامل بدن</option>
-                                            </select>
-                                        </div>
-                                        <input type="text"
-                                               class="form-control form-control-sm"
-                                               style="width: 180px;"
-                                               placeholder="عنوان روز (اختیاری)">
+                    <div class="card shadow-sm mb-3 animate-fade-in" id="current-day-header" style="display: none;">
+                        <div class="card-body py-2 px-3">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                                <div class="d-flex flex-wrap align-items-center gap-2">
+                                    <h5 class="mb-0 fs-6" id="current-day-title">شنبه</h5>
+                                    <div class="input-group input-group-sm" style="width: 160px;">
+                                        <span class="input-group-text py-1"><i class="ri-focus-3-line"></i></span>
+                                        <select class="form-select form-select-sm py-1" id="day-focus" onchange="updateDayFocus()">
+                                            <option>سینه و پشت بازو</option>
+                                            <option>پا</option>
+                                            <option>شانه</option>
+                                            <option>کامل بدن</option>
+                                        </select>
                                     </div>
+                                    <input type="text" id="day-title-input" class="form-control form-control-sm" style="width: 140px;" placeholder="عنوان روز">
                                 </div>
-                                <div class="mt-3 mt-md-0 d-flex gap-2">
-                                    <button class="btn btn-sm btn-outline-danger" onclick="clearCurrentDay()">
-                                        <i class="ri-delete-bin-line me-1"></i>
-                                        پاک کردن روز
-                                    </button>
-                                    <button class="btn btn-sm btn-success" onclick="markDayComplete()">
-                                        <i class="ri-check-double-line me-1"></i>
-                                        تکمیل روز
-                                    </button>
+                                <div class="d-flex gap-1">
+                                    <button class="btn btn-sm btn-outline-danger" onclick="clearCurrentDay()"><i class="ri-delete-bin-line me-1"></i>پاک کردن</button>
+                                    <button class="btn btn-sm btn-success" onclick="markDayComplete()"><i class="ri-check-double-line me-1"></i>تکمیل</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- لیست تمرینات روز -->
-                    <div id="exercises-container" class="animate-fade-in" style="animation-delay: 0.3s;">
-                        <!-- تمرینات به صورت دینامیک اضافه می‌شوند -->
-                    </div>
+                    <div id="exercises-container" class="animate-fade-in" style="animation-delay: 0.3s;"></div>
 
-                    <!-- ناحیه افزودن تمرین -->
-                    <div class="add-exercise-area animate-fade-in"
-                         style="animation-delay: 0.4s;"
-                         onclick="showExerciseModal()"
-                         ondragover="handleDragOver(event)"
-                         ondrop="handleDrop(event)">
-                        <div class="py-5">
-                            <div class="avatar-lg bg-primary bg-opacity-10 rounded-circle p-3 mb-3 mx-auto">
-                                <i class="ri-add-circle-fill fs-36 text-primary"></i>
-                            </div>
-                            <h5 class="mb-2">افزودن تمرین جدید</h5>
-                            <p class="text-muted mb-4">روی این ناحیه کلیک کنید یا تمرینی را از کتابخانه بکشید</p>
-                            <div class="d-flex justify-content-center gap-3">
-                                <button class="btn btn-outline-primary" onclick="event.stopPropagation(); showExerciseModal()">
-                                    <i class="ri-add-line me-1"></i>
-                                    افزودن دستی
-                                </button>
-                                <button class="btn btn-outline-success" onclick="event.stopPropagation(); openLibrary()">
-                                    <i class="ri-database-2-line me-1"></i>
-                                    از کتابخانه
-                                </button>
+                    <div class="add-exercise-area animate-fade-in" style="animation-delay: 0.4s;" onclick="showExerciseModal()" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+                        <div class="py-3">
+                            <i class="ri-add-circle-fill fs-24 text-primary mb-2 d-block"></i>
+                            <span class="fw-medium">افزودن تمرین</span>
+                            <small class="text-muted d-block mb-2">کلیک کنید یا از کتابخانه بکشید</small>
+                            <div class="d-flex justify-content-center gap-2">
+                                <button class="btn btn-sm btn-outline-primary" onclick="event.stopPropagation(); showExerciseModal()"><i class="ri-add-line me-1"></i>دستی</button>
+                                <button class="btn btn-sm btn-outline-success" onclick="event.stopPropagation(); openLibrary()"><i class="ri-database-2-line me-1"></i>کتابخانه</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- تنظیمات روز -->
-                    <div class="card shadow-sm mt-4 animate-fade-in" style="animation-delay: 0.5s;">
-                        <div class="card-header bg-transparent border-bottom">
-                            <h5 class="card-title mb-0 d-flex align-items-center">
-                                <i class="ri-settings-3-line me-2"></i>
-                                تنظیمات روز
-                            </h5>
+                    <div class="card shadow-sm mt-3 animate-fade-in" style="animation-delay: 0.5s;">
+                        <div class="card-header bg-transparent border-bottom py-2">
+                            <h5 class="card-title mb-0 small d-flex align-items-center"><i class="ri-settings-3-line me-2"></i>تنظیمات روز</h5>
                         </div>
-                        <div class="card-body">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">مدت زمان تخمینی (دقیقه)</label>
-                                    <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="ri-timer-line"></i>
-                                    </span>
-                                        <input type="number"
-                                               class="form-control"
-                                               min="15"
-                                               max="180"
-                                               value="60"
-                                               onchange="updateDayStats()">
+                        <div class="card-body py-2 px-3">
+                            <div class="row g-2 align-items-center">
+                                <div class="col-md-4">
+                                    <label class="form-label small mb-0">مدت (دقیقه)</label>
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-text py-1"><i class="ri-timer-line"></i></span>
+                                        <input type="number" id="day-duration" class="form-control py-1" min="15" max="180" value="60" onchange="updateDayStats()">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">سطح دشواری</label>
-                                    <div class="d-flex gap-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="dayDifficulty" id="easy" checked>
-                                            <label class="form-check-label" for="easy">
-                                                <span class="badge bg-success">آسان</span>
-                                            </label>
+                                <div class="col-md-5">
+                                    <label class="form-label small mb-0">سطح</label>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <div class="form-check form-check-inline mb-0">
+                                            <input class="form-check-input" type="radio" name="dayDifficulty" id="easy" value="easy" checked>
+                                            <label class="form-check-label small" for="easy"><span class="badge bg-success">آسان</span></label>
                                         </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="dayDifficulty" id="medium">
-                                            <label class="form-check-label" for="medium">
-                                                <span class="badge bg-warning">متوسط</span>
-                                            </label>
+                                        <div class="form-check form-check-inline mb-0">
+                                            <input class="form-check-input" type="radio" name="dayDifficulty" id="medium" value="medium">
+                                            <label class="form-check-label small" for="medium"><span class="badge bg-warning">متوسط</span></label>
                                         </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="dayDifficulty" id="hard">
-                                            <label class="form-check-label" for="hard">
-                                                <span class="badge bg-danger">سخت</span>
-                                            </label>
+                                        <div class="form-check form-check-inline mb-0">
+                                            <input class="form-check-input" type="radio" name="dayDifficulty" id="hard" value="hard">
+                                            <label class="form-check-label small" for="hard"><span class="badge bg-danger">سخت</span></label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <label class="form-label">نکات و توضیحات روز</label>
-                                    <textarea class="form-control"
-                                              rows="3"
-                                              placeholder="نکات مهم، هشدارها یا توضیحات اضافی..."></textarea>
+                                <div class="col-md-3">
+                                    <label class="form-label small mb-0">نکات روز</label>
+                                    <textarea id="day-notes" class="form-control form-control-sm" rows="1" placeholder="اختیاری..." style="resize: none;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -676,88 +578,46 @@
 
     <!-- Template برای تمرین -->
     <template id="exercise-template">
-        <div class="exercise-card draggable-exercise" draggable="true" data-exercise-id="">
-            <div class="d-flex justify-content-between align-items-start mb-4">
-                <div style="flex: 1;">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="drag-handle me-3 text-muted" style="cursor: move;">
-                            <i class="ri-drag-move-2-line fs-18"></i>
-                        </div>
-                        <input type="text"
-                               class="form-control form-control-lg border-0 exercise-title bg-transparent px-0"
-                               placeholder="نام تمرین (مثال: پرس سینه)"
-                               style="font-weight: 700; font-size: 1.25rem;">
+        <div class="exercise-card draggable-exercise" draggable="true" data-exercise-id="" data-workout-exercise-id="">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <div class="min-w-0 flex-grow-1">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <div class="drag-handle text-muted" style="cursor: move;"><i class="ri-drag-move-2-line"></i></div>
+                        <input type="text" class="form-control form-control-sm border-0 exercise-title bg-transparent px-0" placeholder="نام تمرین" style="font-weight: 600; font-size: 1rem;">
                     </div>
-
-                    <div class="row g-3 align-items-center">
-                        <div class="col-md-auto">
-                            <select class="form-select form-select-sm muscle-select" style="width: 130px;">
-                                <option value="chest">سینه</option>
-                                <option value="back">پشت</option>
-                                <option value="legs">پا</option>
-                                <option value="shoulders">شانه</option>
-                                <option value="arms">بازو</option>
-                                <option value="core">میان تنه</option>
-                            </select>
-                        </div>
-                        <div class="col-md-auto">
-                            <div class="d-flex align-items-center gap-2">
-                                <input type="number"
-                                       class="form-control form-control-sm quick-input"
-                                       placeholder="تعداد ست"
-                                       style="width: 80px;"
-                                       min="1" max="10">
-                                <span class="text-muted">×</span>
-                                <input type="text"
-                                       class="form-control form-control-sm quick-input"
-                                       placeholder="تکرارها"
-                                       style="width: 100px;">
-                            </div>
-                        </div>
-                        <div class="col-md-auto">
-                            <div class="input-group input-group-sm" style="width: 120px;">
-                            <span class="input-group-text">
-                                <i class="ri-timer-line"></i>
-                            </span>
-                                <input type="text"
-                                       class="form-control"
-                                       placeholder="استراحت"
-                                       value="90s">
-                            </div>
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        <select class="form-select form-select-sm muscle-select" style="width: 110px;">
+                            <option value="chest">سینه</option>
+                            <option value="back">پشت</option>
+                            <option value="legs">پا</option>
+                            <option value="shoulders">شانه</option>
+                            <option value="arms">بازو</option>
+                            <option value="core">میان تنه</option>
+                        </select>
+                        <input type="number" class="form-control form-control-sm quick-input" placeholder="ست" style="width: 55px;" min="1" max="10">
+                        <span class="text-muted">×</span>
+                        <input type="text" class="form-control form-control-sm quick-input" placeholder="تکرار" style="width: 70px;">
+                        <div class="input-group input-group-sm" style="width: 85px;">
+                            <span class="input-group-text py-0"><i class="ri-timer-line"></i></span>
+                            <input type="text" class="form-control py-0" placeholder="استراحت" value="90s">
                         </div>
                     </div>
                 </div>
-                <div class="d-flex gap-2 flex-shrink-0">
-                    <button class="btn btn-sm btn-outline-primary" onclick="editExerciseSets(this)">
-                        <i class="ri-settings-3-line"></i>
-                    </button>
-                    <button class="btn btn-sm btn-outline-secondary" onclick="duplicateExercise(this)">
-                        <i class="ri-file-copy-line"></i>
-                    </button>
-                    <button class="btn btn-sm btn-outline-danger" onclick="removeExercise(this)">
-                        <i class="ri-delete-bin-line"></i>
-                    </button>
+                <div class="d-flex gap-1 flex-shrink-0">
+                    <button class="btn btn-sm btn-outline-primary p-1" onclick="editExerciseSets(this)" title="ست‌ها"><i class="ri-settings-3-line"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary p-1" onclick="duplicateExercise(this)" title="کپی"><i class="ri-file-copy-line"></i></button>
+                    <button class="btn btn-sm btn-outline-danger p-1" onclick="removeExercise(this)" title="حذف"><i class="ri-delete-bin-line"></i></button>
                 </div>
             </div>
-
-            <!-- ویرایش ست‌ها -->
             <div class="set-row">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h6 class="mb-0">جزئیات ست‌ها</h6>
-                    <button class="btn btn-sm btn-link" onclick="addSet(this)">
-                        <i class="ri-add-line me-1"></i>
-                        افزودن ست
-                    </button>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="mb-0 small">جزئیات ست‌ها</h6>
+                    <button class="btn btn-sm btn-link p-0 small" onclick="addSet(this)"><i class="ri-add-line me-1"></i>افزودن ست</button>
                 </div>
-                <div class="row g-3" id="sets-container">
-                    <!-- ست‌ها به صورت دینامیک -->
-                </div>
+                <div class="row g-2" id="sets-container"></div>
             </div>
-
-            <!-- توضیحات -->
-            <div class="mt-4">
-                <label class="form-label">توضیحات و نکات اجرایی</label>
-                <textarea class="form-control" rows="2" placeholder="نکات مهم اجرای تمرین..."></textarea>
+            <div class="mt-2">
+                <textarea class="form-control form-control-sm" rows="1" placeholder="نکات اجرایی (اختیاری)" style="resize: none;"></textarea>
             </div>
         </div>
     </template>
@@ -778,6 +638,12 @@
 
 @section('scripts')
     <script>
+        // کتابخانه تمرینات از سرور (دیتابیس دسته‌بندی تمرین‌ها)
+        window.exerciseLibraryFromServer = @json($exerciseLibrary ?? []);
+        window.plansStoreUrl = '{{ route("plans.store") }}';
+        window.plansStoreToken = '{{ csrf_token() }}';
+        window.plansAssignUrl = '{{ route("plans.assign") }}';
+
         // State Management
         let programState = {
             currentDay: 0,
@@ -795,32 +661,103 @@
 
         // Day Management
         function selectDay(dayIndex, dayName) {
-            // Update UI
+            saveCurrentDayToState();
+
             document.querySelectorAll('.day-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-            event.target.closest('.day-tab').classList.add('active');
+            if (event && event.target && event.target.closest) {
+                const tab = event.target.closest('.day-tab');
+                if (tab) tab.classList.add('active');
+            } else {
+                document.querySelector(`.day-tab[data-day="${dayIndex}"]`)?.classList.add('active');
+            }
 
-            // Update state
             programState.currentDay = dayIndex;
 
-            // Show day header
             const header = document.getElementById('current-day-header');
             header.style.display = 'block';
             document.getElementById('current-day-title').textContent = dayName;
 
-            // Load day exercises
             loadDayExercises(dayIndex);
-
-            // Update completion progress
+            loadDaySettings(dayIndex);
+            updateDayCount(dayIndex);
             updateCompletionProgress();
+        }
+
+        function saveCurrentDayToState() {
+            const dayIndex = programState.currentDay;
+            if (!programState.days[dayIndex]) programState.days[dayIndex] = { exercises: [], duration_minutes: 60, difficulty: 'easy', notes: '', title: '', focus: '' };
+
+            const container = document.getElementById('exercises-container');
+            const cards = container.querySelectorAll('.exercise-card');
+            programState.days[dayIndex].exercises = [];
+            cards.forEach(card => {
+                const titleEl = card.querySelector('.exercise-title');
+                const muscleSelect = card.querySelector('.muscle-select');
+                const setsInput = card.querySelectorAll('.quick-input')[0];
+                const repsInput = card.querySelectorAll('.quick-input')[1];
+                const restInput = card.querySelector('.input-group input');
+                const notesEl = card.querySelector('.set-row + div textarea, .mt-2 textarea');
+                programState.days[dayIndex].exercises.push({
+                    name: titleEl ? titleEl.value : '',
+                    workout_exercise_id: card.dataset.workoutExerciseId || null,
+                    custom_name: titleEl && !card.dataset.workoutExerciseId ? titleEl.value : null,
+                    sets_count: setsInput ? parseInt(setsInput.value, 10) || 3 : 3,
+                    reps_text: repsInput ? repsInput.value : '',
+                    rest_seconds: parseRestToSeconds(restInput ? restInput.value : ''),
+                    notes: notesEl ? notesEl.value : ''
+                });
+            });
+
+            const durEl = document.getElementById('day-duration');
+            const notesEl = document.getElementById('day-notes');
+            const titleEl = document.getElementById('day-title-input');
+            const focusEl = document.getElementById('day-focus');
+            const diffRadio = document.querySelector('input[name="dayDifficulty"]:checked');
+            programState.days[dayIndex].duration_minutes = durEl ? parseInt(durEl.value, 10) || 60 : 60;
+            programState.days[dayIndex].notes = notesEl ? notesEl.value : '';
+            programState.days[dayIndex].title = titleEl ? titleEl.value : '';
+            programState.days[dayIndex].focus = focusEl ? focusEl.value : '';
+            programState.days[dayIndex].difficulty = diffRadio ? diffRadio.value || 'medium' : 'medium';
+        }
+
+        function parseRestToSeconds(val) {
+            if (!val) return null;
+            val = String(val).trim().toLowerCase();
+            const num = parseInt(val, 10);
+            if (!isNaN(num)) return num;
+            if (val.endsWith('s')) return parseInt(val, 10) || null;
+            if (val.endsWith('m')) return (parseInt(val, 10) || 0) * 60;
+            return null;
+        }
+
+        function loadDaySettings(dayIndex) {
+            const d = programState.days[dayIndex] || {};
+            const durEl = document.getElementById('day-duration');
+            const notesEl = document.getElementById('day-notes');
+            const titleEl = document.getElementById('day-title-input');
+            const focusEl = document.getElementById('day-focus');
+            if (durEl) durEl.value = d.duration_minutes ?? 60;
+            if (notesEl) notesEl.value = d.notes ?? '';
+            if (titleEl) titleEl.value = d.title ?? '';
+            if (focusEl) focusEl.value = d.focus ?? '';
+            const diff = d.difficulty || 'easy';
+            const r = document.querySelector(`input[name="dayDifficulty"][value="${diff}"]`);
+            if (r) r.checked = true;
+        }
+
+        function updateDayCount(dayIndex) {
+            const count = (programState.days[dayIndex] && programState.days[dayIndex].exercises) ? programState.days[dayIndex].exercises.length : 0;
+            const el = document.querySelector(`.day-count[data-day="${dayIndex}"]`);
+            if (el) el.textContent = count + ' تمرین';
         }
 
         function loadDayExercises(dayIndex) {
             const container = document.getElementById('exercises-container');
             container.innerHTML = '';
 
-            if (programState.days[dayIndex]) {
+            if (programState.days[dayIndex] && programState.days[dayIndex].exercises) {
                 programState.days[dayIndex].exercises.forEach(exercise => {
                     addExerciseToDOM(exercise);
                 });
@@ -835,11 +772,21 @@
 
             const exerciseCard = clone.querySelector('.exercise-card');
             exerciseCard.dataset.exerciseId = exerciseId;
+            if (exerciseData.workoutExerciseId != null) {
+                exerciseCard.dataset.workoutExerciseId = exerciseData.workoutExerciseId;
+            }
 
             // Set values if provided
             if (exerciseData.name) {
                 exerciseCard.querySelector('.exercise-title').value = exerciseData.name;
             }
+            const qInputs = exerciseCard.querySelectorAll('.quick-input');
+            if (exerciseData.sets_count && qInputs[0]) qInputs[0].value = exerciseData.sets_count;
+            if (exerciseData.reps_text && qInputs[1]) qInputs[1].value = exerciseData.reps_text;
+            const restInput = exerciseCard.querySelector('.input-group input');
+            if (restInput && exerciseData.rest_seconds != null) restInput.value = exerciseData.rest_seconds + 's';
+            const notesTa = exerciseCard.querySelector('.mt-2 textarea, textarea[placeholder*="نکات"]');
+            if (notesTa && exerciseData.notes) notesTa.value = exerciseData.notes;
 
             // Add drag & drop handlers
             exerciseCard.addEventListener('dragstart', handleExerciseDragStart);
@@ -923,58 +870,102 @@
 
         // Stats & Progress
         function updateStats() {
-            const exercises = document.querySelectorAll('.exercise-card').length;
+            const container = document.getElementById('exercises-container');
+            const exercises = container ? container.querySelectorAll('.exercise-card').length : 0;
             const sets = document.querySelectorAll('.set-row').length;
 
-            document.getElementById('total-exercises').textContent = exercises;
-            document.getElementById('stat-exercises').textContent = exercises;
-            document.getElementById('stat-sets').textContent = sets;
+            const statEx = document.getElementById('stat-exercises');
+            if (statEx) statEx.textContent = exercises;
+            const statSets = document.getElementById('stat-sets');
+            if (statSets) statSets.textContent = sets;
 
-            // Update day counts
             const currentDay = programState.currentDay;
-            const dayExercises = document.querySelectorAll(`[data-day="${currentDay}"] .exercise-card`).length;
-            document.querySelector(`.day-count[data-day="${currentDay}"]`).textContent = `${dayExercises} تمرین`;
+            const dayCountEl = document.querySelector(`.day-count[data-day="${currentDay}"]`);
+            if (dayCountEl) dayCountEl.textContent = exercises + ' تمرین';
         }
 
         function updateCompletionProgress() {
-            const totalFields = 10; // تعداد فیلدهای مورد نیاز
-            const filledFields = document.querySelectorAll('input[value], textarea[value], select option:checked').length;
-            const progress = Math.min(100, Math.round((filledFields / totalFields) * 100));
-
             const progressBar = document.getElementById('completion-progress');
             const progressText = document.getElementById('completion-text');
-
+            if (!progressBar || !progressText) return;
+            const totalFields = 10;
+            const filledFields = document.querySelectorAll('input[value], textarea[value], select option:checked').length;
+            const progress = Math.min(100, Math.round((filledFields / totalFields) * 100));
             progressBar.style.width = `${progress}%`;
             progressText.textContent = `${progress}٪ تکمیل شده`;
-
-            // Update progress bar color based on progress
-            if (progress < 30) {
-                progressBar.classList.remove('bg-warning', 'bg-success');
-                progressBar.classList.add('bg-danger');
-            } else if (progress < 70) {
-                progressBar.classList.remove('bg-danger', 'bg-success');
-                progressBar.classList.add('bg-warning');
-            } else {
-                progressBar.classList.remove('bg-danger', 'bg-warning');
-                progressBar.classList.add('bg-success');
-            }
+            progressBar.classList.remove('bg-warning', 'bg-success', 'bg-danger');
+            if (progress < 30) progressBar.classList.add('bg-danger');
+            else if (progress < 70) progressBar.classList.add('bg-warning');
+            else progressBar.classList.add('bg-success');
         }
 
-        // Library Functions
-        function initializeLibrary() {
-            const exercises = [
-                { name: 'پرس سینه با هالتر', muscle: 'سینه', difficulty: 'medium' },
-                { name: 'زیربغل هالتر خم', muscle: 'پشت', difficulty: 'medium' },
-                { name: 'اسکوات با هالتر', muscle: 'پا', difficulty: 'hard' },
-                { name: 'پرس سرشانه دمبل', muscle: 'شانه', difficulty: 'medium' },
-                { name: 'جلوبازو هالتر', muscle: 'بازو', difficulty: 'easy' },
-                { name: 'پشت بازو سیمکش', muscle: 'بازو', difficulty: 'easy' },
-                { name: 'لانگز دمبل', muscle: 'پا', difficulty: 'medium' },
-                { name: 'فیله کمر', muscle: 'پشت', difficulty: 'easy' },
-                { name: 'کرانچ', muscle: 'میان تنه', difficulty: 'easy' },
-                { name: 'پول آپ', muscle: 'پشت', difficulty: 'hard' }
-            ];
+        function showHelp() { showToast('راهنما به زودی.', 'info'); }
+        function updateProgramName(v) { programState.name = v; }
+        function updateProgramDescription(v) { programState.description = v; }
+        function updateDayFocus() {}
+        function updateDayStats() {}
+        function clearCurrentDay() {
+            if (!confirm('پاک کردن تمام تمرینات این روز؟')) return;
+            saveCurrentDayToState();
+            programState.days[programState.currentDay].exercises = [];
+            loadDayExercises(programState.currentDay);
+            loadDaySettings(programState.currentDay);
+            updateStats();
+            updateDayCount(programState.currentDay);
+            showToast('روز خالی شد.', 'warning');
+        }
+        function markDayComplete() { showToast('روز به عنوان تکمیل علامت زده شد.', 'success'); }
+        function showExerciseModal() { addExerciseToDOM({}); showToast('تمرین خالی اضافه شد.', 'info'); }
+        function openLibrary() { document.querySelector('.col-xl-3 .card:nth-child(2)')?.scrollIntoView({ behavior: 'smooth' }); }
+        function addQuickExercise() { addExerciseToDOM({}); }
+        function showStats() { updateStats(); showToast('آمار به‌روز شد.', 'info'); }
+        function filterExercises(q) {
+            const lib = document.getElementById('exercise-library');
+            if (!lib) return;
+            q = (q || '').toLowerCase();
+            lib.querySelectorAll('.exercise-library-item').forEach(el => {
+                el.style.display = q ? (el.textContent.toLowerCase().includes(q) ? '' : 'none') : '';
+            });
+        }
+        function showAllExercises() { filterExercises(''); }
+        function refreshLibrary() { initializeLibrary(); showToast('کتابخانه به‌روز شد.', 'info'); }
+        function addSet(btn) { showToast('افزودن ست به نسخه‌های بعدی اضافه می‌شود.', 'info'); }
+        function editExerciseSets(btn) { showToast('ویرایش ست‌ها به زودی.', 'info'); }
+        function handleDragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+        function handleDrop(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('drag-over');
+            const idx = e.dataTransfer.getData('exerciseIndex');
+            if (idx !== '') addLibraryExercise(parseInt(idx, 10));
+        }
 
+        // Library Functions — از سرور (دیتابیس) یا لیست پیش‌فرض
+        function getLibraryExercises() {
+            if (window.exerciseLibraryFromServer && window.exerciseLibraryFromServer.length > 0) {
+                return window.exerciseLibraryFromServer.map(ex => ({
+                    id: ex.id,
+                    name: ex.name,
+                    muscle: ex.muscle || '—',
+                    sub_group: ex.sub_group || '',
+                    difficulty: 'medium'
+                }));
+            }
+            return [
+                { id: null, name: 'پرس سینه با هالتر', muscle: 'سینه', sub_group: '', difficulty: 'medium' },
+                { id: null, name: 'زیربغل هالتر خم', muscle: 'پشت', sub_group: '', difficulty: 'medium' },
+                { id: null, name: 'اسکوات با هالتر', muscle: 'پا', sub_group: '', difficulty: 'hard' },
+                { id: null, name: 'پرس سرشانه دمبل', muscle: 'شانه', sub_group: '', difficulty: 'medium' },
+                { id: null, name: 'جلوبازو هالتر', muscle: 'بازو', sub_group: '', difficulty: 'easy' },
+                { id: null, name: 'پشت بازو سیمکش', muscle: 'بازو', sub_group: '', difficulty: 'easy' },
+                { id: null, name: 'لانگز دمبل', muscle: 'پا', sub_group: '', difficulty: 'medium' },
+                { id: null, name: 'فیله کمر', muscle: 'پشت', sub_group: '', difficulty: 'easy' },
+                { id: null, name: 'کرانچ', muscle: 'میان تنه', sub_group: '', difficulty: 'easy' },
+                { id: null, name: 'پول آپ', muscle: 'پشت', sub_group: '', difficulty: 'hard' }
+            ];
+        }
+
+        function initializeLibrary() {
+            const exercises = getLibraryExercises();
             const library = document.getElementById('exercise-library');
             library.innerHTML = '';
 
@@ -983,10 +974,11 @@
                 item.className = 'exercise-library-item';
                 item.draggable = true;
                 item.dataset.exerciseIndex = index;
+                const sub = exercise.sub_group ? ` • ${exercise.sub_group}` : '';
                 item.innerHTML = `
                 <div>
                     <div class="fw-medium">${exercise.name}</div>
-                    <small class="text-muted">${exercise.muscle} • ${exercise.difficulty}</small>
+                    <small class="text-muted">${exercise.muscle}${sub}</small>
                 </div>
                 <button class="btn btn-sm btn-outline-primary" onclick="addLibraryExercise(${index})">
                     <i class="ri-add-line"></i>
@@ -1002,37 +994,65 @@
         }
 
         function addLibraryExercise(index) {
-            const exercises = [
-                { name: 'پرس سینه با هالتر' },
-                { name: 'زیربغل هالتر خم' },
-                { name: 'اسکوات با هالتر' },
-                { name: 'پرس سرشانه دمبل' },
-                { name: 'جلوبازو هالتر' },
-                { name: 'پشت بازو سیمکش' },
-                { name: 'لانگز دمبل' },
-                { name: 'فیله کمر' },
-                { name: 'کرانچ' },
-                { name: 'پول آپ' }
-            ];
-
-            addExerciseToDOM({ name: exercises[index].name });
+            const exercises = getLibraryExercises();
+            const ex = exercises[index];
+            if (!ex) return;
+            addExerciseToDOM({
+                name: ex.name,
+                workoutExerciseId: ex.id || null
+            });
             showToast('تمرین اضافه شد', 'success');
         }
 
         // Save & Preview
-        function saveProgram() {
+        function submitProgram(redirectAfter = false) {
+            saveCurrentDayToState();
             const programData = collectProgramData();
 
-            // Show loading
+            const nameInput = document.querySelector('input[placeholder*="نام برنامه"]');
+            if (!programData.name || !programData.name.trim()) {
+                showToast('نام برنامه را وارد کنید.', 'danger');
+                if (nameInput) nameInput.focus();
+                return;
+            }
+
             showToast('در حال ذخیره برنامه...', 'info');
 
-            // Simulate API call
-            setTimeout(() => {
-                showToast('برنامه با موفقیت ذخیره شد!', 'success');
+            fetch(window.plansStoreUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': window.plansStoreToken,
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify(programData)
+            })
+            .then(async r => {
+                if (r.ok || r.redirected) {
+                    showToast('برنامه با موفقیت ذخیره شد.', 'success');
+                    if (redirectAfter && window.plansAssignUrl) {
+                        window.location.href = window.plansAssignUrl;
+                    }
+                    return;
+                }
+                const text = await r.text();
+                let err = { message: 'خطا در ذخیره.' };
+                try { err = JSON.parse(text); } catch (e) {}
+                const msg = err.message || (err.errors && Object.values(err.errors).flat().join(' ')) || text || 'خطا در ذخیره.';
+                return Promise.reject({ message: msg });
+            })
+            .catch(err => {
+                showToast(err && err.message ? err.message : 'خطا در ذخیره.', 'danger');
+            });
+        }
 
-                // Optional: Redirect to program page
-                // window.location.href = `/programs/${programData.id}`;
-            }, 1500);
+        function saveProgram() {
+            submitProgram(false);
+        }
+
+        function sendProgram() {
+            submitProgram(true);
         }
 
         function previewProgram() {
@@ -1062,17 +1082,33 @@
         }
 
         function collectProgramData() {
+            const nameEl = document.querySelector('input[placeholder*="نام برنامه"]');
+            const descEl = document.querySelector('textarea[placeholder*="توضیحات اختیاری"]');
+            const days = [];
+            const dayNames = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه'];
+            for (let i = 0; i < 7; i++) {
+                const d = programState.days[i] || {};
+                days.push({
+                    day_index: i,
+                    title: d.title || null,
+                    focus: d.focus || null,
+                    duration_minutes: d.duration_minutes ?? 60,
+                    difficulty: d.difficulty || 'medium',
+                    notes: d.notes || null,
+                    exercises: (d.exercises || []).map(ex => ({
+                        workout_exercise_id: ex.workout_exercise_id ? parseInt(ex.workout_exercise_id, 10) : null,
+                        custom_name: ex.custom_name || ex.name || null,
+                        sets_count: ex.sets_count ?? 3,
+                        reps_text: ex.reps_text || null,
+                        rest_seconds: ex.rest_seconds ?? null,
+                        notes: ex.notes || null
+                    }))
+                });
+            }
             return {
-                name: document.querySelector('input[placeholder*="نام برنامه"]').value,
-                description: document.querySelector('textarea[placeholder*="توضیح مختصر"]').value,
-                duration: document.querySelector('select[onchange*="duration"]').value,
-                level: document.querySelector('select[onchange*="level"]').value,
-                days: programState.days,
-                exercises: Array.from(document.querySelectorAll('.exercise-card')).map(card => ({
-                    name: card.querySelector('.exercise-title').value,
-                    muscle: card.querySelector('.muscle-select').value,
-                    sets: card.querySelectorAll('.set-row').length
-                }))
+                name: nameEl ? nameEl.value.trim() : '',
+                description: descEl ? descEl.value.trim() : '',
+                days: days
             };
         }
 
