@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <h5 class="mb-0">۱۸</h5>
+                                    <h5 class="mb-0">{{ isset($plans) ? $plans->count() : 0 }}</h5>
                                     <p class="text-muted mb-0">برنامه ورزشی</p>
                                 </div>
                             </div>
@@ -98,34 +98,34 @@
             </div>
 
             <!-- نوار جستجو و فیلتر -->
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center">
+            <div class="card border-0 shadow-sm mt-2">
+                <div class="card-body py-3 py-md-3">
+                    <div class="row align-items-center g-3">
                         <div class="col-lg-4">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="جستجوی برنامه...">
-                                <button class="btn btn-primary">
-                                    <i class="ri-search-line"></i>
-                                </button>
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="ri-search-line text-muted"></i>
+                                </span>
+                                <input type="text" class="form-control border-start-0" placeholder="جستجوی برنامه...">
                             </div>
                         </div>
-                        <div class="col-lg-8 mt-3 mt-lg-0">
+                        <div class="col-lg-8">
                             <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
-                                <button class="btn btn-outline-primary">
+                                <button class="btn btn-outline-primary btn-sm">
                                     <i class="ri-filter-line me-1"></i>
                                     فیلتر
                                 </button>
-                                <select class="form-select" style="width: auto;">
+                                <select class="form-select form-select-sm w-auto">
                                     <option>همه دسته‌ها</option>
                                     <option>ورزشی</option>
                                     <option>غذایی</option>
                                 </select>
-                                <select class="form-select" style="width: auto;">
+                                <select class="form-select form-select-sm w-auto">
                                     <option>مرتب‌سازی: جدیدترین</option>
                                     <option>مرتب‌سازی: پراستفاده</option>
                                     <option>مرتب‌سازی: الفبایی</option>
                                 </select>
-                                <a href="{{ route('plans.create') }}" class="btn btn-success">
+                                <a href="{{ route('plans.create') }}" class="btn btn-success btn-sm">
                                     <i class="ri-add-line me-1"></i>
                                     برنامه جدید
                                 </a>
@@ -136,409 +136,92 @@
             </div>
 
             <!-- لیست برنامه‌ها -->
-            <div class="row mt-3">
-                <!-- برنامه ۱ -->
-                <div class="col-xl-4 col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div>
-                                    <span class="badge bg-primary">ورزشی</span>
-                                    <span class="badge bg-warning ms-1">متوسط</span>
-                                </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown">
-                                        <i class="ri-more-2-fill"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#"><i class="ri-send-plane-line me-2"></i>ارسال</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="ri-pencil-line me-2"></i>ویرایش</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2"></i>کپی</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" href="#"><i class="ri-delete-bin-line me-2"></i>حذف</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <h5 class="card-title mb-2">برنامه حجم‌گیری فاز اول</h5>
-                            <p class="text-muted mb-3">برنامه ۴ هفته‌ای برای افزایش حجم عضلات مبتدی تا متوسط</p>
-
-                            <div class="row g-2 mb-3">
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-calendar-line text-muted me-2"></i>
-                                        <small>۴ هفته</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-dumbbell-line text-muted me-2"></i>
-                                        <small>۸ تمرین</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-timer-line text-muted me-2"></i>
-                                        <small>۶۰ دقیقه</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-user-line text-muted me-2"></i>
-                                        <small>۱۵ نفر</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <small class="text-muted">آخرین ویرایش:</small>
-                                    <div class="small">۱۴۰۳/۰۱/۲۰</div>
-                                </div>
-                                <button class="btn btn-sm btn-primary">
-                                    <i class="ri-send-plane-line me-1"></i>
-                                    ارسال
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- برنامه ۲ -->
-                <div class="col-xl-4 col-lg-6">
-                    <div class="card border-success">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div>
-                                    <span class="badge bg-success">غذایی</span>
-                                    <span class="badge bg-info ms-1">کاهش وزن</span>
-                                </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown">
-                                        <i class="ri-more-2-fill"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#"><i class="ri-send-plane-line me-2"></i>ارسال</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="ri-pencil-line me-2"></i>ویرایش</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2"></i>کپی</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" href="#"><i class="ri-delete-bin-line me-2"></i>حذف</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <h5 class="card-title mb-2">رژیم کاهش وزن متوسط</h5>
-                            <p class="text-muted mb-3">برنامه غذایی ۲ هفته‌ای برای کاهش ۲-۳ کیلوگرم</p>
-
-                            <div class="row g-2 mb-3">
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-calendar-line text-muted me-2"></i>
-                                        <small>۲ هفته</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-restaurant-line text-muted me-2"></i>
-                                        <small>۱۴ وعده</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-fire-line text-muted me-2"></i>
-                                        <small>۱۸۰۰ کالری</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-user-line text-muted me-2"></i>
-                                        <small>۲۲ نفر</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <small class="text-muted">آخرین ویرایش:</small>
-                                    <div class="small">۱۴۰۳/۰۱/۱۸</div>
-                                </div>
-                                <button class="btn btn-sm btn-success">
-                                    <i class="ri-send-plane-line me-1"></i>
-                                    ارسال
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- برنامه ۳ -->
-                <div class="col-xl-4 col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div>
-                                    <span class="badge bg-primary">ورزشی</span>
-                                    <span class="badge bg-danger ms-1">پیشرفته</span>
-                                </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown">
-                                        <i class="ri-more-2-fill"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#"><i class="ri-send-plane-line me-2"></i>ارسال</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="ri-pencil-line me-2"></i>ویرایش</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2"></i>کپی</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" href="#"><i class="ri-delete-bin-line me-2"></i>حذف</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <h5 class="card-title mb-2">تمرینات قدرت فول بادی</h5>
-                            <p class="text-muted mb-3">برنامه ۶ هفته‌ای برای افزایش قدرت کلی بدن</p>
-
-                            <div class="row g-2 mb-3">
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-calendar-line text-muted me-2"></i>
-                                        <small>۶ هفته</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-dumbbell-line text-muted me-2"></i>
-                                        <small>۱۰ تمرین</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-timer-line text-muted me-2"></i>
-                                        <small>۹۰ دقیقه</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-user-line text-muted me-2"></i>
-                                        <small>۸ نفر</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <small class="text-muted">آخرین ویرایش:</small>
-                                    <div class="small">۱۴۰۳/۰۱/۱۵</div>
-                                </div>
-                                <button class="btn btn-sm btn-primary">
-                                    <i class="ri-send-plane-line me-1"></i>
-                                    ارسال
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- برنامه ۴ -->
-                <div class="col-xl-4 col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div>
-                                    <span class="badge bg-success">غذایی</span>
-                                    <span class="badge bg-warning ms-1">حجم‌گیری</span>
-                                </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown">
-                                        <i class="ri-more-2-fill"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#"><i class="ri-send-plane-line me-2"></i>ارسال</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="ri-pencil-line me-2"></i>ویرایش</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2"></i>کپی</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" href="#"><i class="ri-delete-bin-line me-2"></i>حذف</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <h5 class="card-title mb-2">رژیم افزایش حجم عضلات</h5>
-                            <p class="text-muted mb-3">برنامه غذایی پرکالری برای افزایش حجم خشک</p>
-
-                            <div class="row g-2 mb-3">
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-calendar-line text-muted me-2"></i>
-                                        <small>۸ هفته</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-restaurant-line text-muted me-2"></i>
-                                        <small>۶ وعده</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-fire-line text-muted me-2"></i>
-                                        <small>۳۲۰۰ کالری</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-user-line text-muted me-2"></i>
-                                        <small>۱۴ نفر</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <small class="text-muted">آخرین ویرایش:</small>
-                                    <div class="small">۱۴۰۳/۰۱/۱۰</div>
-                                </div>
-                                <button class="btn btn-sm btn-success">
-                                    <i class="ri-send-plane-line me-1"></i>
-                                    ارسال
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- برنامه ۵ -->
-                <div class="col-xl-4 col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div>
-                                    <span class="badge bg-primary">ورزشی</span>
-                                    <span class="badge bg-success ms-1">مبتدی</span>
-                                </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown">
-                                        <i class="ri-more-2-fill"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#"><i class="ri-send-plane-line me-2"></i>ارسال</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="ri-pencil-line me-2"></i>ویرایش</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2"></i>کپی</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" href="#"><i class="ri-delete-bin-line me-2"></i>حذف</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <h5 class="card-title mb-2">برنامه شروع بدنسازی</h5>
-                            <p class="text-muted mb-3">برنامه ۱۲ هفته‌ای برای افراد کاملاً مبتدی</p>
-
-                            <div class="row g-2 mb-3">
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-calendar-line text-muted me-2"></i>
-                                        <small>۱۲ هفته</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-dumbbell-line text-muted me-2"></i>
-                                        <small>۶ تمرین</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-timer-line text-muted me-2"></i>
-                                        <small>۴۵ دقیقه</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-user-line text-muted me-2"></i>
-                                        <small>۳۵ نفر</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <small class="text-muted">آخرین ویرایش:</small>
-                                    <div class="small">۱۴۰۲/۱۲/۲۵</div>
-                                </div>
-                                <button class="btn btn-sm btn-primary">
-                                    <i class="ri-send-plane-line me-1"></i>
-                                    ارسال
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- برنامه ۶ -->
-                <div class="col-xl-4 col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div>
-                                    <span class="badge bg-success">غذایی</span>
-                                    <span class="badge bg-info ms-1">ویژه بانوان</span>
-                                </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown">
-                                        <i class="ri-more-2-fill"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#"><i class="ri-send-plane-line me-2"></i>ارسال</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="ri-pencil-line me-2"></i>ویرایش</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2"></i>کپی</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" href="#"><i class="ri-delete-bin-line me-2"></i>حذف</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <h5 class="card-title mb-2">رژیم تناسب اندام بانوان</h5>
-                            <p class="text-muted mb-3">برنامه غذایی ویژه برای تناسب اندام و سلامت</p>
-
-                            <div class="row g-2 mb-3">
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-calendar-line text-muted me-2"></i>
-                                        <small>۴ هفته</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-restaurant-line text-muted me-2"></i>
-                                        <small>۵ وعده</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-fire-line text-muted me-2"></i>
-                                        <small>۲۰۰۰ کالری</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-user-line text-muted me-2"></i>
-                                        <small>۲۸ نفر</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <small class="text-muted">آخرین ویرایش:</small>
-                                    <div class="small">۱۴۰۳/۰۱/۰۵</div>
-                                </div>
-                                <button class="btn btn-sm btn-success">
-                                    <i class="ri-send-plane-line me-1"></i>
-                                    ارسال
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="d-flex justify-content-between align-items-center mt-4 mb-2">
+                <h5 class="mb-0 fw-semibold">برنامه‌های ذخیره‌شده</h5>
+                <span class="text-muted small">
+                    {{ isset($plans) ? $plans->count() : 0 }} برنامه
+                </span>
             </div>
+
+            <div class="row g-3 mt-1">
+                @forelse($plans as $plan)
+                    @php
+                        $dayCount = $plan->days->count();
+                        $exerciseCount = $plan->days->sum(fn($d) => $d->exercises->count());
+                    @endphp
+                    <div class="col-xl-4 col-lg-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <span class="badge rounded-pill bg-primary-subtle text-primary">ورزشی</span>
+                                        <span class="badge rounded-pill bg-warning-subtle text-warning ms-1">
+                                            {{ $dayCount }} روز
+                                        </span>
+                                    </div>
+                                    <div class="dropdown">
+                                        <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown">
+                                            <i class="ri-more-2-fill"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li><a class="dropdown-item" href="#"><i class="ri-send-plane-line me-2"></i>ارسال</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="ri-pencil-line me-2"></i>ویرایش</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2"></i>کپی</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item text-danger" href="#"><i class="ri-delete-bin-line me-2"></i>حذف</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <h5 class="card-title mb-2 text-truncate">{{ $plan->name }}</h5>
+                                <p class="text-muted mb-3 small">
+                                    {{ \Illuminate\Support\Str::limit($plan->description ?? 'بدون توضیح', 120) }}
+                                </p>
+
+                                <div class="row g-2 mb-3 small text-muted">
+                                    <div class="col-6">
+                                        <div class="d-flex align-items-center">
+                                            <i class="ri-calendar-line me-2"></i>
+                                            <span>{{ $dayCount }} روز تمرین</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-flex align-items-center">
+                                            <i class="ri-dumbbell-line me-2"></i>
+                                            <span>{{ $exerciseCount }} تمرین</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                                    <div class="small text-muted">
+                                        <div>آخرین ویرایش</div>
+                                        <div>{{ $plan->updated_at?->format('Y/m/d') }}</div>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-soft-primary">
+                                            <i class="ri-eye-line me-1"></i>
+                                            مشاهده
+                                        </button>
+                                        <button class="btn btn-sm btn-primary">
+                                            <i class="ri-send-plane-line me-1"></i>
+                                            ارسال
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-12">
+                        <div class="text-center text-muted py-5">
+                            <i class="ri-inbox-2-line fs-32 mb-2 d-block"></i>
+                            هنوز برنامه‌ای ذخیره نشده است. از دکمه «برنامه جدید» بالا یک برنامه بسازید.
+                        </div>
+                    </div>
+                @endforelse
+            </div>
+                          
 
             <!-- صفحه‌بندی -->
             <div class="row mt-4">
