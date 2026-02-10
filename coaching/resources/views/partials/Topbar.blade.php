@@ -62,9 +62,15 @@
                 </a>
                 <div class="collapse" id="sidebarWorkoutPlans">
                     <ul class="nav sub-navbar-nav">
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Workouts.edit')}}">ادیت برنامه</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('Workouts.show')}}">نمایش برنامه</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('plans.create')}}">اضافه کردن برنامه</a></li>
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="{{ route('Workouts.edit') }}">ادیت برنامه</a>
+                        </li>
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="{{ route('plans.library') }}">نمایش برنامه</a>
+                        </li>
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="{{ route('plans.create') }}">اضافه کردن برنامه</a>
+                        </li>
                     </ul>
                 </div>
             </li>
