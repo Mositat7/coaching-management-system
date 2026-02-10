@@ -137,7 +137,7 @@
                                 </a>
                             </li>
                             <li class="breadcrumb-item active">
-                                برنامه حجم‌گیری فاز اول
+                                {{ $plan->name }}
                             </li>
                         </ol>
                     </div>
@@ -157,16 +157,23 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-1">برنامه حجم‌گیری فاز اول</h2>
+                                    <h2 class="mb-1">{{ $plan->name }}</h2>
+                                    @php
+                                        $dayCount = $plan->days->count();
+                                        $exerciseCount = $plan->days->sum(fn($d) => $d->exercises->count());
+                                        $totalSets = $plan->days->sum(fn($d) => $d->exercises->sum('sets_count'));
+                                        $avgMinutes = $plan->days->avg('duration_minutes');
+                                        $levelLabel = match($plan->level ?? 'medium') { 'easy' => 'آسان', 'hard' => 'سخت', default => 'متوسط' };
+                                    @endphp
                                     <div class="d-flex flex-wrap gap-2 align-items-center mb-2">
                                         <span class="badge bg-primary">فعال</span>
-                                        <span class="badge bg-warning">۴ هفته</span>
-                                        <span class="badge bg-success">سطح متوسط</span>
-                                        <span class="badge bg-info">۸ تمرین</span>
-                                        <span class="badge bg-danger">۶۰ دقیقه</span>
+                                        <span class="badge bg-warning">{{ $plan->weeks_count ?? 4 }} هفته</span>
+                                        <span class="badge bg-success">سطح {{ $levelLabel }}</span>
+                                        <span class="badge bg-info">{{ $exerciseCount }} تمرین</span>
+                                        <span class="badge bg-danger">{{ (int) $avgMinutes }} دقیقه</span>
                                     </div>
                                     <p class="text-muted mb-0">
-                                        برنامه ۴ هفته‌ای برای افزایش حجم عضلات. تمرکز بر حرکات ترکیبی و پایه برای حداکثر تحریک عضلانی
+                                        {{ $plan->description ?? 'بدون توضیح' }}
                                     </p>
                                 </div>
                             </div>
@@ -202,7 +209,13 @@
             <div class="row">
                 <!-- سایدبار اطلاعات -->
                 <div class="col-xl-3 col-lg-4">
-                    <!-- خلاصه تمرین -->
+                    <!-- خلاصه برنامه -->
+                    @php
+                        $summaryDayCount = $plan->days->count();
+                        $summaryExCount = $plan->days->sum(fn($d) => $d->exercises->count());
+                        $summarySets = $plan->days->sum(fn($d) => $d->exercises->sum('sets_count'));
+                        $summaryMinutes = (int) $plan->days->avg('duration_minutes');
+                    @endphp
                     <div class="card mb-3">
                         <div class="card-header">
                             <h5 class="card-title mb-0">
@@ -213,28 +226,34 @@
                         <div class="card-body">
                             <div class="row text-center mb-3">
                                 <div class="col-6">
-                                    <div class="fw-bold text-primary">۴</div>
+                                    <div class="fw-bold text-primary">{{ $plan->weeks_count ?? 4 }}</div>
                                     <small class="text-muted">هفته</small>
                                 </div>
                                 <div class="col-6">
-                                    <div class="fw-bold text-success">۵</div>
+                                    <div class="fw-bold text-success">{{ $summaryDayCount }}</div>
                                     <small class="text-muted">روز/هفته</small>
                                 </div>
                             </div>
                             <div class="row text-center">
                                 <div class="col-4">
-                                    <div class="fw-bold text-warning">۸</div>
+                                    <div class="fw-bold text-warning">{{ $summaryExCount }}</div>
                                     <small class="text-muted">تمرین</small>
                                 </div>
                                 <div class="col-4">
-                                    <div class="fw-bold text-danger">۳۲</div>
+                                    <div class="fw-bold text-danger">{{ $summarySets }}</div>
                                     <small class="text-muted">ست کل</small>
                                 </div>
                                 <div class="col-4">
-                                    <div class="fw-bold text-info">۶۰</div>
+                                    <div class="fw-bold text-info">{{ $summaryMinutes }}</div>
                                     <small class="text-muted">دقیقه</small>
                                 </div>
                             </div>
+                            @if(!empty($plan->estimated_calories))
+                                <div class="text-center mt-2 pt-2 border-top">
+                                    <div class="fw-bold text-secondary">{{ $plan->estimated_calories }}</div>
+                                    <small class="text-muted">کالری تخمینی</small>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -277,13 +296,17 @@
                             </h5>
                         </div>
                         <div class="card-body">
+                            @php
+                                $equipmentList = $plan->equipment
+                                    ? array_filter(array_map('trim', preg_split('/[\s،,]+/u', $plan->equipment)))
+                                    : [];
+                            @endphp
                             <div class="d-flex flex-wrap gap-2">
-                                <span class="equipment-badge">دمبل</span>
-                                <span class="equipment-badge">هالتر</span>
-                                <span class="equipment-badge">میز پرس</span>
-                                <span class="equipment-badge">جیمبال</span>
-                                <span class="equipment-badge">سیمکش</span>
-                                <span class="equipment-badge">طناب</span>
+                                @forelse($equipmentList as $eq)
+                                    <span class="equipment-badge">{{ $eq }}</span>
+                                @empty
+                                    <span class="text-muted small">تعیین نشده</span>
+                                @endforelse
                             </div>
                         </div>
                     </div>
@@ -297,18 +320,21 @@
                             </h5>
                         </div>
                         <div class="card-body">
-                            <div class="alert alert-warning bg-warning bg-opacity-10 border-warning border-opacity-25 mb-2">
-                                <i class="ri-information-line me-2"></i>
-                                <small>قبل از تمرین حتماً گرم کنید</small>
-                            </div>
-                            <div class="alert alert-warning bg-warning bg-opacity-10 border-warning border-opacity-25 mb-2">
-                                <i class="ri-information-line me-2"></i>
-                                <small>در صورت احساس درد تمرین را متوقف کنید</small>
-                            </div>
-                            <div class="alert alert-warning bg-warning bg-opacity-10 border-warning border-opacity-25">
-                                <i class="ri-information-line me-2"></i>
-                                <small>فرم صحیح حرکات را رعایت کنید</small>
-                            </div>
+                            @php
+                                $safetyLines = $plan->safety_notes
+                                    ? array_filter(array_map('trim', explode("\n", $plan->safety_notes)))
+                                    : [
+                                        'قبل از تمرین حتماً گرم کنید',
+                                        'در صورت احساس درد تمرین را متوقف کنید',
+                                        'فرم صحیح حرکات را رعایت کنید',
+                                    ];
+                            @endphp
+                            @foreach($safetyLines as $line)
+                                <div class="alert alert-warning bg-warning bg-opacity-10 border-warning border-opacity-25 mb-2">
+                                    <i class="ri-information-line me-2"></i>
+                                    <small>{{ $line }}</small>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -317,338 +343,120 @@
                 <div class="col-xl-9 col-lg-8">
                     <!-- تب‌های روزانه -->
                     <div class="card mb-3">
+                        @if($plan->days->isNotEmpty())
                         <div class="card-header">
                             <ul class="nav nav-tabs card-header-tabs" id="workoutDaysTabs" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#day1" type="button">
-                                        <i class="ri-calendar-2-line me-1"></i>
-                                        روز اول (سینه و پشت بازو)
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day2" type="button">
-                                        <i class="ri-calendar-2-line me-1"></i>
-                                        روز دوم (پا)
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day3" type="button">
-                                        <i class="ri-calendar-2-line me-1"></i>
-                                        روز سوم (شانه)
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day4" type="button">
-                                        <i class="ri-calendar-2-line me-1"></i>
-                                        روز چهارم (زیربغل و جلو بازو)
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day5" type="button">
-                                        <i class="ri-calendar-2-line me-1"></i>
-                                        روز پنجم (استراحت فعال)
-                                    </button>
-                                </li>
+                                @foreach($plan->days as $dayIndex => $day)
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link {{ $dayIndex === 0 ? 'active' : '' }}" data-bs-toggle="tab" data-bs-target="#day-{{ $day->id }}" type="button">
+                                            <i class="ri-calendar-2-line me-1"></i>
+                                            روز {{ $dayIndex + 1 }} @if($day->title || $day->focus)({{ $day->title ?? $day->focus }})@endif
+                                        </button>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="card-body">
                             <div class="tab-content" id="workoutDaysTabsContent">
-                                <!-- روز اول -->
-                                <div class="tab-pane fade show active" id="day1" role="tabpanel">
-                                    <div class="d-flex justify-content-between align-items-center mb-4">
-                                        <div>
-                                            <h5 class="mb-1">روز اول: تمرینات سینه و پشت بازو</h5>
-                                            <p class="text-muted mb-0">
-                                                <i class="ri-time-line me-1"></i>
-                                                زمان تخمینی: ۶۰ دقیقه
-                                                <i class="ri-fire-line ms-3 me-1"></i>
-                                                کالری تخمینی: ۴۵۰
-                                            </p>
-                                        </div>
-                                        <button class="btn btn-success print-hide" onclick="completeDay(1)">
-                                            <i class="ri-check-double-line me-1"></i>
-                                            تکمیل روز
-                                        </button>
-                                    </div>
-
-                                    <!-- تمرین ۱ -->
-                                    <div class="exercise-card">
-                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                @foreach($plan->days as $dayIndex => $day)
+                                    @php
+                                        $diffClass = match($day->difficulty ?? 'medium') { 'easy' => 'difficulty-easy', 'hard' => 'difficulty-hard', default => 'difficulty-medium' };
+                                        $diffLabel = match($day->difficulty ?? 'medium') { 'easy' => 'آسان', 'hard' => 'سخت', default => 'متوسط' };
+                                    @endphp
+                                    <div class="tab-pane fade {{ $dayIndex === 0 ? 'show active' : '' }}" id="day-{{ $day->id }}" role="tabpanel">
+                                        <div class="d-flex justify-content-between align-items-center mb-4">
                                             <div>
-                                                <h6 class="mb-1">
-                                                    <i class="ri-basketball-line me-2"></i>
-                                                    پرس سینه با هالتر
-                                                </h6>
-                                                <div class="d-flex align-items-center flex-wrap gap-2">
-                                                    <span class="muscle-group-badge">سینه</span>
-                                                    <span class="difficulty-badge difficulty-medium">متوسط</span>
-                                                    <span class="badge bg-light text-dark">
-                                                    <i class="ri-repeat-line me-1"></i>
-                                                    ۴ ست
-                                                </span>
-                                                    <span class="badge bg-light text-dark">
-                                                    <i class="ri-refresh-line me-1"></i>
-                                                    ۸-۱۲ تکرار
-                                                </span>
-                                                    <span class="badge bg-light text-dark">
+                                                <h5 class="mb-1">روز {{ $dayIndex + 1 }}: {{ $day->title ?? $day->focus ?? 'تمرین' }}</h5>
+                                                <p class="text-muted mb-0">
                                                     <i class="ri-time-line me-1"></i>
-                                                    ۹۰ ثانیه استراحت
-                                                </span>
-                                                </div>
+                                                    زمان تخمینی: {{ $day->duration_minutes ?? 60 }} دقیقه
+                                                    @if(!empty($plan->estimated_calories))
+                                                        <i class="ri-fire-line ms-3 me-1"></i>
+                                                        کالری تخمینی: {{ $plan->estimated_calories }}
+                                                    @endif
+                                                </p>
                                             </div>
-                                            <button class="btn btn-sm btn-outline-primary print-hide" onclick="toggleVideo(1)">
-                                                <i class="ri-play-circle-line me-1"></i>
-                                                ویدیو
+                                            <button class="btn btn-success print-hide" onclick="completeDay({{ $day->id }})">
+                                                <i class="ri-check-double-line me-1"></i>
+                                                تکمیل روز
                                             </button>
                                         </div>
 
-                                        <!-- ویدیو (مخفی) -->
-                                        <div class="mb-3 d-none" id="video-1">
-                                            <div class="video-thumbnail" onclick="playVideo(1)">
-                                                <div class="text-center">
-                                                    <i class="ri-play-circle-fill fs-48"></i>
-                                                    <div class="mt-2">نمایش ویدیوی حرکت</div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <p class="text-muted mb-3">
-                                            حرکت پایه برای عضلات سینه. روی فرم صحیح و کنترل حرکت تمرکز کنید.
-                                        </p>
-
-                                        <!-- جزئیات ست‌ها -->
-                                        <h6 class="mb-3">جزئیات ست‌ها:</h6>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="set-row">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div class="set-number">۱</div>
-                                                        <div class="ms-3">
-                                                            <div class="fw-medium">ست گرم کردنی</div>
-                                                            <small class="text-muted">وزن سبک - ۱۵ تکرار</small>
+                                        @foreach($day->exercises as $exIndex => $ex)
+                                            <div class="exercise-card">
+                                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                                    <div>
+                                                        <h6 class="mb-1">
+                                                            <i class="ri-basketball-line me-2"></i>
+                                                            {{ $ex->display_name }}
+                                                        </h6>
+                                                        <div class="d-flex align-items-center flex-wrap gap-2">
+                                                            <span class="difficulty-badge {{ $diffClass }}">{{ $diffLabel }}</span>
+                                                            <span class="badge bg-light text-dark"><i class="ri-repeat-line me-1"></i>{{ $ex->sets_count }} ست</span>
+                                                            @if($ex->reps_text)
+                                                                <span class="badge bg-light text-dark"><i class="ri-refresh-line me-1"></i>{{ $ex->reps_text }} تکرار</span>
+                                                            @endif
+                                                            @if($ex->rest_seconds)
+                                                                <span class="badge bg-light text-dark"><i class="ri-time-line me-1"></i>{{ $ex->rest_seconds }} ثانیه استراحت</span>
+                                                            @endif
                                                         </div>
                                                     </div>
+                                                    <button class="btn btn-sm btn-outline-primary print-hide" onclick="toggleVideo({{ $ex->id }})">
+                                                        <i class="ri-play-circle-line me-1"></i>
+                                                        ویدیو
+                                                    </button>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="set-row">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div class="set-number">۲</div>
-                                                        <div class="ms-3">
-                                                            <div class="fw-medium">۶۰ کیلوگرم × ۱۲ تکرار</div>
-                                                            <small class="text-muted">تمرکز بر فرم</small>
+                                                @if($ex->notes)
+                                                    <p class="text-muted mb-3">{{ $ex->notes }}</p>
+                                                @endif
+                                                <div class="row">
+                                                    @for($s = 1; $s <= $ex->sets_count; $s++)
+                                                        <div class="col-md-6">
+                                                            <div class="set-row">
+                                                                <div class="d-flex align-items-center mb-2">
+                                                                    <div class="set-number">{{ $s }}</div>
+                                                                    <div class="ms-3">
+                                                                        <div class="fw-medium">ست {{ $s }}</div>
+                                                                        @if($ex->reps_text)
+                                                                            <small class="text-muted">{{ $ex->reps_text }} تکرار</small>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    @endfor
+                                                </div>
+                                                <div class="mt-3 print-hide">
+                                                    <button class="btn btn-sm btn-outline-success w-100" onclick="logSet({{ $ex->id }})">
+                                                        <i class="ri-check-line me-1"></i>
+                                                        ثبت ست انجام شده
+                                                    </button>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="set-row">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div class="set-number">۳</div>
-                                                        <div class="ms-3">
-                                                            <div class="fw-medium">۷۰ کیلوگرم × ۱۰ تکرار</div>
-                                                            <small class="text-muted">افزایش وزن</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="set-row">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div class="set-number">۴</div>
-                                                        <div class="ms-3">
-                                                            <div class="fw-medium">۸۰ کیلوگرم × ۸ تکرار</div>
-                                                            <small class="text-muted">حداکثر فشار</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endforeach
 
-                                        <!-- نکات -->
-                                        <div class="alert alert-info bg-info bg-opacity-10 border-info border-opacity-25 mt-3">
-                                            <i class="ri-lightbulb-flash-line me-2"></i>
-                                            <small>
-                                                <strong>نکات اجرایی:</strong> کمر را به میز بچسبانید، هالتر را تا وسط سینه پایین آورده و با قدرت بالا ببرید.
-                                            </small>
-                                        </div>
-
-                                        <!-- ثبت پیشرفت -->
-                                        <div class="mt-3 print-hide">
-                                            <button class="btn btn-sm btn-outline-success w-100" onclick="logSet(1)">
-                                                <i class="ri-check-line me-1"></i>
-                                                ثبت ست انجام شده
-                                            </button>
-                                        </div>
+                                        @if($day->exercises->isEmpty())
+                                            <div class="text-center py-4 text-muted">
+                                                <i class="ri-dumbbell-line fs-32 d-block mb-2"></i>
+                                                تمرینی برای این روز تعریف نشده است.
+                                            </div>
+                                        @endif
                                     </div>
-
-                                    <!-- تمرین ۲ -->
-                                    <div class="exercise-card">
-                                        <div class="d-flex justify-content-between align-items-start mb-3">
-                                            <div>
-                                                <h6 class="mb-1">
-                                                    <i class="ri-basketball-line me-2"></i>
-                                                    پرس بالا سینه دمبل
-                                                </h6>
-                                                <div class="d-flex align-items-center flex-wrap gap-2">
-                                                    <span class="muscle-group-badge">سینه بالا</span>
-                                                    <span class="difficulty-badge difficulty-medium">متوسط</span>
-                                                    <span class="badge bg-light text-dark">
-                                                    <i class="ri-repeat-line me-1"></i>
-                                                    ۳ ست
-                                                </span>
-                                                    <span class="badge bg-light text-dark">
-                                                    <i class="ri-refresh-line me-1"></i>
-                                                    ۱۰-۱۲ تکرار
-                                                </span>
-                                                    <span class="badge bg-light text-dark">
-                                                    <i class="ri-time-line me-1"></i>
-                                                    ۶۰ ثانیه استراحت
-                                                </span>
-                                                </div>
-                                            </div>
-                                            <button class="btn btn-sm btn-outline-primary print-hide" onclick="toggleVideo(2)">
-                                                <i class="ri-play-circle-line me-1"></i>
-                                                ویدیو
-                                            </button>
-                                        </div>
-
-                                        <p class="text-muted mb-3">
-                                            تمرین عالی برای بخش بالایی سینه. دمبل‌ها را با زاویه ۴۵ درجه حرکت دهید.
-                                        </p>
-
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="set-row">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div class="set-number">۱</div>
-                                                        <div class="ms-3">
-                                                            <div class="fw-medium">۲۰ کیلوگرم × ۱۲</div>
-                                                            <small class="text-muted">گرم کردن</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="set-row">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div class="set-number">۲</div>
-                                                        <div class="ms-3">
-                                                            <div class="fw-medium">۲۵ کیلوگرم × ۱۰</div>
-                                                            <small class="text-muted">افزایش</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="set-row">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div class="set-number">۳</div>
-                                                        <div class="ms-3">
-                                                            <div class="fw-medium">۲۲ کیلوگرم × ۱۲</div>
-                                                            <small class="text-muted">کاهش</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- تمرین ۳ -->
-                                    <div class="exercise-card">
-                                        <div class="d-flex justify-content-between align-items-start mb-3">
-                                            <div>
-                                                <h6 class="mb-1">
-                                                    <i class="ri-basketball-line me-2"></i>
-                                                    پشت بازو سیمکش
-                                                </h6>
-                                                <div class="d-flex align-items-center flex-wrap gap-2">
-                                                    <span class="muscle-group-badge">پشت بازو</span>
-                                                    <span class="difficulty-badge difficulty-easy">آسان</span>
-                                                    <span class="badge bg-light text-dark">
-                                                    <i class="ri-repeat-line me-1"></i>
-                                                    ۳ ست
-                                                </span>
-                                                    <span class="badge bg-light text-dark">
-                                                    <i class="ri-refresh-line me-1"></i>
-                                                    ۱۲-۱۵ تکرار
-                                                </span>
-                                                    <span class="badge bg-light text-dark">
-                                                    <i class="ri-time-line me-1"></i>
-                                                    ۴۵ ثانیه استراحت
-                                                </span>
-                                                </div>
-                                            </div>
-                                            <button class="btn btn-sm btn-outline-primary print-hide" onclick="toggleVideo(3)">
-                                                <i class="ri-play-circle-line me-1"></i>
-                                                ویدیو
-                                            </button>
-                                        </div>
-
-                                        <p class="text-muted mb-3">
-                                            حرکت عالی برای جداسازی عضلات پشت بازو. آرنج‌ها را ثابت نگه دارید.
-                                        </p>
-
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="set-row">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div class="set-number">۱</div>
-                                                        <div class="ms-3">
-                                                            <div class="fw-medium">۳۰ کیلوگرم × ۱۵</div>
-                                                            <small class="text-muted">گرم کردن</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="set-row">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div class="set-number">۲</div>
-                                                        <div class="ms-3">
-                                                            <div class="fw-medium">۴۰ کیلوگرم × ۱۲</div>
-                                                            <small class="text-muted">افزایش</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="set-row">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div class="set-number">۳</div>
-                                                        <div class="ms-3">
-                                                            <div class="fw-medium">۳۵ کیلوگرم × ۱۵</div>
-                                                            <small class="text-muted">کاهش</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- روز دوم -->
-                                <div class="tab-pane fade" id="day2" role="tabpanel">
-                                    <!-- محتوای روز دوم -->
-                                    <div class="text-center py-5">
-                                        <div class="avatar-lg bg-light rounded-circle p-3 mb-3 mx-auto">
-                                            <i class="ri-calendar-line fs-36 text-muted"></i>
-                                        </div>
-                                        <h5>برنامه روز دوم (تمرینات پا)</h5>
-                                        <p class="text-muted">برای مشاهده جزئیات روز دوم، از تب‌های بالا استفاده کنید.</p>
-                                    </div>
-                                </div>
-
-                                <!-- سایر روزها -->
-                                <div class="tab-pane fade" id="day3" role="tabpanel">
-                                    <!-- محتوای روز سوم -->
-                                </div>
-                                <!-- ... -->
+                                @endforeach
                             </div>
                         </div>
+                        @else
+                        <div class="card-body">
+                            <div class="text-center py-5 text-muted">
+                                <i class="ri-calendar-line fs-32 d-block mb-2"></i>
+                                هنوز روزی برای این برنامه تعریف نشده است.
+                            </div>
+                        </div>
+                        @endif
                     </div>
 
-                    <!-- جدول پیشرفت -->
+                    <!-- جدول پیشرفت هفتگی -->
+                    @php $weeksCount = (int) ($plan->weeks_count ?? 4); $dayCount = max(1, $plan->days->count()); @endphp
                     <div class="card mb-3">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0">
@@ -665,46 +473,22 @@
                                     <thead>
                                     <tr>
                                         <th>هفته</th>
-                                        <th>روز اول</th>
-                                        <th>روز دوم</th>
-                                        <th>روز سوم</th>
-                                        <th>روز چهارم</th>
+                                        @for($d = 1; $d <= $dayCount; $d++)
+                                            <th>روز {{ $d }}</th>
+                                        @endfor
                                         <th>پیشرفت</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>هفته ۱</td>
-                                        <td><i class="ri-checkbox-circle-fill text-success"></i></td>
-                                        <td><i class="ri-checkbox-circle-fill text-success"></i></td>
-                                        <td><i class="ri-checkbox-circle-fill text-success"></i></td>
-                                        <td><i class="ri-checkbox-circle-fill text-success"></i></td>
-                                        <td><span class="badge bg-success">۱۰۰٪</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>هفته ۲</td>
-                                        <td><i class="ri-checkbox-circle-fill text-success"></i></td>
-                                        <td><i class="ri-checkbox-circle-fill text-success"></i></td>
-                                        <td><i class="ri-checkbox-circle-line text-muted"></i></td>
-                                        <td><i class="ri-checkbox-circle-line text-muted"></i></td>
-                                        <td><span class="badge bg-warning">۵۰٪</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>هفته ۳</td>
-                                        <td><i class="ri-checkbox-circle-line text-muted"></i></td>
-                                        <td><i class="ri-checkbox-circle-line text-muted"></i></td>
-                                        <td><i class="ri-checkbox-circle-line text-muted"></i></td>
-                                        <td><i class="ri-checkbox-circle-line text-muted"></i></td>
-                                        <td><span class="badge bg-danger">۰٪</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>هفته ۴</td>
-                                        <td><i class="ri-checkbox-circle-line text-muted"></i></td>
-                                        <td><i class="ri-checkbox-circle-line text-muted"></i></td>
-                                        <td><i class="ri-checkbox-circle-line text-muted"></i></td>
-                                        <td><i class="ri-checkbox-circle-line text-muted"></i></td>
-                                        <td><span class="badge bg-danger">۰٪</span></td>
-                                    </tr>
+                                    @for($w = 1; $w <= $weeksCount; $w++)
+                                        <tr>
+                                            <td>هفته {{ $w }}</td>
+                                            @for($d = 1; $d <= $dayCount; $d++)
+                                                <td><i class="ri-checkbox-circle-line text-muted"></i></td>
+                                            @endfor
+                                            <td><span class="badge bg-secondary">۰٪</span></td>
+                                        </tr>
+                                    @endfor
                                     </tbody>
                                 </table>
                             </div>
