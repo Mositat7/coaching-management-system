@@ -16,6 +16,11 @@ class WorkoutPlan extends Model
     protected $fillable = [
         'name',
         'description',
+        'weeks_count',
+        'level',
+        'estimated_calories',
+        'equipment',
+        'safety_notes',
         'coach_id',
     ];
 
