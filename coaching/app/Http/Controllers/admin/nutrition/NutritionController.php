@@ -67,17 +67,19 @@ class NutritionController extends Controller
         }
 
         return redirect()
-            ->route('nutrition.show')
+            ->route('plans.library')
             ->with('success', 'برنامه غذایی با موفقیت ذخیره شد.');
     }
 
-    public function edit(): View
+    public function edit(NutritionPlan $plan): View
     {
-        return view('admin.plans.nutrition.edit');
+        $plan->load(['days.meals']);
+        return view('admin.plans.nutrition.edit', ['plan' => $plan]);
     }
 
-    public function show(): View
+    public function show(NutritionPlan $plan): View
     {
-        return view('admin.plans.nutrition.show');
+        $plan->load(['days.meals']);
+        return view('admin.plans.nutrition.show', ['plan' => $plan]);
     }
 }
