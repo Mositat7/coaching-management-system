@@ -43,6 +43,7 @@ Route::middleware('auth.coach')->group(function () {
     
     // برنامه غذایی
     Route::get('/nutrition-add', [NutritionController::class, 'create'])->name('nutrition.create');
+    Route::post('/nutrition-add', [NutritionController::class, 'store'])->name('nutrition.store');
     Route::get('/nutrition-edit', [NutritionController::class, 'edit'])->name('nutrition.edit');
     Route::get('/nutrition-show', [NutritionController::class, 'show'])->name('nutrition.show');
     
