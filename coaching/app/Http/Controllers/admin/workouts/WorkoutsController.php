@@ -8,6 +8,7 @@ use App\Models\WorkoutExercise;
 use App\Models\WorkoutPlan;
 use App\Models\WorkoutPlanDay;
 use App\Models\WorkoutPlanDayExercise;
+use App\Services\Workout\WorkoutPlanService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,6 +17,11 @@ use Illuminate\View\View;
 
 class WorkoutsController extends Controller
 {
+    public function __construct(
+        protected WorkoutPlanService $workoutPlanService,
+    ) {
+    }
+
     /**
      * صفحه ساخت برنامه ورزشی جدید — کتابخانه تمرینات از دیتابیس
      */
@@ -42,45 +48,7 @@ class WorkoutsController extends Controller
     {
         $data = $request->validated();
 
-        $plan = WorkoutPlan::create([
-            'name'               => $data['name'],
-            'description'        => $data['description'] ?? null,
-            'weeks_count'       => (int) ($data['weeks_count'] ?? 4),
-            'level'             => $data['level'] ?? 'medium',
-            'estimated_calories' => isset($data['estimated_calories']) ? (int) $data['estimated_calories'] : null,
-            'equipment'         => $data['equipment'] ?? null,
-            'safety_notes'      => $data['safety_notes'] ?? null,
-            'coach_id'          => Session::get('coach_id'),
-        ]);
-
-        foreach ($data['days'] ?? [] as $sortOrder => $dayData) {
-            /** @var WorkoutPlanDay $day */
-            $day = $plan->days()->create([
-                'day_index'        => (int) ($dayData['day_index'] ?? 0),
-                'title'            => $dayData['title'] ?? null,
-                'focus'            => $dayData['focus'] ?? null,
-                'duration_minutes' => (int) ($dayData['duration_minutes'] ?? 60),
-                'difficulty'       => $dayData['difficulty'] ?? 'medium',
-                'notes'            => $dayData['notes'] ?? null,
-                'sort_order'       => $sortOrder,
-            ]);
-
-            foreach ($dayData['exercises'] ?? [] as $exOrder => $exerciseData) {
-                $day->exercises()->create([
-                    'workout_exercise_id' => ! empty($exerciseData['workout_exercise_id'])
-                        ? (int) $exerciseData['workout_exercise_id']
-                        : null,
-                    'custom_name'   => $exerciseData['custom_name'] ?? null,
-                    'sets_count'    => (int) ($exerciseData['sets_count'] ?? 3),
-                    'reps_text'     => $exerciseData['reps_text'] ?? null,
-                    'rest_seconds'  => isset($exerciseData['rest_seconds'])
-                        ? (int) $exerciseData['rest_seconds']
-                        : null,
-                    'notes'         => $exerciseData['notes'] ?? null,
-                    'sort_order'    => $exOrder,
-                ]);
-            }
-        }
+        $plan = $this->workoutPlanService->createFromArray($data, Session::get('coach_id'));
 
         if ($request->wantsJson()) {
             return response()->json([
@@ -137,45 +105,7 @@ class WorkoutsController extends Controller
     {
         $data = $request->validated();
 
-        $plan->update([
-            'name'               => $data['name'],
-            'description'        => $data['description'] ?? null,
-            'weeks_count'       => (int) ($data['weeks_count'] ?? 4),
-            'level'             => $data['level'] ?? 'medium',
-            'estimated_calories' => isset($data['estimated_calories']) ? (int) $data['estimated_calories'] : null,
-            'equipment'         => $data['equipment'] ?? null,
-            'safety_notes'      => $data['safety_notes'] ?? null,
-        ]);
-
-        $plan->days()->delete();
-
-        foreach ($data['days'] ?? [] as $sortOrder => $dayData) {
-            $day = $plan->days()->create([
-                'day_index'        => (int) ($dayData['day_index'] ?? 0),
-                'title'            => $dayData['title'] ?? null,
-                'focus'            => $dayData['focus'] ?? null,
-                'duration_minutes' => (int) ($dayData['duration_minutes'] ?? 60),
-                'difficulty'       => $dayData['difficulty'] ?? 'medium',
-                'notes'            => $dayData['notes'] ?? null,
-                'sort_order'       => $sortOrder,
-            ]);
-
-            foreach ($dayData['exercises'] ?? [] as $exOrder => $exerciseData) {
-                $day->exercises()->create([
-                    'workout_exercise_id' => ! empty($exerciseData['workout_exercise_id'])
-                        ? (int) $exerciseData['workout_exercise_id']
-                        : null,
-                    'custom_name'   => $exerciseData['custom_name'] ?? null,
-                    'sets_count'    => (int) ($exerciseData['sets_count'] ?? 3),
-                    'reps_text'     => $exerciseData['reps_text'] ?? null,
-                    'rest_seconds'  => isset($exerciseData['rest_seconds'])
-                        ? (int) $exerciseData['rest_seconds']
-                        : null,
-                    'notes'         => $exerciseData['notes'] ?? null,
-                    'sort_order'    => $exOrder,
-                ]);
-            }
-        }
+        $plan = $this->workoutPlanService->updateFromArray($plan, $data);
 
         if ($request->wantsJson()) {
             return response()->json([
