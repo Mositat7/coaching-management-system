@@ -85,77 +85,44 @@
             </div>
             <!-- ========== Page Title End ========== -->
 
-            <div class="row">
-                <!-- سایدبار پیش‌نمایش -->
-                <div class="col-xl-3 col-lg-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center mb-4">
-                                <div class="bg-success bg-opacity-10 rounded-circle p-3 d-inline-block">
-                                    <i class="ri-restaurant-fill fs-36 text-success"></i>
+            <!-- هدر فشرده با دکمه‌های ارسال / ذخیره -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body py-3 px-3 px-md-4 d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-3 gap-lg-4">
+                            <div class="d-flex align-items-center gap-3 flex-grow-1 min-w-0">
+                                <div class="bg-success bg-opacity-10 rounded-circle p-2 d-none d-md-flex align-items-center justify-content-center">
+                                    <i class="ri-restaurant-fill fs-4 text-success"></i>
                                 </div>
-                                <h5 class="mt-3 mb-1">پیش‌نمایش برنامه غذایی</h5>
-                                <p class="text-muted" id="preview-goal">هدف: تعریف نشده</p>
-                            </div>
-
-                            <!-- خلاصه تغذیه -->
-                            <div class="border rounded p-3 mb-3">
-                                <div class="text-center mb-3">
-                                    <div class="calorie-circle mx-auto">
-                                        <span class="fs-20 fw-bold text-success" id="preview-calories">0</span>
-                                        <small class="text-muted">کالری</small>
+                                    <div class="min-w-0 flex-grow-1">
+                                        <input type="text"
+                                               class="form-control form-control-lg border-0 bg-transparent px-0 fw-semibold"
+                                               id="program-name"
+                                               name="name"
+                                               form="nutrition-form"
+                                               placeholder="نام برنامه غذایی خود را اینجا بنویسید..."
+                                               style="font-size: 1.1rem;"
+                                               required>
                                     </div>
-                                </div>
-                                <div class="row g-2">
-                                    <div class="col-6">
-                                        <div class="text-center">
-                                            <div class="fw-medium" id="preview-meals">0</div>
-                                            <small class="text-muted">وعده</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="text-center">
-                                            <div class="fw-medium" id="preview-days">0</div>
-                                            <small class="text-muted">روز</small>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-
-                            <!-- مواد غذایی اصلی -->
-                            <div class="mt-3">
-                                <h6 class="fw-semibold mb-2">مواد غذایی اصلی:</h6>
-                                <div id="preview-ingredients">
-                                    <span class="badge bg-light text-dark me-1 mb-1">هیچ کدام</span>
-                                </div>
-                            </div>
-
-                            <!-- هشدارها -->
-                            <div class="mt-4">
-                                <div class="alert alert-warning bg-warning bg-opacity-10 border-warning border-opacity-25">
-                                    <i class="ri-alert-line me-2"></i>
-                                    <small>اطلاعات غذایی پیشنهادی است. برای مشاوره تخصصی به متخصص تغذیه مراجعه کنید.</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-light-subtle">
-                            <div class="d-grid gap-2">
-                                <button type="submit" form="nutrition-form" class="btn btn-success">
-                                    <i class="ri-save-line me-1"></i>
+                            <div class="d-flex flex-wrap gap-2 flex-shrink-0">
+                                <button type="button" class="btn btn-outline-primary btn-sm">
+                                    <i class="ri-send-plane-line me-1"></i>
+                                    ارسال
+                                </button>
+                                <button type="submit" form="nutrition-form" class="btn btn-success btn-sm">
+                                    <i class="ri-save-3-line me-1"></i>
                                     ذخیره برنامه غذایی
                                 </button>
-                                <a href="{{ route('plans.library') }}" class="btn btn-light">
-                                    <i class="ri-arrow-go-back-line me-1"></i>
-                                    بازگشت
-                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- فرم اصلی -->
-                <div class="col-xl-9 col-lg-8">
-                    <form id="nutrition-form" action="#" method="POST">
+            <div class="row">
+                <div class="col-12">
+                    <form id="nutrition-form" action="{{ route('nutrition.store') }}" method="POST">
                         @csrf
 
                         <!-- اطلاعات کلی -->
@@ -171,22 +138,10 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label">
-                                                <i class="ri-pencil-line me-1"></i>
-                                                نام برنامه غذایی <span class="text-danger">*</span>
-                                            </label>
-                                            <input type="text" class="form-control"
-                                                   id="program-name"
-                                                   placeholder="مثال: رژیم کاهش وزن ۱۵۰۰ کالری"
-                                                   required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">
                                                 <i class="ri-target-line me-1"></i>
                                                 هدف برنامه <span class="text-danger">*</span>
                                             </label>
-                                            <select class="form-control" id="program-goal" required>
+                                            <select class="form-control" id="program-goal" name="goal" required>
                                                 <option value="">انتخاب هدف</option>
                                                 <option value="weight_loss">کاهش وزن</option>
                                                 <option value="muscle_gain">افزایش حجم عضلات</option>
@@ -204,7 +159,7 @@
                                                 <i class="ri-user-line me-1"></i>
                                                 سطح <span class="text-danger">*</span>
                                             </label>
-                                            <select class="form-control" id="program-level" required>
+                                            <select class="form-control" id="program-level" name="level" required>
                                                 <option value="">انتخاب سطح</option>
                                                 <option value="beginner">مبتدی</option>
                                                 <option value="intermediate">متوسط</option>
@@ -218,7 +173,7 @@
                                                 <i class="ri-calendar-line me-1"></i>
                                                 مدت برنامه <span class="text-danger">*</span>
                                             </label>
-                                            <select class="form-control" id="program-duration" required>
+                                            <select class="form-control" id="program-duration" name="duration_days" required>
                                                 <option value="">انتخاب مدت</option>
                                                 <option value="7">۱ هفته</option>
                                                 <option value="14">۲ هفته</option>
@@ -237,6 +192,7 @@
                                             <div class="input-group">
                                                 <input type="number" class="form-control"
                                                        id="daily-calories"
+                                                       name="daily_calories"
                                                        min="800" max="5000"
                                                        step="50"
                                                        value="1800"
@@ -252,7 +208,7 @@
                                                 <i class="ri-file-text-line me-1"></i>
                                                 توضیحات برنامه
                                             </label>
-                                            <textarea class="form-control" id="program-description"
+                                            <textarea class="form-control" id="program-description" name="description"
                                                       rows="3"
                                                       placeholder="توضیحات کامل برنامه غذایی، نکات مهم و دستورالعمل‌ها..."></textarea>
                                         </div>
@@ -301,38 +257,80 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label small">مواد غذایی</label>
-                                        <div class="ingredient-item">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div>
-                                                    <span class="fw-medium">نان سبوس دار</span>
-                                                    <small class="text-muted ms-2">۲ برش</small>
+                                        <label class="form-label small d-flex justify-content-between align-items-center">
+                                            <span>مواد غذایی</span>
+                                            <span class="text-muted fst-italic" style="font-size: 0.8rem;">نام، وزن، کالری، پروتئین / کربوهیدرات / چربی</span>
+                                        </label>
+
+                                        <!-- فرم ورود ماده غذایی جدید -->
+                                        <div class="row g-2 mb-2">
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control form-control-sm" placeholder="نام ماده غذایی">
+                                            </div>
+                                            <div class="col-6 col-md-2">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number" class="form-control" placeholder="100">
+                                                    <span class="input-group-text">گرم</span>
                                                 </div>
-                                                <small class="text-success">۱۵۰ کالری</small>
+                                            </div>
+                                            <div class="col-6 col-md-2">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number" class="form-control" placeholder="کالری">
+                                                    <span class="input-group-text">kcal</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="d-flex gap-1">
+                                                    <input type="number" class="form-control form-control-sm" placeholder="پروتئین (g)">
+                                                    <input type="number" class="form-control form-control-sm" placeholder="کربوهیدرات (g)">
+                                                    <input type="number" class="form-control form-control-sm" placeholder="چربی (g)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-success w-100 mb-2">
+                                            <i class="ri-add-line me-1"></i>
+                                            افزودن به لیست مواد غذایی
+                                        </button>
+
+                                        <hr class="my-2">
+
+                                        <!-- نمونه لیست مواد غذایی این وعده (نمایشی) -->
+                                        <div class="ingredient-item">
+                                            <div class="d-flex justify-content-between align-items-center w-100">
+                                                <div>
+                                                    <span class="fw-medium">نان سبوس‌دار</span>
+                                                    <small class="text-muted ms-2">۲ برش (۶۰g)</small>
+                                                </div>
+                                                <div class="text-end small">
+                                                    <div class="text-success">۱۵۰ kcal</div>
+                                                    <div class="text-muted">۵P • ۲۸C • ۲F</div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="ingredient-item">
-                                            <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex justify-content-between align-items-center w-100">
                                                 <div>
-                                                    <span class="fw-medium">پنیر کم چرب</span>
-                                                    <small class="text-muted ms-2">۳۰ گرم</small>
+                                                    <span class="fw-medium">پنیر کم‌چرب</span>
+                                                    <small class="text-muted ms-2">۳۰g</small>
                                                 </div>
-                                                <small class="text-success">۸۰ کالری</small>
+                                                <div class="text-end small">
+                                                    <div class="text-success">۸۰ kcal</div>
+                                                    <div class="text-muted">۷P • ۱C • ۵F</div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="ingredient-item">
-                                            <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex justify-content-between align-items-center w-100">
                                                 <div>
                                                     <span class="fw-medium">چای سبز</span>
                                                     <small class="text-muted ms-2">۱ فنجان</small>
                                                 </div>
-                                                <small class="text-success">۲ کالری</small>
+                                                <div class="text-end small">
+                                                    <div class="text-success">۲ kcal</div>
+                                                    <div class="text-muted">۰P • ۰C • ۰F</div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <button type="button" class="btn btn-sm btn-outline-success w-100 mt-2">
-                                            <i class="ri-add-line me-1"></i>
-                                            اضافه کردن ماده غذایی
-                                        </button>
                                     </div>
 
                                     <div class="row">
@@ -396,47 +394,92 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label small">مواد غذایی</label>
+                                        <label class="form-label small d-flex justify-content-between align-items-center">
+                                            <span>مواد غذایی</span>
+                                            <span class="text-muted fst-italic" style="font-size: 0.8rem;">نام، وزن، کالری، پروتئین / کربوهیدرات / چربی</span>
+                                        </label>
+
+                                        <!-- فرم ورود ماده غذایی جدید -->
+                                        <div class="row g-2 mb-2">
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control form-control-sm" placeholder="نام ماده غذایی">
+                                            </div>
+                                            <div class="col-6 col-md-2">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number" class="form-control" placeholder="مثال: 150">
+                                                    <span class="input-group-text">گرم</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-2">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number" class="form-control" placeholder="کالری">
+                                                    <span class="input-group-text">kcal</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="d-flex gap-1">
+                                                    <input type="number" class="form-control form-control-sm" placeholder="پروتئین (g)">
+                                                    <input type="number" class="form-control form-control-sm" placeholder="کربوهیدرات (g)">
+                                                    <input type="number" class="form-control form-control-sm" placeholder="چربی (g)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-success w-100 mb-2">
+                                            <i class="ri-add-line me-1"></i>
+                                            افزودن به لیست مواد غذایی
+                                        </button>
+
+                                        <hr class="my-2">
+
+                                        <!-- نمونه لیست مواد غذایی این وعده (نمایشی) -->
                                         <div class="ingredient-item">
-                                            <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex justify-content-between align-items-center w-100">
                                                 <div>
                                                     <span class="fw-medium">مرغ گریل شده</span>
-                                                    <small class="text-muted ms-2">۱۵۰ گرم</small>
+                                                    <small class="text-muted ms-2">۱۵۰g</small>
                                                 </div>
-                                                <small class="text-success">۲۵۰ کالری</small>
+                                                <div class="text-end small">
+                                                    <div class="text-success">۲۵۰ kcal</div>
+                                                    <div class="text-muted">۳۰P • ۰C • ۸F</div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="ingredient-item">
-                                            <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex justify-content-between align-items-center w-100">
                                                 <div>
                                                     <span class="fw-medium">برنج قهوه‌ای</span>
                                                     <small class="text-muted ms-2">۱ پیمانه</small>
                                                 </div>
-                                                <small class="text-success">۲۰۰ کالری</small>
+                                                <div class="text-end small">
+                                                    <div class="text-success">۲۰۰ kcal</div>
+                                                    <div class="text-muted">۴P • ۴۲C • ۲F</div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="ingredient-item">
-                                            <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex justify-content-between align-items-center w-100">
                                                 <div>
                                                     <span class="fw-medium">سالاد سبزیجات</span>
                                                     <small class="text-muted ms-2">۱ کاسه</small>
                                                 </div>
-                                                <small class="text-success">۵۰ کالری</small>
+                                                <div class="text-end small">
+                                                    <div class="text-success">۵۰ kcal</div>
+                                                    <div class="text-muted">۲P • ۸C • ۱F</div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="ingredient-item">
-                                            <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex justify-content-between align-items-center w-100">
                                                 <div>
-                                                    <span class="fw-medium">ماست کم چرب</span>
-                                                    <small class="text-muted ms-2">۱۰۰ گرم</small>
+                                                    <span class="fw-medium">ماست کم‌چرب</span>
+                                                    <small class="text-muted ms-2">۱۰۰g</small>
                                                 </div>
-                                                <small class="text-success">۵۰ کالری</small>
+                                                <div class="text-end small">
+                                                    <div class="text-success">۵۰ kcal</div>
+                                                    <div class="text-muted">۴P • ۵C • ۱F</div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <button type="button" class="btn btn-sm btn-outline-success w-100 mt-2">
-                                            <i class="ri-add-line me-1"></i>
-                                            اضافه کردن ماده غذایی
-                                        </button>
                                     </div>
 
                                     <div class="row">
@@ -488,7 +531,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label">مواد غذایی ممنوع</label>
-                                            <select class="form-select" multiple>
+                                            <select class="form-select" name="restrictions[]" multiple>
                                                 <option>شکر سفید</option>
                                                 <option>نوشابه</option>
                                                 <option>فست فود</option>
@@ -504,7 +547,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label">مواد غذایی ضروری</label>
-                                            <select class="form-select" multiple>
+                                            <select class="form-select" name="supplements[]" multiple>
                                                 <option>سبزیجات برگ‌دار</option>
                                                 <option>میوه تازه</option>
                                                 <option>پروتئین بدون چربی</option>
@@ -578,7 +621,7 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label class="form-label">نکات مهم</label>
-                                            <textarea class="form-control" rows="4"
+                                            <textarea class="form-control" name="notes" rows="4"
                                                       placeholder="نکات ایمنی، دستورالعمل‌ها و هشدارها...">۱. روزانه ۸ لیوان آب بنوشید
 ۲. از نمک و شکر اضافه پرهیز کنید
 ۳. وعده‌ها را سر وقت مصرف کنید
@@ -592,19 +635,19 @@
                                             <div class="row">
                                                 <div class="col-lg-4">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="supplement1">
+                                                        <input class="form-check-input" type="checkbox" id="supplement1" name="supplements[]" value="multivitamin">
                                                         <label class="form-check-label" for="supplement1">مولتی ویتامین</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="supplement2" checked>
+                                                        <input class="form-check-input" type="checkbox" id="supplement2" name="supplements[]" value="vitamin_d" checked>
                                                         <label class="form-check-label" for="supplement2">ویتامین D</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="supplement3">
+                                                        <input class="form-check-input" type="checkbox" id="supplement3" name="supplements[]" value="omega_3">
                                                         <label class="form-check-label" for="supplement3">امگا ۳</label>
                                                     </div>
                                                 </div>
@@ -615,28 +658,12 @@
                             </div>
                         </div>
 
-                        <!-- دکمه‌های نهایی -->
-                        <div class="mt-3">
-                            <div class="row justify-content-end g-2">
-                                <div class="col-lg-2">
-                                    <button type="submit" class="btn btn-success w-100">
-                                        <i class="ri-save-line me-1"></i>
-                                        ذخیره
-                                    </button>
-                                </div>
-                                <div class="col-lg-2">
-                                    <a href="{{ route('plans.library') }}" class="btn btn-light w-100">
-                                        <i class="ri-close-line me-1"></i>
-                                        انصراف
-                                    </a>
-                                </div>
-                                <div class="col-lg-2">
-                                    <button type="button" class="btn btn-outline-secondary w-100" onclick="previewPlan()">
-                                        <i class="ri-eye-line me-1"></i>
-                                        پیش‌نمایش
-                                    </button>
-                                </div>
-                            </div>
+                        <!-- دکمه‌های نهایی (فقط انصراف، چون ذخیره بالا است) -->
+                        <div class="mt-3 text-end">
+                            <a href="{{ route('plans.library') }}" class="btn btn-light">
+                                <i class="ri-close-line me-1"></i>
+                                انصراف
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -746,62 +773,7 @@
             }
         }
 
-        // به‌روزرسانی پیش‌نمایش
-        function updatePreview() {
-            // به‌روزرسانی تعداد وعده‌ها
-            const mealCards = document.querySelectorAll('.meal-card').length;
-            document.getElementById('preview-meals').textContent = mealCards;
-
-            // به‌روزرسانی کالری کل
-            let totalCalories = 0;
-            document.querySelectorAll('input[type="number"]').forEach(input => {
-                if (input.value) {
-                    totalCalories += parseInt(input.value) || 0;
-                }
-            });
-            document.getElementById('preview-calories').textContent = totalCalories;
-
-            // به‌روزرسانی هدف
-            const goalSelect = document.getElementById('program-goal');
-            if (goalSelect.value) {
-                const goalText = goalSelect.options[goalSelect.selectedIndex].text;
-                document.getElementById('preview-goal').textContent = `هدف: ${goalText}`;
-            }
-
-            // به‌روزرسانی تعداد روزها
-            const durationSelect = document.getElementById('program-duration');
-            if (durationSelect.value) {
-                const days = parseInt(durationSelect.value);
-                document.getElementById('preview-days').textContent = days;
-            }
-        }
-
-        // پیش‌نمایش کامل
-        function previewPlan() {
-            updatePreview();
-            alert('پیش‌نمایش برنامه آماده شد!');
-        }
-
-        // رویدادهای به‌روزرسانی پیش‌نمایش
-        document.addEventListener('DOMContentLoaded', function() {
-            const inputs = ['program-name', 'program-goal', 'program-duration', 'daily-calories'];
-            inputs.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.addEventListener('change', updatePreview);
-                    element.addEventListener('input', updatePreview);
-                }
-            });
-
-            // مقداردهی اولیه
-            updatePreview();
-        });
-
-        // ارسال فرم
-        document.getElementById('nutrition-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('برنامه غذایی با موفقیت ذخیره شد!');
-            // در حالت واقعی، اینجا اطلاعات به سرور ارسال می‌شود
-        });
+        // ارسال فرم (فعلاً فقط جلوگیری از رفرش کامل صفحه)
+        // فرم مستقیماً به روت بک‌اند ارسال می‌شود (nutrition.store)
     </script>
 @endsection
