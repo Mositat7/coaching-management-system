@@ -38,7 +38,12 @@ class StoreNutritionPlanRequest extends FormRequest
             'days.*.meals.*.priority'    => ['nullable', 'string', 'in:required,optional,if_possible'],
             'days.*.meals.*.description' => ['nullable', 'string', 'max:2000'],
             'days.*.meals.*.items'       => ['nullable', 'array'],
-            'days.*.meals.*.items.*'     => ['string', 'max:255'],
+            'days.*.meals.*.items.*.name'     => ['nullable', 'string', 'max:255'],
+            'days.*.meals.*.items.*.weight'   => ['nullable', 'numeric', 'min:0'],
+            'days.*.meals.*.items.*.calories' => ['nullable', 'numeric', 'min:0'],
+            'days.*.meals.*.items.*.protein'  => ['nullable', 'numeric', 'min:0'],
+            'days.*.meals.*.items.*.carbs'    => ['nullable', 'numeric', 'min:0'],
+            'days.*.meals.*.items.*.fat'      => ['nullable', 'numeric', 'min:0'],
         ];
     }
 }
