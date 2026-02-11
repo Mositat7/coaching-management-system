@@ -114,7 +114,7 @@
                                 </a>
                             </li>
                             <li class="breadcrumb-item active">
-                                رژیم کاهش وزن متوسط
+                                {{ $plan->name ?? 'برنامه غذایی' }}
                             </li>
                         </ol>
                     </div>
@@ -134,15 +134,29 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-1">رژیم کاهش وزن متوسط</h2>
+                                    <h2 class="mb-1">{{ $plan->name }}</h2>
                                     <div class="d-flex flex-wrap gap-2 align-items-center mb-2">
                                         <span class="badge bg-success">فعال</span>
                                         <span class="badge bg-info">تغذیه</span>
-                                        <span class="badge bg-warning">۲ هفته</span>
-                                        <span class="badge bg-primary badge-pulse">۱۸۰۰ کالری/روز</span>
+                                        @if($plan->goal)
+                                            @php
+                                                $goalLabels = ['weight_loss' => 'کاهش وزن', 'muscle_gain' => 'افزایش حجم', 'maintenance' => 'نگهداری وزن', 'detox' => 'سم‌زدایی', 'energy' => 'افزایش انرژی', 'health' => 'سلامت عمومی'];
+                                            @endphp
+                                            <span class="badge bg-secondary">{{ $goalLabels[$plan->goal] ?? $plan->goal }}</span>
+                                        @endif
+                                        @if($plan->level)
+                                            @php $levelLabels = ['beginner' => 'مبتدی', 'intermediate' => 'متوسط', 'advanced' => 'پیشرفته']; @endphp
+                                            <span class="badge bg-warning text-dark">{{ $levelLabels[$plan->level] ?? $plan->level }}</span>
+                                        @endif
+                                        @if($plan->duration_days)
+                                            <span class="badge bg-warning">{{ $plan->duration_days }} روز</span>
+                                        @endif
+                                        @if($plan->daily_calories)
+                                            <span class="badge bg-primary badge-pulse">{{ number_format($plan->daily_calories) }} کالری/روز</span>
+                                        @endif
                                     </div>
                                     <p class="text-muted mb-0">
-                                        برنامه غذایی ۲ هفته‌ای برای کاهش وزن سالم و پایدار با تأکید بر پروتئین و فیبر بالا
+                                        {{ $plan->description ?: 'بدون توضیح' }}
                                     </p>
                                 </div>
                             </div>
@@ -166,7 +180,7 @@
                                         <li><a class="dropdown-item" href="#"><i class="ri-share-line me-2"></i>اشتراک‌گذاری</a></li>
                                         <li><a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2"></i>کپی برنامه</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="{{ route('nutrition.edit') }}"><i class="ri-pencil-line me-2"></i>ویرایش</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('nutrition.edit', ['plan' => $plan->id]) }}"><i class="ri-pencil-line me-2"></i>ویرایش</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -178,7 +192,13 @@
             <div class="row">
                 <!-- سایدبار اطلاعات -->
                 <div class="col-xl-3 col-lg-4">
-                    <!-- خلاصه تغذیه -->
+                    <!-- خلاصه تغذیه (براساس داده ذخیره‌شده) -->
+                    @php
+                        $totalMeals = $plan->days->sum(fn($d) => $d->meals->count());
+                        $totalDays = $plan->days->count() ?: 1;
+                        $dayCalories = $plan->daily_calories ?? $plan->days->sum(fn($d) => $d->meals->sum('calories'));
+                        $totalCalories = $plan->duration_days ? (($plan->daily_calories ?? 0) * $plan->duration_days) : $plan->days->sum(fn($d) => $d->meals->sum('calories'));
+                    @endphp
                     <div class="card mb-3">
                         <div class="card-header">
                             <h5 class="card-title mb-0">
@@ -190,29 +210,48 @@
                             <div class="text-center mb-3">
                                 <div class="d-inline-block position-relative">
                                     <div class="calorie-circle">
-                                        <span class="fs-24 fw-bold text-success">۱,۸۰۰</span>
+                                        <span class="fs-24 fw-bold text-success">{{ number_format($plan->daily_calories ?? $dayCalories) }}</span>
                                         <small class="text-muted">کالری/روز</small>
                                     </div>
                                 </div>
                             </div>
                             <div class="row text-center">
                                 <div class="col-4">
-                                    <div class="fw-bold text-primary">۵</div>
+                                    <div class="fw-bold text-primary">{{ $totalMeals }}</div>
                                     <small class="text-muted">وعده</small>
                                 </div>
                                 <div class="col-4">
-                                    <div class="fw-bold text-success">۱۴</div>
+                                    <div class="fw-bold text-success">{{ $plan->duration_days ?? $totalDays }}</div>
                                     <small class="text-muted">روز</small>
                                 </div>
                                 <div class="col-4">
-                                    <div class="fw-bold text-warning">۲۵,۲۰۰</div>
+                                    <div class="fw-bold text-warning">{{ number_format($totalCalories) }}</div>
                                     <small class="text-muted">کل کالری</small>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- اطلاعات تغذیه‌ای -->
+                    <!-- اطلاعات تغذیه‌ای (جمع‌شده از مواد ذخیره‌شده) -->
+                    @php
+                        $totP = 0; $totC = 0; $totF = 0; $totKcal = 0;
+                        foreach ($plan->days as $day) {
+                            foreach ($day->meals as $meal) {
+                                foreach ($meal->items_json ?? [] as $it) {
+                                    if (is_array($it)) {
+                                        $totP += (float)($it['protein'] ?? 0);
+                                        $totC += (float)($it['carbs'] ?? 0);
+                                        $totF += (float)($it['fat'] ?? 0);
+                                        $totKcal += (float)($it['calories'] ?? 0);
+                                    }
+                                }
+                            }
+                        }
+                        $macroTotal = $totP + $totC + $totF;
+                        $pctP = $macroTotal > 0 ? round(100 * $totP / $macroTotal) : 33;
+                        $pctC = $macroTotal > 0 ? round(100 * $totC / $macroTotal) : 34;
+                        $pctF = $macroTotal > 0 ? round(100 * $totF / $macroTotal) : 33;
+                    @endphp
                     <div class="card mb-3">
                         <div class="card-header">
                             <h5 class="card-title mb-0">
@@ -225,42 +264,42 @@
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between mb-1">
                                         <span class="small">پروتئین</span>
-                                        <span class="small fw-medium">۳۵٪</span>
+                                        <span class="small fw-medium">{{ $pctP }}٪</span>
                                     </div>
                                     <div class="nutrient-bar">
-                                        <div class="nutrient-fill bg-primary" style="width: 35%"></div>
+                                        <div class="nutrient-fill bg-primary" style="width: {{ min(100, $pctP) }}%"></div>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between mb-1">
                                         <span class="small">کربوهیدرات</span>
-                                        <span class="small fw-medium">۴۰٪</span>
+                                        <span class="small fw-medium">{{ $pctC }}٪</span>
                                     </div>
                                     <div class="nutrient-bar">
-                                        <div class="nutrient-fill bg-success" style="width: 40%"></div>
+                                        <div class="nutrient-fill bg-success" style="width: {{ min(100, $pctC) }}%"></div>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between mb-1">
                                         <span class="small">چربی</span>
-                                        <span class="small fw-medium">۲۵٪</span>
+                                        <span class="small fw-medium">{{ $pctF }}٪</span>
                                     </div>
                                     <div class="nutrient-bar">
-                                        <div class="nutrient-fill bg-warning" style="width: 25%"></div>
+                                        <div class="nutrient-fill bg-warning" style="width: {{ min(100, $pctF) }}%"></div>
                                     </div>
                                 </div>
                                 <div class="mt-3 pt-3 border-top">
                                     <div class="row text-center">
                                         <div class="col-4">
-                                            <div class="fw-bold">۱۴۰g</div>
+                                            <div class="fw-bold">{{ number_format($totP) }}g</div>
                                             <small class="text-muted">پروتئین</small>
                                         </div>
                                         <div class="col-4">
-                                            <div class="fw-bold">۱۸۰g</div>
+                                            <div class="fw-bold">{{ number_format($totC) }}g</div>
                                             <small class="text-muted">کربوهیدرات</small>
                                         </div>
                                         <div class="col-4">
-                                            <div class="fw-bold">۵۰g</div>
+                                            <div class="fw-bold">{{ number_format($totF) }}g</div>
                                             <small class="text-muted">چربی</small>
                                         </div>
                                     </div>
@@ -269,7 +308,7 @@
                         </div>
                     </div>
 
-                    <!-- نکات مهم -->
+                    <!-- نکات مهم (از فیلد notes برنامه) -->
                     <div class="card">
                         <div class="card-header">
                             <h5 class="card-title mb-0">
@@ -278,363 +317,136 @@
                             </h5>
                         </div>
                         <div class="card-body">
-                            <div class="tip-box">
-                                <i class="ri-information-line me-2"></i>
-                                روزانه ۸ لیوان آب بنوشید
-                            </div>
-                            <div class="tip-box">
-                                <i class="ri-information-line me-2"></i>
-                                وعده‌ها را سر وقت مصرف کنید
-                            </div>
-                            <div class="tip-box">
-                                <i class="ri-information-line me-2"></i>
-                                از شکر و نمک اضافه پرهیز کنید
-                            </div>
-                            <div class="tip-box">
-                                <i class="ri-information-line me-2"></i>
-                                فعالیت بدنی منظم داشته باشید
-                            </div>
+                            @if($plan->notes)
+                                @foreach(array_filter(preg_split('/\r\n|\n|\r/', $plan->notes)) as $line)
+                                    <div class="tip-box">
+                                        <i class="ri-information-line me-2"></i>
+                                        {{ trim($line) }}
+                                    </div>
+                                @endforeach
+                            @else
+                                <p class="text-muted small mb-0">نکته‌ای ثبت نشده است.</p>
+                            @endif
                         </div>
                     </div>
                 </div>
 
                 <!-- محتوای اصلی -->
                 <div class="col-xl-9 col-lg-8">
-                    <!-- تب‌های روزانه -->
+                    <!-- تب‌های روزانه (داینامیک از برنامه ذخیره‌شده) -->
                     <div class="card">
-                        <div class="card-header">
-                            <ul class="nav nav-tabs card-header-tabs" id="daysTabs" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#day1" type="button">
-                                        روز اول
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day2" type="button">
-                                        روز دوم
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day3" type="button">
-                                        روز سوم
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day4" type="button">
-                                        روز چهارم
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day5" type="button">
-                                        روز پنجم
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day6" type="button">
-                                        روز ششم
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day7" type="button">
-                                        روز هفتم
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <div class="tab-content" id="daysTabsContent">
-                                <!-- روز اول -->
-                                <div class="tab-pane fade show active" id="day1" role="tabpanel">
-                                    <div class="d-flex justify-content-between align-items-center mb-4">
-                                        <h5 class="mb-0">برنامه غذایی روز اول</h5>
-                                        <div class="d-flex align-items-center">
-                                            <span class="badge bg-success me-2">مجموع کالری: ۱,۸۰۰</span>
-                                            <button class="btn btn-sm btn-outline-primary">
-                                                <i class="ri-check-double-line me-1"></i>
-                                                تکمیل شده
+                        @if($plan->days->isNotEmpty())
+                            <div class="card-header">
+                                <ul class="nav nav-tabs card-header-tabs" id="daysTabs" role="tablist">
+                                    @foreach($plan->days as $dIndex => $day)
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link {{ $dIndex === 0 ? 'active' : '' }}" data-bs-toggle="tab" data-bs-target="#day{{ $dIndex }}" type="button">
+                                                {{ $day->title ?: ('روز ' . ($dIndex + 1)) }}
                                             </button>
-                                        </div>
-                                    </div>
-
-                                    <!-- وعده ۱ -->
-                                    <div class="meal-schedule">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <h6 class="mb-0">
-                                                <i class="ri-sun-line me-2 text-warning"></i>
-                                                صبحانه
-                                            </h6>
-                                            <div>
-                                                <span class="meal-time me-2">۷:۰۰ - ۸:۰۰</span>
-                                                <span class="calorie-tag">۳۵۰ کالری</span>
-                                            </div>
-                                        </div>
-                                        <p class="text-muted mb-2">صبحانه کامل با پروتئین بالا برای شروع روز</p>
-
-                                        <ul class="ingredient-list">
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">نان سبوس دار</span>
-                                                    <small class="text-muted ms-2">۲ برش</small>
-                                                </div>
-                                                <span class="calorie-tag">۱۵۰ کالری</span>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">پنیر کم چرب</span>
-                                                    <small class="text-muted ms-2">۳۰ گرم</small>
-                                                </div>
-                                                <span class="calorie-tag">۸۰ کالری</span>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">گردو</span>
-                                                    <small class="text-muted ms-2">۲ عدد</small>
-                                                </div>
-                                                <span class="calorie-tag">۱۰۰ کالری</span>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">چای سبز</span>
-                                                    <small class="text-muted ms-2">۱ فنجان</small>
-                                                </div>
-                                                <span class="calorie-tag">۲ کالری</span>
-                                            </li>
-                                        </ul>
-
-                                        <div class="alert alert-info bg-info bg-opacity-10 border-info border-opacity-25 mt-2">
-                                            <i class="ri-information-line me-2"></i>
-                                            <small>نان را می‌توان با نان سنگک جایگزین کرد.</small>
-                                        </div>
-                                    </div>
-
-                                    <!-- وعده ۲ -->
-                                    <div class="meal-schedule">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <h6 class="mb-0">
-                                                <i class="ri-apple-line me-2 text-success"></i>
-                                                میان وعده صبح
-                                            </h6>
-                                            <div>
-                                                <span class="meal-time me-2">۱۰:۰۰ - ۱۱:۰۰</span>
-                                                <span class="calorie-tag">۱۵۰ کالری</span>
-                                            </div>
-                                        </div>
-                                        <p class="text-muted mb-2">میوه تازه برای تأمین ویتامین‌ها</p>
-
-                                        <ul class="ingredient-list">
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">سیب</span>
-                                                    <small class="text-muted ms-2">۱ عدد متوسط</small>
-                                                </div>
-                                                <span class="calorie-tag">۹۵ کالری</span>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">بادام</span>
-                                                    <small class="text-muted ms-2">۵ عدد</small>
-                                                </div>
-                                                <span class="calorie-tag">۵۵ کالری</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <!-- وعده ۳ -->
-                                    <div class="meal-schedule">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <h6 class="mb-0">
-                                                <i class="ri-restaurant-2-line me-2 text-primary"></i>
-                                                ناهار
-                                            </h6>
-                                            <div>
-                                                <span class="meal-time me-2">۱۲:۳۰ - ۱۳:۳۰</span>
-                                                <span class="calorie-tag">۵۵۰ کالری</span>
-                                            </div>
-                                        </div>
-                                        <p class="text-muted mb-2">ناهار با پروتئین بالا و کربوهیدرات متوسط</p>
-
-                                        <ul class="ingredient-list">
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">مرغ گریل شده</span>
-                                                    <small class="text-muted ms-2">۱۵۰ گرم</small>
-                                                </div>
-                                                <span class="calorie-tag">۲۵۰ کالری</span>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">برنج قهوه‌ای</span>
-                                                    <small class="text-muted ms-2">۱ پیمانه</small>
-                                                </div>
-                                                <span class="calorie-tag">۲۰۰ کالری</span>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">سالاد سبزیجات</span>
-                                                    <small class="text-muted ms-2">۱ کاسه</small>
-                                                </div>
-                                                <span class="calorie-tag">۵۰ کالری</span>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">ماست کم چرب</span>
-                                                    <small class="text-muted ms-2">۱۰۰ گرم</small>
-                                                </div>
-                                                <span class="calorie-tag">۵۰ کالری</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <!-- وعده ۴ -->
-                                    <div class="meal-schedule">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <h6 class="mb-0">
-                                                <i class="ri-cup-line me-2 text-info"></i>
-                                                میان وعده عصر
-                                            </h6>
-                                            <div>
-                                                <span class="meal-time me-2">۱۶:۰۰ - ۱۷:۰۰</span>
-                                                <span class="calorie-tag">۲۰۰ کالری</span>
-                                            </div>
-                                        </div>
-                                        <p class="text-muted mb-2">اسنک سالم برای رفع گرسنگی عصر</p>
-
-                                        <ul class="ingredient-list">
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">کره بادام زمینی</span>
-                                                    <small class="text-muted ms-2">۱ قاشق غذاخوری</small>
-                                                </div>
-                                                <span class="calorie-tag">۱۰۰ کالری</span>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">کرفس</span>
-                                                    <small class="text-muted ms-2">۲ شاخه</small>
-                                                </div>
-                                                <span class="calorie-tag">۲۰ کالری</span>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">چای گیاهی</span>
-                                                    <small class="text-muted ms-2">۱ فنجان</small>
-                                                </div>
-                                                <span class="calorie-tag">۰ کالری</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <!-- وعده ۵ -->
-                                    <div class="meal-schedule">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <h6 class="mb-0">
-                                                <i class="ri-moon-line me-2 text-secondary"></i>
-                                                شام
-                                            </h6>
-                                            <div>
-                                                <span class="meal-time me-2">۱۹:۰۰ - ۲۰:۰۰</span>
-                                                <span class="calorie-tag">۵۵۰ کالری</span>
-                                            </div>
-                                        </div>
-                                        <p class="text-muted mb-2">شام سبک با پروتئین گیاهی</p>
-
-                                        <ul class="ingredient-list">
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">ماهی قزل آلا</span>
-                                                    <small class="text-muted ms-2">۱۲۰ گرم</small>
-                                                </div>
-                                                <span class="calorie-tag">۲۵۰ کالری</span>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">سبزیجات بخارپز</span>
-                                                    <small class="text-muted ms-2">۲ پیمانه</small>
-                                                </div>
-                                                <span class="calorie-tag">۱۵۰ کالری</span>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <span class="fw-medium">عدس پخته</span>
-                                                    <small class="text-muted ms-2">½ پیمانه</small>
-                                                </div>
-                                                <span class="calorie-tag">۱۵۰ کالری</span>
-                                            </li>
-                                        </ul>
-
-                                        <div class="alert alert-warning bg-warning bg-opacity-10 border-warning border-opacity-25 mt-2">
-                                            <i class="ri-alert-line me-2"></i>
-                                            <small>شام را حداقل ۳ ساعت قبل از خواب میل کنید.</small>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- روز دوم -->
-                                <div class="tab-pane fade" id="day2" role="tabpanel">
-                                    <!-- محتوای روز دوم -->
-                                    <div class="text-center py-5">
-                                        <div class="avatar-lg bg-light rounded-circle p-3 mb-3 mx-auto">
-                                            <i class="ri-calendar-line fs-36 text-muted"></i>
-                                        </div>
-                                        <h5>برنامه روز دوم</h5>
-                                        <p class="text-muted">برای مشاهده جزئیات روز دوم، از تب‌های بالا استفاده کنید.</p>
-                                    </div>
-                                </div>
-
-                                <!-- سایر روزها -->
-                                <div class="tab-pane fade" id="day3" role="tabpanel">
-                                    <!-- محتوای روز سوم -->
-                                </div>
-                                <!-- ... -->
+                                        </li>
+                                    @endforeach
+                                </ul>
                             </div>
-                        </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="daysTabsContent">
+                                    @foreach($plan->days as $dIndex => $day)
+                                        @php $dayCal = $day->meals->sum('calories'); @endphp
+                                        <div class="tab-pane fade {{ $dIndex === 0 ? 'show active' : '' }}" id="day{{ $dIndex }}" role="tabpanel">
+                                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                                <h5 class="mb-0">برنامه غذایی {{ $day->title ?: ('روز ' . ($dIndex + 1)) }}</h5>
+                                                <span class="badge bg-success">مجموع کالری: {{ number_format($dayCal) }}</span>
+                                            </div>
+
+                                            @foreach($day->meals as $meal)
+                                                @php $items = $meal->items_json ?? []; @endphp
+                                                <div class="meal-schedule">
+                                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                                        <h6 class="mb-0">
+                                                            <i class="ri-restaurant-2-line me-2 text-primary"></i>
+                                                            {{ $meal->name }}
+                                                        </h6>
+                                                        <div>
+                                                            @if($meal->time_text)
+                                                                <span class="meal-time me-2">{{ $meal->time_text }}</span>
+                                                            @endif
+                                                            <span class="calorie-tag">{{ number_format($meal->calories ?? 0) }} کالری</span>
+                                                        </div>
+                                                    </div>
+                                                    @if($meal->description)
+                                                        <p class="text-muted mb-2">{{ $meal->description }}</p>
+                                                    @endif
+
+                                                    @if(!empty($items))
+                                                        <ul class="ingredient-list">
+                                                            @foreach($items as $item)
+                                                                @php
+                                                                    $name = is_array($item) ? ($item['name'] ?? '') : (string) $item;
+                                                                    $weight = is_array($item) ? ($item['weight'] ?? null) : null;
+                                                                    $cal = is_array($item) ? ($item['calories'] ?? null) : null;
+                                                                    $p = is_array($item) ? ($item['protein'] ?? null) : null;
+                                                                    $c = is_array($item) ? ($item['carbs'] ?? null) : null;
+                                                                    $f = is_array($item) ? ($item['fat'] ?? null) : null;
+                                                                @endphp
+                                                                <li>
+                                                                    <div>
+                                                                        <span class="fw-medium">{{ $name }}</span>
+                                                                        @if($weight !== null && $weight !== '')
+                                                                            <small class="text-muted ms-2">{{ number_format((float) $weight) }} گرم</small>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="text-end">
+                                                                        @if($cal !== null && $cal !== '')
+                                                                            <span class="calorie-tag">{{ number_format((float) $cal) }} کالری</span>
+                                                                        @endif
+                                                                        @if($p !== null || $c !== null || $f !== null)
+                                                                            <div class="text-muted small mt-1">{{ $p ?? 0 }}P • {{ $c ?? 0 }}C • {{ $f ?? 0 }}F</div>
+                                                                        @endif
+                                                                    </div>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @else
+                                                        <p class="text-muted small mb-0">مواد این وعده ثبت نشده است.</p>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @else
+                            <div class="card-body">
+                                <div class="text-center text-muted py-5">
+                                    <i class="ri-restaurant-line fs-32 mb-2 d-block"></i>
+                                    هنوز روز یا وعده‌ای برای این برنامه تعریف نشده است.
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
-                    <!-- اطلاعات تکمیلی -->
+                    <!-- مواد مجاز / ممنوع و مکمل‌ها (از داده ذخیره‌شده) -->
                     <div class="row mt-3">
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-header">
                                     <h5 class="card-title mb-0">
                                         <i class="ri-list-check me-2"></i>
-                                        مواد غذایی مجاز
+                                        مواد غذایی مجاز / مکمل‌ها
                                     </h5>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <i class="ri-checkbox-circle-fill text-success me-2"></i>
-                                                <span>سبزیجات برگ‌دار</span>
-                                            </div>
-                                            <div class="d-flex align-items-center mb-2">
-                                                <i class="ri-checkbox-circle-fill text-success me-2"></i>
-                                                <span>پروتئین بدون چربی</span>
-                                            </div>
-                                            <div class="d-flex align-items-center mb-2">
-                                                <i class="ri-checkbox-circle-fill text-success me-2"></i>
-                                                <span>میوه تازه</span>
-                                            </div>
+                                    @if(!empty($plan->supplements))
+                                        <div class="d-flex flex-wrap gap-2">
+                                            @foreach((array) $plan->supplements as $s)
+                                                <span class="badge bg-primary">{{ is_string($s) ? $s : '' }}</span>
+                                            @endforeach
                                         </div>
-                                        <div class="col-6">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <i class="ri-checkbox-circle-fill text-success me-2"></i>
-                                                <span>غلات کامل</span>
-                                            </div>
-                                            <div class="d-flex align-items-center mb-2">
-                                                <i class="ri-checkbox-circle-fill text-success me-2"></i>
-                                                <span>آجیل و مغزها</span>
-                                            </div>
-                                            <div class="d-flex align-items-center mb-2">
-                                                <i class="ri-checkbox-circle-fill text-success me-2"></i>
-                                                <span>حبوبات</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @else
+                                        <p class="text-muted small mb-0">ثبت نشده است.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-header">
@@ -644,71 +456,15 @@
                                     </h5>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <i class="ri-close-circle-fill text-danger me-2"></i>
-                                                <span>شکر سفید</span>
-                                            </div>
-                                            <div class="d-flex align-items-center mb-2">
-                                                <i class="ri-close-circle-fill text-danger me-2"></i>
-                                                <span>فست فود</span>
-                                            </div>
-                                            <div class="d-flex align-items-center mb-2">
-                                                <i class="ri-close-circle-fill text-danger me-2"></i>
-                                                <span>نوشابه</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <i class="ri-close-circle-fill text-danger me-2"></i>
-                                                <span>روغن نباتی</span>
-                                            </div>
-                                            <div class="d-flex align-items-center mb-2">
-                                                <i class="ri-close-circle-fill text-danger me-2"></i>
-                                                <span>شیرینی‌جات</span>
-                                            </div>
-                                            <div class="d-flex align-items-center mb-2">
-                                                <i class="ri-close-circle-fill text-danger me-2"></i>
-                                                <span>غذاهای کنسروی</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- مکمل‌ها و آلرژی -->
-                    <div class="card mt-3">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0">
-                                <i class="ri-heart-add-line me-2"></i>
-                                اطلاعات تکمیلی
-                            </h5>
-                            <button class="btn btn-sm btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#additionalInfo">
-                                نمایش جزئیات
-                            </button>
-                        </div>
-                        <div class="collapse show" id="additionalInfo">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <h6 class="mb-3">مکمل‌های پیشنهادی</h6>
+                                    @if(!empty($plan->restrictions))
                                         <div class="d-flex flex-wrap gap-2">
-                                            <span class="badge bg-primary">ویتامین D</span>
-                                            <span class="badge bg-primary">امگا ۳</span>
-                                            <span class="badge bg-primary">پروبیوتیک</span>
-                                            <span class="badge bg-primary">مولتی ویتامین</span>
+                                            @foreach((array) $plan->restrictions as $r)
+                                                <span class="badge bg-danger">{{ is_string($r) ? $r : '' }}</span>
+                                            @endforeach
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <h6 class="mb-3">محدودیت‌های غذایی</h6>
-                                        <div class="d-flex flex-wrap gap-2">
-                                            <span class="badge bg-danger">لاکتوز</span>
-                                            <span class="badge bg-warning">گلوتن (اختیاری)</span>
-                                        </div>
-                                    </div>
+                                    @else
+                                        <p class="text-muted small mb-0">ثبت نشده است.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -733,7 +489,7 @@
                                     <div class="mt-2">
                                         <small class="text-muted">
                                             <i class="ri-calendar-line me-1"></i>
-                                            آخرین به‌روزرسانی: ۱۴۰۳/۰۱/۲۰
+                                            آخرین به‌روزرسانی: {{ $plan->updated_at?->format('Y/m/d') }}
                                         </small>
                                     </div>
                                 </div>
