@@ -95,9 +95,8 @@
                 </a>
                 <div class="collapse" id="sidebarNutrition">
                     <ul class="nav sub-navbar-nav">
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('nutrition.show')}}">نمایش</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('nutrition.edit')}}">تغییر برنامه غذایی</a></li>
-                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{route('nutrition.create')}}">اضافه کردن برنامه</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{ route('plans.library') }}">کتابخانه برنامه‌ها</a></li>
+                        <li class="sub-nav-item"><a class="sub-nav-link" href="{{ route('nutrition.create') }}">اضافه کردن برنامه</a></li>
                     </ul>
                 </div>
             </li>
