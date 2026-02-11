@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\plans;
 
 use App\Http\Controllers\Controller;
+use App\Models\NutritionPlan;
 use App\Models\WorkoutPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -34,8 +35,14 @@ class PlanController extends Controller
             ->latest()
             ->get();
 
+        $nutritionPlans = NutritionPlan::with(['days.meals'])
+            ->when($coachId, fn ($q) => $q->where('coach_id', $coachId))
+            ->latest()
+            ->get();
+
         return view('admin.plans.library', [
             'plans' => $plans,
+            'nutritionPlans' => $nutritionPlans,
         ]);
     }
 }
