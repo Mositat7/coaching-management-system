@@ -166,7 +166,7 @@
                                         <li><a class="dropdown-item" href="#"><i class="ri-share-line me-2"></i>اشتراک‌گذاری</a></li>
                                         <li><a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2"></i>کپی برنامه</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="{{ route('nutrition.edit', 1) }}"><i class="ri-pencil-line me-2"></i>ویرایش</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('nutrition.edit') }}"><i class="ri-pencil-line me-2"></i>ویرایش</a></li>
                                     </ul>
                                 </div>
                             </div>
