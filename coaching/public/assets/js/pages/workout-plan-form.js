@@ -7,6 +7,18 @@
 (function() {
     'use strict';
 
+    // خواندن تنظیمات از data-attributeهای بلید
+    var configEl = document.getElementById('workout-plan-config');
+    var cfg = (configEl && configEl.dataset) ? configEl.dataset : {};
+    window.exerciseLibraryFromServer = cfg.exerciseLibrary ? JSON.parse(cfg.exerciseLibrary) : [];
+    window.plansStoreUrl = cfg.plansStoreUrl || '';
+    window.plansStoreToken = cfg.plansToken || '';
+    window.plansAssignUrl = cfg.plansAssignUrl || '';
+    window.plansLibraryUrl = cfg.plansLibraryUrl || '';
+    window.initialPlanState = cfg.initialPlan ? JSON.parse(cfg.initialPlan) : null;
+    window.plansUpdateUrl = cfg.plansUpdateUrl || null;
+    window.editingPlanId = cfg.editingPlanId || null;
+
     const DAY_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه'];
 
     let programState = {
@@ -257,6 +269,7 @@
     }
 
     function selectDay(dayIndex, dayName) {
+        dayIndex = parseInt(dayIndex, 10) || 0;
         saveCurrentDayToState();
         document.querySelectorAll('.day-tab').forEach(function(tab) { tab.classList.remove('active'); });
         var tab = document.querySelector('.day-tab[data-day="' + dayIndex + '"]');

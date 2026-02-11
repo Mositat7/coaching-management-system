@@ -317,6 +317,24 @@
         }
 
         /* Dark Mode Optimizations */
+        .header-hero-card {
+            background: #ffffff;
+        }
+
+        [data-bs-theme="dark"] .header-hero-card {
+            background: #0f172a;
+        }
+
+        .hero-description-input {
+            background: #f8fafc;
+        }
+
+        [data-bs-theme="dark"] .hero-description-input {
+            background: #1e293b;
+            border-color: #475569;
+            color: #e5e7eb;
+        }
+
         [data-bs-theme="dark"] .quick-input::placeholder {
             color: #94a3b8;
         }
@@ -364,7 +382,7 @@
             <!-- Page Title + Header compact -->
             <div class="row animate-fade-in">
                 <div class="col-12">
-                    <div class="card border-0 bg-white shadow-sm mb-3">
+                    <div class="card border-0 shadow-sm mb-3 header-hero-card">
                         <div class="card-body py-3 px-3 px-md-4">
                             <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-3 gap-lg-4">
                                 <div class="d-flex align-items-center gap-3 flex-grow-1 min-w-0">
@@ -387,7 +405,7 @@
                                 </div>
                             </div>
                             <div class="mt-2">
-                                <textarea class="form-control form-control-sm border-0 bg-light"
+                                <textarea class="form-control form-control-sm border-0 bg-light hero-description-input"
                                           rows="2"
                                           placeholder="توضیحات اختیاری..."
                                           style="border-radius: 8px; resize: none; padding: 0.5rem 0.75rem; font-size: 0.9rem;"
@@ -414,7 +432,8 @@
                                     <div class="col-6 col-md-4 col-lg-6 col-xl-12">
                                         <div class="day-tab text-center"
                                              data-day="{{ $index }}"
-                                             onclick="workoutPlanForm.selectDay({{ $index }}, '{{ $day }}')">
+                                             data-day-name="{{ $day }}"
+                                             onclick="workoutPlanForm.selectDay(this.dataset.day, this.dataset.dayName)">
                                             <div class="fw-medium" style="font-size: 0.9rem;">{{ $day }}</div>
                                             <small class="text-muted day-count" data-day="{{ $index }}">۰ تمرین</small>
                                         </div>
@@ -702,15 +721,11 @@
 @endsection
 
 @section('scripts')
-    {{-- فقط تنظیمات سرور برای JS فرم برنامه ورزشی --}}
-    <script>
-        window.exerciseLibraryFromServer = @json($exerciseLibrary ?? []);
-        window.plansStoreUrl = '{{ route("plans.store") }}';
-        window.plansStoreToken = '{{ csrf_token() }}';
-        window.plansAssignUrl = '{{ route("plans.assign") }}';
-        window.plansLibraryUrl = '{{ route("plans.library") }}';
-        @if(isset($plan))
-        @php
+    {{-- فقط تنظیمات سرور برای JS فرم برنامه ورزشی (به‌صورت data-attribute تا TS درگیر JS نشود) --}}
+    @php
+        $exerciseJson = json_encode($exerciseLibrary ?? [], JSON_UNESCAPED_UNICODE);
+        $initialPlanJson = null;
+        if (isset($plan)) {
             $initialPlanState = [
                 'name' => $plan->name,
                 'description' => $plan->description,
@@ -741,16 +756,23 @@
                     ];
                 })->values()->all(),
             ];
-        @endphp
-        window.initialPlanState = @json($initialPlanState);
-        window.plansUpdateUrl = '{{ route("Workouts.update", $plan) }}';
-        window.editingPlanId = {{ $plan->id }};
-        @else
-        window.initialPlanState = null;
-        window.plansUpdateUrl = null;
-        window.editingPlanId = null;
-        @endif
-    </script>
+            $initialPlanJson = json_encode($initialPlanState, JSON_UNESCAPED_UNICODE);
+        }
+    @endphp
+
+    <div id="workout-plan-config"
+         data-exercise-library='{{ $exerciseJson }}'
+         data-plans-store-url="{{ route('plans.store') }}"
+         data-plans-token="{{ csrf_token() }}"
+         data-plans-assign-url="{{ route('plans.assign') }}"
+         data-plans-library-url="{{ route('plans.library') }}"
+         @if(isset($plan))
+             data-initial-plan='{{ $initialPlanJson }}'
+             data-plans-update-url="{{ route('Workouts.update', $plan) }}"
+             data-editing-plan-id="{{ $plan->id }}"
+         @endif
+    ></div>
+
     <script src="{{ asset('assets/js/pages/workout-plan-form.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/css/icons.min.css') }}">
