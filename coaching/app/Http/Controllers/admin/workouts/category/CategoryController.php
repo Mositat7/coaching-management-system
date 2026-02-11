@@ -10,7 +10,7 @@ use App\Models\MuscleGroup;
 use App\Models\MuscleSubGroup;
 use App\Models\WorkoutExercise;
 use Illuminate\Http\RedirectResponse;
-
+use Illuminate\View\View;
 /**
  * کنترلر صفحهٔ دسته‌بندی تمرین‌ها (عضلات، زیرمجموعه‌ها، حرکات)
  */
@@ -19,7 +19,7 @@ class CategoryController extends Controller
     /**
      * نمایش لیست عضلات با زیرمجموعه‌ها و تمرین‌ها
      */
-    public function index()
+    public function index(): View
     {
         $muscleGroups = MuscleGroup::with(['subGroups.exercises'])
             ->orderBy('sort_order')
