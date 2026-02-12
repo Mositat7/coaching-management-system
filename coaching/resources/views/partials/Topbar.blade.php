@@ -1,3 +1,16 @@
+<style>
+    /* خوانایی متن و آیکن منو در تم روشن و تاریک */
+    .main-nav .nav-link { color: var(--bs-main-nav-item-color) !important; }
+    .main-nav .nav-link .nav-text,
+    .main-nav .nav-link .nav-icon,
+    .main-nav .nav-link .nav-icon i { color: inherit !important; }
+    .main-nav .menu-title { color: var(--bs-main-nav-item-color) !important; font-weight: 600; opacity: 1; }
+    .main-nav .sub-nav-link { color: var(--bs-main-nav-item-color) !important; }
+    .main-nav .nav-item .nav-link:hover .nav-text,
+    .main-nav .nav-item .nav-link:hover .nav-icon { color: var(--bs-main-nav-item-hover-color) !important; }
+    .main-nav .nav-item .nav-link.active .nav-text,
+    .main-nav .nav-item .nav-link.active .nav-icon { color: var(--bs-main-nav-item-active-color) !important; }
+</style>
 <div class="main-nav">
     <!-- Sidebar Logo -->
     <div class="logo-box">
@@ -123,6 +136,14 @@
         <span class="nav-text">سفارشات</span>
     </a>
 </li>
+
+            <!-- Chat -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('chat.index') }}">
+                    <span class="nav-icon"><i class="ri-message-3-line"></i></span>
+                    <span class="nav-text">چت و پیام‌ها</span>
+                </a>
+            </li>
 
             <!-- Transactions -->
             <li class="nav-item">

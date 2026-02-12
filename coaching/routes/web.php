@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\workouts\category\CategoryController;
 use App\Http\Controllers\admin\workouts\WorkoutsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\Orders\OrdersController;
+use App\Http\Controllers\admin\Chat\ChatController;
 // ======================
 // Auth Routes for Coaches
 // ======================
@@ -82,6 +83,9 @@ Route::middleware('auth.coach')->group(function () {
     Route::delete('/Coach-delete/{id}', [CoachController::class, 'destroy'])->name('Coach.destroy');
 // سفارشات
     Route::get('/Orders', [OrdersController::class, 'index'])->name('orders.index');
+
+    // چت / پیام‌ها (ارتباط شاگرد با مدیر)
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
 });
 
 // ======================
