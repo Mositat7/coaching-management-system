@@ -24,5 +24,8 @@ class DatabaseSeeder extends Seeder
 
         // دادهٔ اولیه دسته‌بندی تمرین‌ها (عضلات، زیرمجموعه، حرکات)
         $this->call(MuscleGroupSeeder::class);
+
+        // اعضای نمونه (در صورت وجود مربی در جدول coaches)
+        $this->call(MemberSeeder::class);
     }
 }
