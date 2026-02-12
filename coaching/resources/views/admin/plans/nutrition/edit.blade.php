@@ -115,9 +115,7 @@
                                 </a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="#">
-                                    رژیم کاهش وزن
-                                </a>
+                                <a href="{{ route('nutrition.show', ['plan' => $plan->id]) }}">{{ $plan->name }}</a>
                             </li>
                             <li class="breadcrumb-item active">
                                 ویرایش
@@ -143,75 +141,29 @@
                                 </span>
                                 </div>
                                 <h5 class="mt-3 mb-1">در حال ویرایش</h5>
-                                <p class="text-muted">رژیم کاهش وزن متوسط</p>
+                                <p class="text-muted">{{ $plan->name }}</p>
                             </div>
 
                             <!-- اطلاعات برنامه -->
                             <div class="border rounded p-3 mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <small class="text-muted">کد برنامه:</small>
-                                    <span class="badge bg-dark">#NUT-001</span>
+                                    <small class="text-muted">شناسه:</small>
+                                    <span class="badge bg-dark">#{{ $plan->id }}</span>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <small class="text-muted">تاریخ ایجاد:</small>
-                                    <span class="small">۱۴۰۳/۰۱/۱۵</span>
+                                    <span class="small">{{ $plan->created_at?->format('Y/m/d') }}</span>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <small class="text-muted">آخرین ویرایش:</small>
-                                    <span class="small">۱۴۰۳/۰۱/۲۰</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <small class="text-muted">ویرایش‌کننده:</small>
-                                    <span class="small fw-medium">شما</span>
+                                    <span class="small">{{ $plan->updated_at?->format('Y/m/d') }}</span>
                                 </div>
                             </div>
-
-                            <!-- آمار استفاده -->
-                            <div class="mt-3">
-                                <h6 class="fw-semibold mb-3">
-                                    <i class="ri-bar-chart-line me-2"></i>
-                                    آمار استفاده
-                                </h6>
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="text-muted">شاگردان فعال:</span>
-                                    <span class="badge bg-success">۱۸ نفر</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="text-muted">تکمیل شده:</span>
-                                    <span class="badge bg-primary">۱۲ نفر</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="text-muted">میانگین امتیاز:</span>
-                                    <span class="badge bg-warning">۴.۸/۵</span>
-                                </div>
+                            <div class="d-grid gap-2 mb-2">
+                                <a href="{{ route('nutrition.show', ['plan' => $plan->id]) }}" class="btn btn-outline-primary btn-sm">
+                                    <i class="ri-eye-line me-1"></i>پیش‌نمایش
+                                </a>
                             </div>
-
-                            <!-- تاریخچه تغییرات -->
-                            <div class="mt-4">
-                                <h6 class="fw-semibold mb-2">
-                                    <i class="ri-history-line me-2"></i>
-                                    آخرین تغییرات
-                                </h6>
-                                <div class="history-item">
-                                    <div class="d-flex justify-content-between">
-                                        <span>کالری ناهار کاهش یافت</span>
-                                        <small class="text-muted">۲ روز پیش</small>
-                                    </div>
-                                </div>
-                                <div class="history-item">
-                                    <div class="d-flex justify-content-between">
-                                        <span>وعده جدید اضافه شد</span>
-                                        <small class="text-muted">۱ هفته پیش</small>
-                                    </div>
-                                </div>
-                                <div class="history-item">
-                                    <div class="d-flex justify-content-between">
-                                        <span>آلرژی گلوتن اضافه شد</span>
-                                        <small class="text-muted">۲ هفته پیش</small>
-                                    </div>
-                                </div>
-                            </div>
-
                             <!-- هشدارهای ویرایش -->
                             <div class="mt-4">
                                 <div class="alert alert-warning bg-warning bg-opacity-10 border-warning border-opacity-25">
@@ -227,7 +179,7 @@
                                     ذخیره تغییرات
                                 </button>
                                 <div class="d-flex gap-2">
-                                    <a href="#" class="btn btn-outline-primary w-100">
+                                    <a href="{{ route('nutrition.show', ['plan' => $plan->id]) }}" class="btn btn-outline-primary w-100">
                                         <i class="ri-eye-line me-1"></i>
                                         پیش‌نمایش
                                     </a>
@@ -243,48 +195,50 @@
 
                 <!-- فرم ویرایش اصلی -->
                 <div class="col-xl-9 col-lg-8">
-                    <form id="nutrition-edit-form" action="#" method="POST">
+                    <form id="nutrition-edit-form" action="{{ route('nutrition.update', ['plan' => $plan->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
 
-                        <!-- هدر با وضعیت -->
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-8">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="avatar-sm bg-success bg-opacity-10 rounded-circle p-2">
-                                                    <i class="ri-restaurant-fill fs-20 text-success"></i>
-                                                </div>
+                        <!-- هدر فشرده و تمیز برای ویرایش -->
+                        <div class="card mb-3 border-0 shadow-sm">
+                            <div class="card-body py-3 px-3 px-md-4">
+                                <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-3">
+                                    <div class="d-flex align-items-center flex-grow-1 min-w-0 gap-3">
+                                        <div class="flex-shrink-0 d-none d-sm-flex">
+                                            <div class="bg-success bg-opacity-10 rounded-circle p-2 d-inline-flex align-items-center justify-content-center">
+                                                <i class="ri-restaurant-fill fs-4 text-success"></i>
                                             </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <input type="text" class="form-control form-control-lg border-0 fs-4 fw-bold px-0"
-                                                       value="رژیم کاهش وزن متوسط"
-                                                       id="program-title">
-                                                <div class="d-flex align-items-center mt-1">
-                                                    <span class="badge bg-success me-2">فعال</span>
-                                                    <span class="badge bg-info me-2">تغذیه</span>
-                                                    <span class="text-muted small">
+                                        </div>
+                                        <div class="flex-grow-1 min-w-0">
+                                            <input type="text"
+                                                   class="form-control form-control-lg border-0 px-0 fw-semibold text-truncate"
+                                                   name="name" id="program-name" form="nutrition-edit-form"
+                                                   value="{{ old('name', $plan->name) }}"
+                                                   placeholder="نام برنامه غذایی"
+                                                   required>
+                                            <div class="d-flex flex-wrap align-items-center gap-2 mt-1 small text-muted">
+                                                <span class="badge bg-success-subtle text-success">فعال</span>
+                                                <span class="badge bg-info-subtle text-info">تغذیه</span>
+                                                <span>
                                                     <i class="ri-calendar-line me-1"></i>
-                                                    ویرایش: ۱۴۰۳/۰۱/۲۰
-                                                </span>
-                                                </div>
+                                                    آخرین ویرایش: {{ $plan->updated_at?->format('Y/m/d') }}
+                                              </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 mt-3 mt-lg-0">
-                                        <div class="d-flex gap-2">
-                                            <select class="form-select" id="program-status">
-                                                <option value="active" selected>فعال</option>
-                                                <option value="draft">پیش‌نویس</option>
-                                                <option value="archived">آرشیو</option>
-                                                <option value="disabled">غیرفعال</option>
-                                            </select>
-                                            <button type="button" class="btn btn-primary">
-                                                <i class="ri-refresh-line"></i>
-                                            </button>
-                                        </div>
+                                    <div class="d-flex flex-wrap flex-lg-nowrap gap-2 justify-content-lg-end">
+                                        <a href="{{ route('plans.library') }}" class="btn btn-light btn-sm">
+                                            <i class="ri-arrow-go-back-line me-1"></i>
+                                            بازگشت
+                                        </a>
+                                        <a href="{{ route('nutrition.show', ['plan' => $plan->id]) }}" class="btn btn-outline-primary btn-sm">
+                                            <i class="ri-eye-line me-1"></i>
+                                            پیش‌نمایش
+                                        </a>
+                                        <button type="submit" form="nutrition-edit-form" class="btn btn-warning btn-sm">
+                                            <i class="ri-save-3-line me-1"></i>
+                                            ذخیره تغییرات
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -313,12 +267,6 @@
                                             تنظیمات
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-bs-toggle="tab" href="#history">
-                                            <i class="ri-history-line me-1"></i>
-                                            تاریخچه
-                                        </a>
-                                    </li>
                                 </ul>
                             </div>
                             <div class="card-body">
@@ -329,21 +277,25 @@
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">هدف برنامه</label>
-                                                    <select class="form-control" id="edit-goal">
-                                                        <option value="weight_loss" selected>کاهش وزن</option>
-                                                        <option value="muscle_gain">افزایش حجم عضلات</option>
-                                                        <option value="maintenance">نگهداری وزن</option>
-                                                        <option value="detox">سم‌زدایی</option>
+                                                    <select class="form-control" name="goal" id="edit-goal">
+                                                        <option value="">انتخاب هدف</option>
+                                                        <option value="weight_loss" @selected($plan->goal === 'weight_loss')>کاهش وزن</option>
+                                                        <option value="muscle_gain" @selected($plan->goal === 'muscle_gain')>افزایش حجم عضلات</option>
+                                                        <option value="maintenance" @selected($plan->goal === 'maintenance')>نگهداری وزن</option>
+                                                        <option value="detox" @selected($plan->goal === 'detox')>سم‌زدایی</option>
+                                                        <option value="energy" @selected($plan->goal === 'energy')>افزایش انرژی</option>
+                                                        <option value="health" @selected($plan->goal === 'health')>سلامت عمومی</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">سطح</label>
-                                                    <select class="form-control" id="edit-level">
-                                                        <option value="beginner">مبتدی</option>
-                                                        <option value="intermediate" selected>متوسط</option>
-                                                        <option value="advanced">پیشرفته</option>
+                                                    <select class="form-control" name="level" id="edit-level">
+                                                        <option value="">انتخاب سطح</option>
+                                                        <option value="beginner" @selected($plan->level === 'beginner')>مبتدی</option>
+                                                        <option value="intermediate" @selected($plan->level === 'intermediate')>متوسط</option>
+                                                        <option value="advanced" @selected($plan->level === 'advanced')>پیشرفته</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -351,43 +303,32 @@
                                             <div class="col-lg-4">
                                                 <div class="mb-3">
                                                     <label class="form-label">مدت برنامه (روز)</label>
-                                                    <input type="number" class="form-control"
-                                                           value="14" min="1" max="365">
+                                                    <input type="number" class="form-control" name="duration_days"
+                                                           value="{{ old('duration_days', $plan->duration_days ?? 14) }}" min="1" max="365">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="mb-3">
                                                     <label class="form-label">کالری روزانه</label>
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control"
-                                                               value="1800" min="800" max="5000">
+                                                        <input type="number" class="form-control" name="daily_calories"
+                                                               value="{{ old('daily_calories', $plan->daily_calories ?? 1800) }}" min="800" max="5000">
                                                         <span class="input-group-text">کالری</span>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="mb-3">
-                                                    <label class="form-label">محدودیت کربوهیدرات (گرم)</label>
-                                                    <input type="number" class="form-control"
-                                                           value="150" min="0" max="500">
                                                 </div>
                                             </div>
 
                                             <div class="col-lg-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">توضیحات</label>
-                                                    <textarea class="form-control" rows="4"
-                                                              id="edit-description">برنامه غذایی ۲ هفته‌ای برای کاهش وزن متوسط. شامل ۵ وعده غذایی در روز با تأکید بر پروتئین و فیبر بالا.</textarea>
+                                                    <textarea class="form-control" rows="4" name="description" id="edit-description">{{ old('description', $plan->description) }}</textarea>
                                                 </div>
                                             </div>
 
                                             <div class="col-lg-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">نکات مهم</label>
-                                                    <textarea class="form-control" rows="3"
-                                                              placeholder="نکات ایمنی و دستورالعمل‌ها...">۱. روزانه ۸ لیوان آب مصرف شود
-۲. از شکر و نمک اضافه پرهیز شود
-۳. وعده‌ها سر وقت مصرف شوند</textarea>
+                                                    <textarea class="form-control" rows="3" name="notes" placeholder="نکات ایمنی و دستورالعمل‌ها...">{{ old('notes', $plan->notes) }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -429,98 +370,30 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label small">نام وعده</label>
-                                                            <input type="text" class="form-control form-control-sm"
-                                                                   value="صبحانه پروتئینی">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="mb-3">
-                                                            <label class="form-label small">زمان</label>
-                                                            <input type="text" class="form-control form-control-sm"
-                                                                   value="۷:۰۰ - ۸:۰۰">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="mb-3">
-                                                            <label class="form-label small">کالری</label>
-                                                            <input type="number" class="form-control form-control-sm"
-                                                                   value="350" min="0" max="2000">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
                                                 <div class="mb-3">
-                                                    <label class="form-label small">مواد غذایی</label>
-                                                    <div class="ingredient-item">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="d-flex align-items-center">
-                                                                <button type="button" class="btn btn-sm btn-link text-danger p-0 me-2">
-                                                                    <i class="ri-close-line"></i>
-                                                                </button>
-                                                                <div>
-                                                                    <span class="fw-medium">نان سبوس دار</span>
-                                                                    <small class="text-muted ms-2">۲ برش</small>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex align-items-center gap-2">
-                                                                <small class="text-success">۱۵۰ کالری</small>
-                                                                <button type="button" class="btn btn-sm btn-link text-primary p-0">
-                                                                    <i class="ri-pencil-line"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="ingredient-item">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="d-flex align-items-center">
-                                                                <button type="button" class="btn btn-sm btn-link text-danger p-0 me-2">
-                                                                    <i class="ri-close-line"></i>
-                                                                </button>
-                                                                <div>
-                                                                    <span class="fw-medium">پنیر کم چرب</span>
-                                                                    <small class="text-muted ms-2">۳۰ گرم</small>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex align-items-center gap-2">
-                                                                <small class="text-success">۸۰ کالری</small>
-                                                                <button type="button" class="btn btn-sm btn-link text-primary p-0">
-                                                                    <i class="ri-pencil-line"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="ingredient-item">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="d-flex align-items-center">
-                                                                <button type="button" class="btn btn-sm btn-link text-danger p-0 me-2">
-                                                                    <i class="ri-close-line"></i>
-                                                                </button>
-                                                                <div>
-                                                                    <span class="fw-medium">چای سبز</span>
-                                                                    <small class="text-muted ms-2">۱ فنجان</small>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex align-items-center gap-2">
-                                                                <small class="text-success">۲ کالری</small>
-                                                                <button type="button" class="btn btn-sm btn-link text-primary p-0">
-                                                                    <i class="ri-pencil-line"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <button type="button" class="btn btn-sm btn-outline-success w-100 mt-2">
-                                                        <i class="ri-add-line me-1"></i>
-                                                        افزودن ماده غذایی
-                                                    </button>
+                                                    <label class="form-label small">نام وعده</label>
+                                                    <input type="text" class="form-control form-control-sm meal-name" value="صبحانه">
                                                 </div>
-
+                                                <div class="mb-3">
+                                                    <label class="form-label small">مواد غذایی این وعده</label>
+                                                    <input type="hidden" class="meal-items-json" value="[]">
+                                                    <div class="row g-2 mb-2">
+                                                        <div class="col-md-4"><input type="text" class="form-control form-control-sm food-name" placeholder="نام ماده غذایی"></div>
+                                                        <div class="col-6 col-md-2"><div class="input-group input-group-sm"><input type="number" class="form-control food-weight" placeholder="100" min="0" step="1"><span class="input-group-text">گرم</span></div></div>
+                                                        <div class="col-6 col-md-2"><div class="input-group input-group-sm"><input type="number" class="form-control food-kcal" placeholder="کالری" min="0" step="1"><span class="input-group-text">kcal</span></div></div>
+                                                        <div class="col-12 col-md-4"><div class="d-flex gap-1"><input type="number" class="form-control form-control-sm food-protein" placeholder="پ" min="0" step="0.1"><input type="number" class="form-control form-control-sm food-carbs" placeholder="ک" min="0" step="0.1"><input type="number" class="form-control form-control-sm food-fat" placeholder="چ" min="0" step="0.1"></div></div>
+                                                    </div>
+                                                    <button type="button" class="btn btn-sm btn-outline-success w-100 mb-2" onclick="addFoodItem(this)"><i class="ri-add-line me-1"></i>افزودن به لیست مواد غذایی</button>
+                                                    <div class="meal-items-list"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4"><div class="mb-3"><label class="form-label small">زمان مصرف</label><input type="text" class="form-control form-control-sm meal-time-text" value="۷:۰۰ - ۸:۰۰"></div></div>
+                                                    <div class="col-lg-4"><div class="mb-3"><label class="form-label small">کالری وعده</label><input type="number" class="form-control form-control-sm meal-calories" value="350" min="0" max="2000"></div></div>
+                                                    <div class="col-lg-4"><div class="mb-3"><label class="form-label small">اولویت</label><select class="form-control form-control-sm meal-priority"><option value="required">ضروری</option><option value="optional">اختیاری</option><option value="if_possible">در صورت امکان</option></select></div></div>
+                                                </div>
                                                 <div class="mb-3">
                                                     <label class="form-label small">توضیحات</label>
-                                                    <textarea class="form-control form-control-sm" rows="2">صبحانه با پروتئین بالا برای شروع روز</textarea>
+                                                    <textarea class="form-control form-control-sm meal-description" rows="2">صبحانه با پروتئین بالا برای شروع روز</textarea>
                                                 </div>
                                             </div>
 
@@ -539,38 +412,28 @@
                                                         </span>
                                                         </div>
                                                     </div>
-                                                    <div class="d-flex gap-1">
-                                                        <button type="button" class="btn btn-sm btn-outline-primary">
-                                                            <i class="ri-clipboard-line"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeMeal(this)">
-                                                            <i class="ri-delete-bin-line"></i>
-                                                        </button>
-                                                    </div>
+                                                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeMeal(this)"><i class="ri-delete-bin-line"></i></button>
                                                 </div>
-
+                                                <div class="mb-3">
+                                                    <label class="form-label small">نام وعده</label>
+                                                    <input type="text" class="form-control form-control-sm meal-name" value="ناهار">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label small">مواد غذایی این وعده</label>
+                                                    <input type="hidden" class="meal-items-json" value="[]">
+                                                    <div class="row g-2 mb-2">
+                                                        <div class="col-md-4"><input type="text" class="form-control form-control-sm food-name" placeholder="نام ماده غذایی"></div>
+                                                        <div class="col-6 col-md-2"><div class="input-group input-group-sm"><input type="number" class="form-control food-weight" placeholder="150" min="0" step="1"><span class="input-group-text">گرم</span></div></div>
+                                                        <div class="col-6 col-md-2"><div class="input-group input-group-sm"><input type="number" class="form-control food-kcal" placeholder="کالری" min="0" step="1"><span class="input-group-text">kcal</span></div></div>
+                                                        <div class="col-12 col-md-4"><div class="d-flex gap-1"><input type="number" class="form-control form-control-sm food-protein" placeholder="پ" min="0" step="0.1"><input type="number" class="form-control form-control-sm food-carbs" placeholder="ک" min="0" step="0.1"><input type="number" class="form-control form-control-sm food-fat" placeholder="چ" min="0" step="0.1"></div></div>
+                                                    </div>
+                                                    <button type="button" class="btn btn-sm btn-outline-success w-100 mb-2" onclick="addFoodItem(this)"><i class="ri-add-line me-1"></i>افزودن به لیست مواد غذایی</button>
+                                                    <div class="meal-items-list"></div>
+                                                </div>
                                                 <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label small">نام وعده</label>
-                                                            <input type="text" class="form-control form-control-sm"
-                                                                   value="ناهار پروتئینی">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="mb-3">
-                                                            <label class="form-label small">زمان</label>
-                                                            <input type="text" class="form-control form-control-sm"
-                                                                   value="۱۲:۳۰ - ۱۳:۳۰">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="mb-3">
-                                                            <label class="form-label small">کالری</label>
-                                                            <input type="number" class="form-control form-control-sm"
-                                                                   value="550" min="0" max="2000">
-                                                        </div>
-                                                    </div>
+                                                    <div class="col-lg-4"><div class="mb-3"><label class="form-label small">زمان مصرف</label><input type="text" class="form-control form-control-sm meal-time-text" value="۱۲:۳۰ - ۱۳:۳۰"></div></div>
+                                                    <div class="col-lg-4"><div class="mb-3"><label class="form-label small">کالری وعده</label><input type="number" class="form-control form-control-sm meal-calories" value="550" min="0" max="2000"></div></div>
+                                                    <div class="col-lg-4"><div class="mb-3"><label class="form-label small">اولویت</label><select class="form-control form-control-sm meal-priority"><option value="required">ضروری</option><option value="optional">اختیاری</option><option value="if_possible">در صورت امکان</option></select></div></div>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -640,7 +503,7 @@
 
                                                 <div class="mb-3">
                                                     <label class="form-label small">توضیحات</label>
-                                                    <textarea class="form-control form-control-sm" rows="2">ناهار با پروتئین بالا و کربوهیدرات متوسط</textarea>
+                                                    <textarea class="form-control form-control-sm meal-description" rows="2">ناهار با پروتئین بالا و کربوهیدرات متوسط</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -686,25 +549,25 @@
                                                     <div class="row">
                                                         <div class="col-lg-6">
                                                             <div class="form-check mb-2">
-                                                                <input class="form-check-input" type="checkbox" id="edit-supplement1">
+                                                                <input class="form-check-input" type="checkbox" id="edit-supplement1" name="supplements[]" value="multivitamin" @checked(in_array('multivitamin', $plan->supplements ?? []))>
                                                                 <label class="form-check-label" for="edit-supplement1">مولتی ویتامین</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-check mb-2">
-                                                                <input class="form-check-input" type="checkbox" id="edit-supplement2" checked>
+                                                                <input class="form-check-input" type="checkbox" id="edit-supplement2" name="supplements[]" value="vitamin_d" @checked(in_array('vitamin_d', $plan->supplements ?? []))>
                                                                 <label class="form-check-label" for="edit-supplement2">ویتامین D</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-check mb-2">
-                                                                <input class="form-check-input" type="checkbox" id="edit-supplement3">
+                                                                <input class="form-check-input" type="checkbox" id="edit-supplement3" name="supplements[]" value="omega_3" @checked(in_array('omega_3', $plan->supplements ?? []))>
                                                                 <label class="form-check-label" for="edit-supplement3">امگا ۳</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-check mb-2">
-                                                                <input class="form-check-input" type="checkbox" id="edit-supplement4">
+                                                                <input class="form-check-input" type="checkbox" id="edit-supplement4" name="supplements[]" value="protein" @checked(in_array('protein', $plan->supplements ?? []))>
                                                                 <label class="form-check-label" for="edit-supplement4">پروتئین</label>
                                                             </div>
                                                         </div>
@@ -785,35 +648,6 @@
                             </div>
                         </div>
 
-                        <!-- دکمه‌های نهایی -->
-                        <div class="mt-3">
-                            <div class="row justify-content-between g-2">
-                                <div class="col-lg-4">
-                                    <div class="d-flex gap-2">
-                                        <button type="button" class="btn btn-outline-secondary w-100" onclick="saveAsDraft()">
-                                            <i class="ri-save-line me-1"></i>
-                                            ذخیره پیش‌نویس
-                                        </button>
-                                        <button type="button" class="btn btn-outline-danger w-100" onclick="confirmDelete()">
-                                            <i class="ri-delete-bin-line me-1"></i>
-                                            حذف
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="d-flex gap-2 justify-content-lg-end">
-                                        <a href="#" class="btn btn-light w-100">
-                                            <i class="ri-close-line me-1"></i>
-                                            انصراف
-                                        </a>
-                                        <button type="submit" class="btn btn-warning w-100">
-                                            <i class="ri-save-3-line me-1"></i>
-                                            ذخیره تغییرات
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </form>
                 </div>
             </div>
@@ -925,31 +759,80 @@
             }
         }
 
-        // ذخیره پیش‌نویس
-        function saveAsDraft() {
-            alert('تغییرات به عنوان پیش‌نویس ذخیره شد.');
+        // افزودن ماده غذایی به لیست وعده (همان منطق صفحه ایجاد)
+        function addFoodItem(button) {
+            var card = button.closest('.meal-card');
+            var name = (card.querySelector('.food-name') && card.querySelector('.food-name').value.trim()) || '';
+            if (!name) { alert('نام ماده غذایی را وارد کنید.'); return; }
+            var weight = parseFloat(card.querySelector('.food-weight') && card.querySelector('.food-weight').value) || 0;
+            var calories = parseFloat(card.querySelector('.food-kcal') && card.querySelector('.food-kcal').value) || 0;
+            var protein = parseFloat(card.querySelector('.food-protein') && card.querySelector('.food-protein').value) || 0;
+            var carbs = parseFloat(card.querySelector('.food-carbs') && card.querySelector('.food-carbs').value) || 0;
+            var fat = parseFloat(card.querySelector('.food-fat') && card.querySelector('.food-fat').value) || 0;
+            var hidden = card.querySelector('.meal-items-json');
+            var listEl = card.querySelector('.meal-items-list');
+            if (!hidden || !listEl) return;
+            var items = JSON.parse(hidden.value || '[]');
+            items.push({ name: name, weight: weight, calories: calories, protein: protein, carbs: carbs, fat: fat });
+            hidden.value = JSON.stringify(items);
+            var row = document.createElement('div');
+            row.className = 'ingredient-item d-flex justify-content-between align-items-center w-100 border rounded p-2 mb-2 small';
+            row.innerHTML = '<div><span class="fw-medium">' + name + '</span><small class="text-muted ms-2">' + (weight ? weight + 'g' : '') + '</small></div><div class="text-end"><span class="text-success">' + calories + ' kcal</span><br><span class="text-muted">' + protein + 'P • ' + carbs + 'C • ' + fat + 'F</span></div>';
+            listEl.appendChild(row);
+            if (card.querySelector('.food-name')) card.querySelector('.food-name').value = '';
+            if (card.querySelector('.food-weight')) card.querySelector('.food-weight').value = '';
+            if (card.querySelector('.food-kcal')) card.querySelector('.food-kcal').value = '';
+            if (card.querySelector('.food-protein')) card.querySelector('.food-protein').value = '';
+            if (card.querySelector('.food-carbs')) card.querySelector('.food-carbs').value = '';
+            if (card.querySelector('.food-fat')) card.querySelector('.food-fat').value = '';
         }
 
-        // تأیید بازنشانی
-        function confirmReset() {
-            if (confirm('آیا می‌خواهید همه تغییرات را بازنشانی کنید؟')) {
-                location.reload();
-            }
-        }
-
-        // تأیید حذف
-        function confirmDelete() {
-            if (confirm('آیا از حذف این برنامه غذایی مطمئن هستید؟ این عمل غیرقابل بازگشت است.')) {
-                alert('برنامه غذایی حذف شد.');
-                // در حالت واقعی، درخواست DELETE ارسال می‌شود
-            }
-        }
-
-        // ارسال فرم ویرایش
+        // ارسال فرم ویرایش با PUT و payload مشابه صفحه ایجاد
         document.getElementById('nutrition-edit-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('تغییرات با موفقیت ذخیره شدند.');
-            // در حالت واقعی، درخواست PUT ارسال می‌شود
+            var form = this;
+            var days = [{ day_index: 0, title: 'روز ۱', notes: '', meals: [] }];
+            document.querySelectorAll('#meals-container .meal-card').forEach(function(card) {
+                var itemsJson = card.querySelector('.meal-items-json');
+                var items = itemsJson ? JSON.parse(itemsJson.value || '[]') : [];
+                var nameEl = card.querySelector('.meal-name');
+                var timeEl = card.querySelector('.meal-time-text');
+                var calEl = card.querySelector('.meal-calories');
+                var prioEl = card.querySelector('.meal-priority');
+                var descEl = card.querySelector('.meal-description');
+                days[0].meals.push({
+                    name: (nameEl && nameEl.value) || 'وعده',
+                    time_text: (timeEl && timeEl.value) || '',
+                    calories: parseInt((calEl && calEl.value) || 0, 10),
+                    priority: (prioEl && prioEl.value) || 'required',
+                    description: (descEl && descEl.value) || '',
+                    items: items
+                });
+            });
+            var nameInput = document.getElementById('program-name') || form.querySelector('[name="name"]');
+            var payload = {
+                _token: form.querySelector('input[name="_token"]').value,
+                _method: 'PUT',
+                name: (nameInput && nameInput.value) ? nameInput.value : '',
+                goal: form.querySelector('[name="goal"]') && form.querySelector('[name="goal"]').value,
+                level: form.querySelector('[name="level"]') && form.querySelector('[name="level"]').value,
+                duration_days: form.querySelector('[name="duration_days"]') && form.querySelector('[name="duration_days"]').value,
+                daily_calories: form.querySelector('[name="daily_calories"]') && form.querySelector('[name="daily_calories"]').value,
+                description: form.querySelector('[name="description"]') && form.querySelector('[name="description"]').value,
+                notes: form.querySelector('[name="notes"]') && form.querySelector('[name="notes"]').value,
+                supplements: (function() { var a = []; form.querySelectorAll('input[name="supplements[]"]:checked').forEach(function(el) { a.push(el.value); }); return a; })(),
+                restrictions: (function() { var a = []; var sel = form.querySelector('select[name="restrictions[]"]'); if (sel) for (var i = 0; i < sel.options.length; i++) if (sel.options[i].selected) a.push(sel.options[i].value); return a; })(),
+                days: days
+            };
+            fetch(form.action, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': payload._token },
+                body: JSON.stringify(payload)
+            }).then(function(r) { return r.json().then(function(data) { return { ok: r.ok, data: data }; }).catch(function() { return { ok: r.ok, data: null }; }); })
+              .then(function(res) {
+                if (res.ok && res.data && res.data.success) window.location.href = '{{ route("plans.library") }}?saved=1';
+                else window.location.href = '{{ route("plans.library") }}';
+            }).catch(function() { window.location.href = '{{ route("plans.library") }}'; });
         });
     </script>
 @endsection
