@@ -371,13 +371,13 @@
                 <div class="alert alert-success alert-dismissible fade show rounded-3 shadow-sm" role="alert">
                     <i class="ri-checkbox-circle-line me-2"></i>{{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="بستن"></button>
-                </div>
+                        </div>
             @endif
             @if($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm" role="alert">
                     <i class="ri-error-warning-line me-2"></i>{{ $errors->first() }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="بستن"></button>
-                </div>
+                        </div>
             @endif
             <!-- Page Title + Header compact -->
             <div class="row animate-fade-in">
@@ -394,7 +394,7 @@
                                                style="font-size: 1.15rem; font-weight: 600; border-radius: 10px;"
                                                oninput="workoutPlanForm.updateProgramName(this.value)">
                                     </div>
-                                </div>
+                                    </div>
                                 <div class="d-flex flex-wrap gap-2 flex-shrink-0">
                                     <button type="button" class="btn btn-outline-primary btn-sm d-none d-md-inline-flex" onclick="workoutPlanForm.sendProgram()">
                                         <i class="ri-send-plane-line me-1"></i>ارسال
@@ -402,8 +402,8 @@
                                     <button class="btn btn-primary btn-sm" onclick="workoutPlanForm.saveProgram()">
                                         <i class="ri-save-3-line me-1"></i>ذخیره برنامه
                                     </button>
-                                </div>
-                            </div>
+                                            </div>
+                                        </div>
                             <div class="mt-2">
                                 <textarea class="form-control form-control-sm border-0 bg-light hero-description-input"
                                           rows="2"
@@ -469,7 +469,7 @@
                                 <button class="btn btn-sm btn-outline-secondary" onclick="workoutPlanForm.showAllExercises()">نمایش همه</button>
                             </div>
                         </div>
-                    </div>
+                            </div>
 
                     {{-- خلاصه برنامه (تعداد هفته، سطح، کالری تخمینی) --}}
                     <div class="card shadow-sm mb-3 animate-slide-in" style="animation-delay: 0.35s;">
@@ -478,7 +478,7 @@
                                 <i class="ri-file-info-line me-2 text-info"></i>
                                 خلاصه برنامه
                             </h5>
-                        </div>
+                            </div>
                         <div class="card-body py-2">
                             <div class="mb-2">
                                 <label class="form-label small mb-0">تعداد هفته</label>
@@ -536,9 +536,9 @@
                             <div class="mt-2">
                                 <h6 class="mb-2 small">گروه‌های عضلانی</h6>
                                 <div class="d-flex flex-wrap gap-1" id="muscle-groups"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
                     {{-- تجهیزات مورد نیاز --}}
                     <div class="card shadow-sm mb-3 animate-slide-in" style="animation-delay: 0.45s;">
@@ -547,7 +547,7 @@
                                 <i class="ri-tools-line me-2 text-secondary"></i>
                                 تجهیزات مورد نیاز
                             </h5>
-                        </div>
+                                </div>
                         <div class="card-body py-2">
                             <small class="text-muted d-block mb-1" style="font-size: 0.75rem;">
                                 مثال: دمبل، هالتر، میز پرس، سیمکش...
@@ -557,8 +557,8 @@
                                       rows="2"
                                       placeholder="تجهیزات پیشنهادی برای اجرای این برنامه را بنویسید..."
                                       style="font-size: 0.8rem; resize: vertical;"></textarea>
+                            </div>
                         </div>
-                    </div>
 
                     {{-- نکات ایمنی --}}
                     <div class="card shadow-sm mb-3 animate-slide-in" style="animation-delay: 0.5s;">
@@ -592,10 +592,10 @@
                                             <option>پا</option>
                                             <option>شانه</option>
                                             <option>کامل بدن</option>
-                                        </select>
-                                    </div>
+                                            </select>
+                                        </div>
                                     <input type="text" id="day-title-input" class="form-control form-control-sm" style="width: 140px;" placeholder="عنوان روز">
-                                </div>
+                                    </div>
                                 <div class="d-flex gap-1">
                                     <button class="btn btn-sm btn-outline-danger" onclick="workoutPlanForm.clearCurrentDay()"><i class="ri-delete-bin-line me-1"></i>پاک کردن</button>
                                     <button class="btn btn-sm btn-success" onclick="workoutPlanForm.markDayComplete()"><i class="ri-check-double-line me-1"></i>تکمیل</button>
@@ -668,38 +668,38 @@
                     <div class="d-flex align-items-center gap-2 mb-2">
                         <div class="drag-handle text-muted" style="cursor: move;"><i class="ri-drag-move-2-line"></i></div>
                         <input type="text" class="form-control form-control-sm border-0 exercise-title bg-transparent px-0" placeholder="نام تمرین" style="font-weight: 600; font-size: 1rem;">
-                    </div>
+                        </div>
                     <div class="d-flex flex-wrap align-items-center gap-2">
                         <select class="form-select form-select-sm muscle-select" style="width: 110px;">
-                            <option value="chest">سینه</option>
-                            <option value="back">پشت</option>
-                            <option value="legs">پا</option>
-                            <option value="shoulders">شانه</option>
-                            <option value="arms">بازو</option>
-                            <option value="core">میان تنه</option>
-                        </select>
+                                <option value="chest">سینه</option>
+                                <option value="back">پشت</option>
+                                <option value="legs">پا</option>
+                                <option value="shoulders">شانه</option>
+                                <option value="arms">بازو</option>
+                                <option value="core">میان تنه</option>
+                            </select>
                         <input type="number" class="form-control form-control-sm quick-input" placeholder="ست" style="width: 55px;" min="1" max="10">
-                        <span class="text-muted">×</span>
+                                <span class="text-muted">×</span>
                         <input type="text" class="form-control form-control-sm quick-input" placeholder="تکرار" style="width: 70px;">
                         <div class="input-group input-group-sm" style="width: 85px;">
                             <span class="input-group-text py-0"><i class="ri-timer-line"></i></span>
                             <input type="text" class="form-control py-0" placeholder="استراحت" value="90s">
+                            </div>
                         </div>
-                    </div>
-                </div>
+                            </div>
                 <div class="d-flex gap-1 flex-shrink-0">
                     <button class="btn btn-sm btn-outline-primary p-1" onclick="workoutPlanForm.editExerciseSets(this)" title="ست‌ها"><i class="ri-settings-3-line"></i></button>
                     <button class="btn btn-sm btn-outline-secondary p-1" onclick="workoutPlanForm.duplicateExercise(this)" title="کپی"><i class="ri-file-copy-line"></i></button>
                     <button class="btn btn-sm btn-outline-danger p-1" onclick="workoutPlanForm.removeExercise(this)" title="حذف"><i class="ri-delete-bin-line"></i></button>
-                </div>
-            </div>
+                        </div>
+                    </div>
             <div class="set-row">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <h6 class="mb-0 small">جزئیات ست‌ها</h6>
                     <button class="btn btn-sm btn-link p-0 small" onclick="workoutPlanForm.addSet(this)"><i class="ri-add-line me-1"></i>افزودن ست</button>
                 </div>
                 <div class="row g-2" id="sets-container"></div>
-            </div>
+                </div>
             <div class="mt-2">
                 <textarea class="form-control form-control-sm" rows="1" placeholder="نکات اجرایی (اختیاری)" style="resize: none;"></textarea>
             </div>
@@ -776,7 +776,7 @@
     <script src="{{ asset('assets/js/pages/workout-plan-form.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/css/icons.min.css') }}">
-    <style>
+                    <style>
         @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         .text-gradient { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
