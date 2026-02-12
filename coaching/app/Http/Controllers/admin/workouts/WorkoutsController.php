@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin\workouts;
+namespace App\Http\Controllers\admin\workouts;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WorkoutPlan\StoreWorkoutPlanRequest;
 use App\Models\WorkoutExercise;
 use App\Models\WorkoutPlan;
-use App\Models\WorkoutPlanDay;
-use App\Models\WorkoutPlanDayExercise;
 use App\Services\Workout\WorkoutPlanService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -27,20 +25,11 @@ class WorkoutsController extends Controller
      */
     public function add(): View
     {
-        $exercises = WorkoutExercise::with(['muscleSubGroup.muscleGroup'])
-            ->orderBy('sort_order')
-            ->get()
-            ->map(fn ($ex) => [
-                'id' => $ex->id,
-                'name' => $ex->name,
-                'muscle' => $ex->muscleSubGroup?->muscleGroup?->name ?? '—',
-                'sub_group' => $ex->muscleSubGroup?->name ?? '—',
-            ]);
-
         return view('admin.plans.workout.create', [
-            'exerciseLibrary' => $exercises,
+            'exerciseLibrary' => $this->getExerciseLibrary(),
         ]);
     }
+
     /**
      * ذخیره برنامه ورزشی جدید
      */
@@ -81,20 +70,10 @@ class WorkoutsController extends Controller
             return redirect()->route('plans.library')->with('error', 'برنامه یافت نشد.');
         }
 
-        $exercises = WorkoutExercise::with(['muscleSubGroup.muscleGroup'])
-            ->orderBy('sort_order')
-            ->get()
-            ->map(fn ($ex) => [
-                'id' => $ex->id,
-                'name' => $ex->name,
-                'muscle' => $ex->muscleSubGroup?->muscleGroup?->name ?? '—',
-                'sub_group' => $ex->muscleSubGroup?->name ?? '—',
-            ]);
-
         return view('admin.plans.workout.create', [
-            'exerciseLibrary' => $exercises,
-            'plan' => $plan,
-            'isEdit' => true,
+            'exerciseLibrary' => $this->getExerciseLibrary(),
+            'plan'            => $plan,
+            'isEdit'          => true,
         ]);
     }
 
@@ -132,8 +111,21 @@ class WorkoutsController extends Controller
             'plan' => $plan,
         ]);
     }
-    public function destroy(string $id)
+
+    /**
+     * کتابخانه تمرینات برای فرم ساخت/ویرایش (یک منبع، بدون تکرار).
+     */
+    private function getExerciseLibrary(): array
     {
-        //
+        return WorkoutExercise::with(['muscleSubGroup.muscleGroup'])
+            ->orderBy('sort_order')
+            ->get()
+            ->map(fn ($ex) => [
+                'id'         => $ex->id,
+                'name'       => $ex->name,
+                'muscle'     => $ex->muscleSubGroup?->muscleGroup?->name ?? '—',
+                'sub_group'  => $ex->muscleSubGroup?->name ?? '—',
+            ])
+            ->all();
     }
 }
