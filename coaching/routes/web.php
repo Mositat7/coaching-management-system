@@ -8,7 +8,7 @@ use App\Http\Controllers\admin\plans\PlanController;
 use App\Http\Controllers\admin\workouts\category\CategoryController;
 use App\Http\Controllers\admin\workouts\WorkoutsController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\admin\Orders\OrdersController;
 // ======================
 // Auth Routes for Coaches
 // ======================
@@ -80,6 +80,8 @@ Route::middleware('auth.coach')->group(function () {
     Route::get('/Coach-add', [CoachController::class, 'add'])->name('Coach.add');
     Route::post('/Coach-store', [CoachController::class, 'store'])->name('Coach.store');
     Route::delete('/Coach-delete/{id}', [CoachController::class, 'destroy'])->name('Coach.destroy');
+// سفارشات
+    Route::get('/Orders', [OrdersController::class, 'index'])->name('orders.index');
 });
 
 // ======================
