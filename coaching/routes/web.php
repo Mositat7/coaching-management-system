@@ -46,6 +46,7 @@ Route::middleware('auth.coach')->group(function () {
     Route::post('/nutrition-add', [NutritionController::class, 'store'])->name('nutrition.store');
     Route::get('/nutrition-show/{plan}', [NutritionController::class, 'show'])->name('nutrition.show');
     Route::get('/nutrition-edit/{plan}', [NutritionController::class, 'edit'])->name('nutrition.edit');
+    Route::put('/nutrition-edit/{plan}', [NutritionController::class, 'update'])->name('nutrition.update');
     
     // کتگوری عضلات
     Route::get('/Workouts-category', [CategoryController::class, 'index'])->name('Workouts.category');
