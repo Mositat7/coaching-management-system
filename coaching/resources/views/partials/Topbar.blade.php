@@ -118,11 +118,11 @@
 
             <!-- Orders -->
             <li class="nav-item">
-                <a class="nav-link" href="orders.html">
-                    <span class="nav-icon"><i class="ri-shopping-cart-line"></i></span>
-                    <span class="nav-text">سفارشات</span>
-                </a>
-            </li>
+    <a class="nav-link" href="{{ route('orders.index') }}">
+        <span class="nav-icon"><i class="ri-shopping-cart-line"></i></span>
+        <span class="nav-text">سفارشات</span>
+    </a>
+</li>
 
             <!-- Transactions -->
             <li class="nav-item">
