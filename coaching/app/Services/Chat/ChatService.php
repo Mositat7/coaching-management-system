@@ -80,7 +80,7 @@ class ChatService
     }
 
     /**
-     * علامت‌زدن پیام‌های یک مکالمه به عنوان خوانده‌شده
+     * علامت‌زدن پیام‌های یک مکالمه به عنوان خوانده‌شده (توسط مربی)
      */
     public function markAsRead(int $coachId, int $memberId): void
     {
@@ -89,5 +89,125 @@ class ChatService
             ->where('is_from_coach', false)
             ->whereNull('read_at')
             ->update(['read_at' => now()]);
+    }
+
+    /**
+     * پیام‌های مکالمه شاگرد با مربی خودش
+     */
+    public function getMessagesForMember(int $memberId, int $perPage = 50): LengthAwarePaginator
+    {
+        $member = Member::find($memberId);
+        if (! $member || ! $member->coach_id) {
+            return new LengthAwarePaginator([], 0, $perPage);
+        }
+
+        return $this->getMessages($member->coach_id, $memberId, $perPage);
+    }
+
+    /**
+     * ارسال پیام از طرف شاگرد
+     */
+    public function sendFromMember(int $memberId, string $body): ChatMessage
+    {
+        $member = Member::find($memberId);
+        if (! $member || ! $member->coach_id) {
+            throw new \InvalidArgumentException('عضو یا مربی معتبر نیست.');
+        }
+
+        return ChatMessage::create([
+            'coach_id'      => $member->coach_id,
+            'member_id'     => $memberId,
+            'body'          => $body,
+            'is_from_coach' => false,
+        ]);
+    }
+
+    /**
+     * علامت‌زدن پیام‌های مربی به عنوان خوانده‌شده توسط شاگرد
+     */
+    public function markCoachMessagesAsReadByMember(int $memberId): void
+    {
+        $member = Member::find($memberId);
+        if (! $member || ! $member->coach_id) {
+            return;
+        }
+
+        ChatMessage::where('coach_id', $member->coach_id)
+            ->where('member_id', $memberId)
+            ->where('is_from_coach', true)
+            ->whereNull('read_at')
+            ->update(['read_at' => now()]);
+    }
+
+    /**
+     * ویرایش پیام توسط مربی (فقط پیام‌های خودش)
+     */
+    public function updateByCoach(int $messageId, int $coachId, string $body): ?ChatMessage
+    {
+        $msg = ChatMessage::where('id', $messageId)
+            ->where('coach_id', $coachId)
+            ->where('is_from_coach', true)
+            ->first();
+
+        if (! $msg) {
+            return null;
+        }
+
+        $msg->update(['body' => $body, 'edited_at' => now()]);
+
+        return $msg->fresh();
+    }
+
+    /**
+     * حذف پیام توسط مربی (فقط پیام‌های خودش)
+     */
+    public function deleteByCoach(int $messageId, int $coachId): bool
+    {
+        $msg = ChatMessage::where('id', $messageId)
+            ->where('coach_id', $coachId)
+            ->where('is_from_coach', true)
+            ->first();
+
+        if (! $msg) {
+            return false;
+        }
+
+        return $msg->delete();
+    }
+
+    /**
+     * ویرایش پیام توسط شاگرد (فقط پیام‌های خودش)
+     */
+    public function updateByMember(int $messageId, int $memberId, string $body): ?ChatMessage
+    {
+        $msg = ChatMessage::where('id', $messageId)
+            ->where('member_id', $memberId)
+            ->where('is_from_coach', false)
+            ->first();
+
+        if (! $msg) {
+            return null;
+        }
+
+        $msg->update(['body' => $body, 'edited_at' => now()]);
+
+        return $msg->fresh();
+    }
+
+    /**
+     * حذف پیام توسط شاگرد (فقط پیام‌های خودش)
+     */
+    public function deleteByMember(int $messageId, int $memberId): bool
+    {
+        $msg = ChatMessage::where('id', $messageId)
+            ->where('member_id', $memberId)
+            ->where('is_from_coach', false)
+            ->first();
+
+        if (! $msg) {
+            return false;
+        }
+
+        return $msg->delete();
     }
 }
