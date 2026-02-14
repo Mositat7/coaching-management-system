@@ -62,4 +62,44 @@ class Jalali
 
         return [$jy, $jm, $jd];
     }
+
+    /** نام ماه‌های شمسی */
+    protected static array $monthNames = [
+        1  => 'فروردین', 2  => 'اردیبهشت', 3  => 'خرداد', 4  => 'تیر', 5  => 'مرداد', 6  => 'شهریور',
+        7  => 'مهر', 8  => 'آبان', 9  => 'آذر', 10 => 'دی', 11 => 'بهمن', 12 => 'اسفند',
+    ];
+
+    /**
+     * برچسب تاریخ برای چت: امروز، دیروز، پریروز، یا «۱۴ فروردین»
+     */
+    public static function chatDateLabel(?Carbon $date): string
+    {
+        if (! $date) {
+            return '';
+        }
+        $today = $date->format('Y-m-d') === now()->format('Y-m-d');
+        if ($today) {
+            return 'امروز';
+        }
+        $yesterday = $date->format('Y-m-d') === now()->subDay()->format('Y-m-d');
+        if ($yesterday) {
+            return 'دیروز';
+        }
+        $dayBefore = $date->format('Y-m-d') === now()->subDays(2)->format('Y-m-d');
+        if ($dayBefore) {
+            return 'پریروز';
+        }
+        $j = self::gregorianToJalali(
+            (int) $date->format('Y'),
+            (int) $date->format('n'),
+            (int) $date->format('j')
+        );
+        if (! $j) {
+            return $date->format('Y/m/d');
+        }
+        [$jy, $jm, $jd] = $j;
+        $monthName = self::$monthNames[$jm] ?? (string) $jm;
+
+        return (string) $jd . ' ' . $monthName;
+    }
 }
