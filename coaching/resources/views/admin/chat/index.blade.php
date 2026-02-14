@@ -40,8 +40,21 @@
     .chat-msg-bubble { padding: 10px 14px; border-radius: 14px; font-size: 0.9rem; line-height: 1.5; position: relative; color: var(--bs-body-color); }
     .chat-msg.me .chat-msg-bubble { background: var(--bs-primary); color: #fff; border-bottom-left-radius: 4px; }
     .chat-msg.them .chat-msg-bubble { background: var(--bs-secondary-bg); border: 1px solid var(--bs-border-color); color: var(--bs-body-color); border-bottom-right-radius: 4px; }
-    .chat-msg-time { font-size: 0.7rem; color: var(--bs-secondary-color); margin-top: 4px; }
-    .chat-msg.me .chat-msg-time { text-align: left; color: rgba(255,255,255,.85); }
+    .chat-msg-meta { margin-top: 4px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .chat-msg-time { font-size: 0.75rem; color: var(--bs-secondary-color); min-height: 1.2em; }
+    .chat-msg.me .chat-msg-time { color: rgba(255,255,255,.9); }
+    .chat-msg-ticks { display: inline-flex; align-items: center; color: rgba(255,255,255,.9); font-size: 0.9rem; margin-right: 2px; }
+    .chat-msg-ticks.sent { opacity: .85; }
+    .chat-msg-ticks.seen { color: #6ab2f2; }
+    .chat-msg-edited { font-size: 0.65rem; color: rgba(255,255,255,.7); margin-top: 1px; font-style: italic; width: 100%; }
+    .chat-msg-more-wrap { position: relative; margin-right: auto; }
+    .chat-msg-more { width: 24px; height: 24px; border: none; background: transparent; color: rgba(255,255,255,.75); cursor: pointer; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; padding: 0; font-size: 1.1rem; }
+    .chat-msg-more:hover { background: rgba(255,255,255,.15); color: #fff; }
+    .chat-msg-dropdown { position: absolute; bottom: 100%; right: 0; margin-bottom: 4px; background: var(--bs-body-bg); border: 1px solid var(--bs-border-color); border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,.15); padding: 4px; min-width: 100px; z-index: 50; display: none; }
+    .chat-msg-dropdown.show { display: block; }
+    .chat-msg-dropdown button { width: 100%; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: none; background: none; cursor: pointer; border-radius: 6px; font-size: 0.85rem; color: var(--bs-body-color); text-align: right; }
+    .chat-msg-dropdown button:hover { background: var(--bs-secondary-bg); }
+    .chat-msg-dropdown button i { font-size: 1rem; }
     .chat-input-wrap { padding: 16px 20px; background: var(--bs-secondary-bg); border-top: 1px solid var(--bs-border-color); flex-shrink: 0; }
     .chat-input-row { display: flex; gap: 10px; align-items: flex-end; }
     .chat-input { flex: 1; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--bs-border-color); font-size: 0.95rem; resize: none; min-height: 46px; max-height: 120px; background: var(--bs-body-bg); color: var(--bs-body-color); }
@@ -52,6 +65,11 @@
     .chat-send:disabled { opacity: .6; cursor: not-allowed; }
     .chat-empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--bs-secondary-color); padding: 24px; text-align: center; }
     .chat-empty-state i { font-size: 4rem; margin-bottom: 16px; opacity: .5; }
+    .chat-date-sep { text-align: center; margin: 16px 0 8px; }
+    .chat-date-sep span { font-size: 0.75rem; color: var(--bs-secondary-color); background: var(--bs-secondary-bg); padding: 4px 12px; border-radius: 20px; }
+    .chat-sticker-bar { padding: 8px 0; border-bottom: 1px solid var(--bs-border-color); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .chat-sticker-bar .sticker-btn { width: 36px; height: 36px; border: none; background: transparent; border-radius: 8px; font-size: 1.4rem; cursor: pointer; transition: background .15s; }
+    .chat-sticker-bar .sticker-btn:hover { background: var(--bs-secondary-bg); }
     @media (max-width: 991px) {
         .chat-sidebar { width: 100%; max-width: 100%; }
         .chat-layout { flex-direction: column; }
@@ -138,6 +156,16 @@
                                 </div>
                             </div>
                             <div class="chat-input-wrap" id="chatInputWrap" style="display: none;">
+                                <div class="chat-sticker-bar" id="chatStickerBar">
+                                    <button type="button" class="sticker-btn" data-sticker="👍" title="👍">👍</button>
+                                    <button type="button" class="sticker-btn" data-sticker="❤️" title="❤️">❤️</button>
+                                    <button type="button" class="sticker-btn" data-sticker="🔥" title="🔥">🔥</button>
+                                    <button type="button" class="sticker-btn" data-sticker="💪" title="💪">💪</button>
+                                    <button type="button" class="sticker-btn" data-sticker="🙏" title="🙏">🙏</button>
+                                    <button type="button" class="sticker-btn" data-sticker="✅" title="✅">✅</button>
+                                    <button type="button" class="sticker-btn" data-sticker="😊" title="😊">😊</button>
+                                    <button type="button" class="sticker-btn" data-sticker="🎉" title="🎉">🎉</button>
+                                </div>
                                 <div class="chat-input-row">
                                     <textarea class="chat-input" id="chatInput" placeholder="پیام خود را بنویسید..." rows="1"></textarea>
                                     <button type="button" class="chat-send" id="chatSend" aria-label="ارسال">
@@ -173,26 +201,178 @@
 
     var currentMemberId = null;
     var currentMemberName = '';
+    var maxMessageId = 0;
+    var pollIntervalId = null;
+    var pollIntervalMs = 800;
     var urlMessages = '{{ url("chat/messages") }}';
     var urlSend = '{{ url("chat/send") }}';
+    var urlMessageBase = '{{ url("chat/message") }}';
     var csrfToken = '{{ csrf_token() }}';
 
     function isMobile() { return window.innerWidth <= 991; }
 
-    function escapeHtml(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+    function escapeHtml(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/\n/g, '<br>'); }
+
+    function renderDateSep(label) {
+        var div = document.createElement('div');
+        div.className = 'chat-date-sep';
+        div.innerHTML = '<span>' + escapeHtml(label || '') + '</span>';
+        return div;
+    }
+
+    function getTimeLabel(msg) {
+        if (msg && msg.created_at) return msg.created_at;
+        var d = new Date();
+        var h = d.getHours();
+        var m = d.getMinutes();
+        return (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m);
+    }
 
     function renderMessage(msg) {
         var isMe = !!msg.is_from_coach;
         var letter = isMe ? 'م' : (currentMemberName ? currentMemberName.charAt(0) : '—');
+        var timeStr = getTimeLabel(msg);
         var div = document.createElement('div');
         div.className = 'chat-msg ' + (isMe ? 'me' : 'them');
-        div.innerHTML = '<div class="chat-msg-avatar">' + escapeHtml(letter) + '</div><div><div class="chat-msg-bubble">' + escapeHtml(msg.body) + '</div><div class="chat-msg-time">' + escapeHtml(msg.created_at) + '</div></div>';
+        if (msg.id) div.setAttribute('data-message-id', msg.id);
+        var bodyHtml = (msg.body || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+        var ticksHtml = '';
+        if (isMe) {
+            if (msg.read_at) ticksHtml = '<span class="chat-msg-ticks seen" title="مشاهده شده"><i class="ri-check-double-line"></i></span>';
+            else ticksHtml = '<span class="chat-msg-ticks sent" title="ارسال شده"><i class="ri-check-line"></i></span>';
+        }
+        var editedHtml = (msg.edited_at) ? '<div class="chat-msg-edited">ویرایش شده</div>' : '';
+        var moreHtml = '';
+        if (isMe && msg.id) {
+            moreHtml = '<div class="chat-msg-more-wrap"><button type="button" class="chat-msg-more" title="گزینه‌ها" aria-label="گزینه‌ها"><i class="ri-more-2-fill"></i></button><div class="chat-msg-dropdown"><button type="button" class="chat-msg-dropdown-edit" data-id="' + msg.id + '"><i class="ri-edit-line"></i> ویرایش</button><button type="button" class="chat-msg-dropdown-delete" data-id="' + msg.id + '"><i class="ri-delete-bin-line"></i> حذف</button></div></div>';
+        }
+        var metaHtml = '<div class="chat-msg-meta">' + (isMe ? moreHtml : '') + '<span class="chat-msg-time">' + escapeHtml(timeStr) + '</span>' + ticksHtml + '</div>';
+        div.innerHTML = '<div class="chat-msg-avatar">' + escapeHtml(letter) + '</div><div><div class="chat-msg-bubble">' + bodyHtml + '</div>' + metaHtml + editedHtml + '</div>';
+        if (isMe && msg.id) {
+            var wrap = div.querySelector('.chat-msg-more-wrap');
+            var moreBtn = div.querySelector('.chat-msg-more');
+            var drop = div.querySelector('.chat-msg-dropdown');
+            var editBtn = div.querySelector('.chat-msg-dropdown-edit');
+            var delBtn = div.querySelector('.chat-msg-dropdown-delete');
+            if (moreBtn && drop) {
+                moreBtn.addEventListener('click', function(e) { e.stopPropagation(); drop.classList.toggle('show'); });
+                drop.addEventListener('click', function(e) { e.stopPropagation(); });
+            }
+            if (editBtn) editBtn.addEventListener('click', function() { drop.classList.remove('show'); doEditMessage(this.getAttribute('data-id'), div); });
+            if (delBtn) delBtn.addEventListener('click', function() { drop.classList.remove('show'); doDeleteMessage(this.getAttribute('data-id'), div); });
+        }
         return div;
     }
 
+    function doEditMessage(id, msgEl) {
+        var bubble = msgEl.querySelector('.chat-msg-bubble');
+        var currentBody = bubble ? (bubble.innerText || bubble.textContent || '') : '';
+        var body = prompt('متن جدید پیام:', currentBody);
+        if (body === null || body.trim() === '') return;
+        fetch(urlMessageBase + '/' + id, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': csrfToken },
+            body: JSON.stringify({ body: body.trim(), _token: csrfToken })
+        }).then(function(r) { return r.json(); }).then(function(data) {
+            if (data.message) {
+                var bubble = msgEl.querySelector('.chat-msg-bubble');
+                if (bubble) bubble.innerHTML = (data.message.body || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+                var editedZone = msgEl.querySelector('.chat-msg-edited');
+                if (!editedZone && data.message.edited_at) {
+                    var wrap = msgEl.querySelector('.chat-msg-bubble').parentNode;
+                    var ed = document.createElement('div'); ed.className = 'chat-msg-edited'; ed.textContent = 'ویرایش شده';
+                    wrap.appendChild(ed);
+                }
+            }
+        }).catch(function() { alert('خطا در ویرایش'); });
+    }
+
+    function doDeleteMessage(id, msgEl) {
+        if (!confirm('این پیام حذف شود؟')) return;
+        fetch(urlMessageBase + '/' + id, {
+            method: 'DELETE',
+            headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': csrfToken }
+        }).then(function(r) { return r.json(); }).then(function(data) {
+            if (data.success && msgEl && msgEl.parentNode) msgEl.remove();
+        }).catch(function() { alert('خطا در حذف'); });
+    }
+
+    function renderMessagesGrouped(messages) {
+        if (!messages || messages.length === 0) return;
+        var lastDate = null;
+        messages.forEach(function (msg) {
+            var date = msg.created_date || '';
+            var label = msg.date_label || date;
+            if (date && date !== lastDate) {
+                var sep = renderDateSep(label);
+                sep.setAttribute('data-date', date);
+                chatMessages.appendChild(sep);
+                lastDate = date;
+            }
+            chatMessages.appendChild(renderMessage(msg));
+        });
+    }
+
+    function appendNewMessage(msg, dateLabel) {
+        var lastSep = chatMessages.querySelector('.chat-date-sep:last-child');
+        var lastDate = lastSep ? (lastSep.getAttribute('data-date') || '') : '';
+        var msgDate = msg.created_date || '';
+        if (msgDate && msgDate !== lastDate) {
+            var sep = renderDateSep(dateLabel || msg.date_label || msgDate);
+            sep.setAttribute('data-date', msgDate);
+            chatMessages.appendChild(sep);
+        }
+        chatMessages.appendChild(renderMessage(msg));
+    }
+
+    function stopPolling() {
+        if (pollIntervalId) {
+            clearInterval(pollIntervalId);
+            pollIntervalId = null;
+        }
+    }
+
+    function startPolling() {
+        stopPolling();
+        if (!currentMemberId) return;
+        pollIntervalId = setInterval(pollForNewMessages, pollIntervalMs);
+    }
+
+    function updateTicksToSeen(messageId) {
+        var el = chatMessages.querySelector('.chat-msg[data-message-id="' + messageId + '"]');
+        if (!el) return;
+        var ticks = el.querySelector('.chat-msg-ticks');
+        if (ticks && !ticks.classList.contains('seen')) {
+            ticks.className = 'chat-msg-ticks seen';
+            ticks.title = 'مشاهده شده';
+            ticks.innerHTML = '<i class="ri-check-double-line"></i>';
+        }
+    }
+
+    function pollForNewMessages() {
+        if (!currentMemberId || document.hidden) return;
+        fetch(urlMessages + '/' + currentMemberId, { headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                var messages = data.messages || [];
+                var newOnes = messages.filter(function (m) { return m.id > maxMessageId; });
+                newOnes.forEach(function (msg) {
+                    appendNewMessage(msg, msg.date_label);
+                    if (msg.id > maxMessageId) maxMessageId = msg.id;
+                });
+                messages.forEach(function (m) {
+                    if (m.is_from_coach && m.read_at) updateTicksToSeen(m.id);
+                });
+                if (newOnes.length > 0) chatMessages.scrollTop = chatMessages.scrollHeight;
+            })
+            .catch(function () {});
+    }
+
     function loadMessages(memberId, memberName) {
+        stopPolling();
         currentMemberId = memberId;
         currentMemberName = memberName || '';
+        maxMessageId = 0;
         chatMainName.textContent = memberName || 'مکالمه';
         chatMainAvatar.textContent = memberName ? memberName.charAt(0) : '—';
         chatMainStatus.innerHTML = '<i class="ri-record-circle-fill me-1"></i> آنلاین';
@@ -207,15 +387,23 @@
             .then(function (r) { return r.json(); })
             .then(function (data) {
                 chatMessages.innerHTML = '';
-                (data.messages || []).forEach(function (msg) {
-                    chatMessages.appendChild(renderMessage(msg));
-                });
+                var messages = data.messages || [];
+                renderMessagesGrouped(messages);
+                messages.forEach(function (m) { if (m.id > maxMessageId) maxMessageId = m.id; });
                 chatMessages.scrollTop = chatMessages.scrollHeight;
+                startPolling();
             })
             .catch(function () {
                 chatMessages.innerHTML = '<div class="chat-empty-state"><p class="mb-0 text-danger">خطا در بارگذاری پیام‌ها</p></div>';
             });
     }
+
+    document.querySelectorAll('#chatStickerBar .sticker-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var sticker = this.getAttribute('data-sticker') || '';
+            if (sticker && input) input.value = (input.value || '') + sticker;
+        });
+    });
 
     var startNewEl = document.getElementById('chatStartNew');
     if (startNewEl) {
@@ -267,7 +455,8 @@
             .then(function (r) { return r.json(); })
             .then(function (data) {
                 if (data.message) {
-                    chatMessages.appendChild(renderMessage(data.message));
+                    appendNewMessage(data.message, data.message.date_label);
+                    if (data.message.id > maxMessageId) maxMessageId = data.message.id;
                     input.value = '';
                     input.style.height = 'auto';
                     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -275,6 +464,15 @@
             })
             .catch(function () { alert('خطا در ارسال پیام'); });
     }
+
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) stopPolling();
+        else if (currentMemberId) startPolling();
+    });
+
+    document.addEventListener('click', function () {
+        chatMessages.querySelectorAll('.chat-msg-dropdown.show').forEach(function (d) { d.classList.remove('show'); });
+    });
 
     sendBtn.addEventListener('click', sendMessage);
     input.addEventListener('keydown', function (e) {
