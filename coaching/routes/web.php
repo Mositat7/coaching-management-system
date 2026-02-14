@@ -71,7 +71,7 @@ Route::middleware('auth.coach')->group(function () {
     
     // بخش عضوها
     Route::get('/members-add', [MemberController::class, 'add'])->name('members.add');
-    Route::get('/members-details', [MemberController::class, 'details'])->name('members.details');
+    Route::get('/members-details/{member?}', [MemberController::class, 'details'])->name('members.details');
     Route::get('/members-list', [MemberController::class, 'list'])->name('members.list');
     Route::get('/members-grid', [MemberController::class, 'grid'])->name('members.grid');
     
@@ -86,9 +86,13 @@ Route::middleware('auth.coach')->group(function () {
 
     // چت / پیام‌ها (ارتباط شاگرد با مدیر)
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    Route::get('/chat/messages/{member}', [ChatController::class, 'messages'])->name('chat.messages');
+    Route::post('/chat/send', [ChatController::class, 'send'])->name('chat.send');
 });
 
 // ======================
-// Member Routes (راه‌های بخش عضو - بدون نیاز به لاگین ادمین)
+// Member / شاگرد Routes (پنل شاگرد - ورود با لینک از مربی)
 // ======================
 Route::get('/dashboard/member', [\App\Http\Controllers\member\DashboardController::class, 'index'])->name('dashboard.member');
+Route::get('/member/enter', [\App\Http\Controllers\member\MemberEntryController::class, 'enter'])->name('member.enter');
+Route::get('/member/logout', [\App\Http\Controllers\member\MemberEntryController::class, 'logout'])->name('member.logout');
