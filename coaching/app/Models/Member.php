@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Jalali;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -90,5 +91,48 @@ class Member extends Model
         }
 
         return asset('assets/images/users/avatar-2.jpg');
+    }
+
+    /**
+     * متن انقضا برای نمایش: «X روز دیگر» یا «X روز قبل»
+     * با startOfDay تا تفاوت بر اساس روز تقویمی باشد (منطقه زمانی ایران).
+     */
+    public function getExpiryLabelAttribute(): ?string
+    {
+        if (! $this->subscription_expires_at) {
+            return null;
+        }
+        $expiresAt = $this->subscription_expires_at->copy()->startOfDay();
+        $today = now()->startOfDay();
+        $days = (int) $expiresAt->diffInDays($today, false);
+        if ($days > 0) {
+            return (string) $days . ' روز دیگر';
+        }
+        if ($days < 0) {
+            return (string) abs($days) . ' روز قبل';
+        }
+
+        return 'امروز';
+    }
+
+    /**
+     * تاریخ انقضای اشتراک به شمسی برای نمایش (مثلاً 1403/11/25)
+     */
+    public function getSubscriptionExpiresAtShamsiAttribute(): ?string
+    {
+        return Jalali::format($this->subscription_expires_at);
+    }
+
+    /**
+     * لینک ورود به پنل شاگرد (برای ارسال توسط مربی) — معتبر برای ۷ روز
+     */
+    public function getEntryUrlAttribute(): string
+    {
+        $token = encrypt([
+            'member_id' => $this->id,
+            'exp'       => now()->addDays(7)->timestamp,
+        ]);
+
+        return route('member.enter', ['token' => $token]);
     }
 }
