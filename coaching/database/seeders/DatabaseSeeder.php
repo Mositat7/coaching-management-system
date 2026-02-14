@@ -27,5 +27,8 @@ class DatabaseSeeder extends Seeder
 
         // اعضای نمونه (در صورت وجود مربی در جدول coaches)
         $this->call(MemberSeeder::class);
+
+        // سفارشات/درخواست‌های نمونه
+        $this->call(OrderSeeder::class);
     }
 }

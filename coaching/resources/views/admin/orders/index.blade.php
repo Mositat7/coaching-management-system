@@ -37,7 +37,7 @@
                                 <i class="ri-file-add-line text-primary fs-4"></i>
                             </div>
                             <div>
-                                <h5 class="mb-0">{{ $orders->count() ?? 0 }}</h5>
+                                <h5 class="mb-0">{{ $stats['total'] ?? 0 }}</h5>
                                 <small class="text-muted">کل درخواست‌ها</small>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                                 <i class="ri-checkbox-circle-line text-success fs-4"></i>
                             </div>
                             <div>
-                                <h5 class="mb-0">{{ $orders->where('status','accepted')->count() ?? 0 }}</h5>
+                                <h5 class="mb-0">{{ $stats['accepted'] ?? 0 }}</h5>
                                 <small class="text-muted">تایید شده</small>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                                 <i class="ri-time-line text-warning fs-4"></i>
                             </div>
                             <div>
-                                <h5 class="mb-0">{{ $orders->where('status','pending')->count() ?? 0 }}</h5>
+                                <h5 class="mb-0">{{ $stats['pending'] ?? 0 }}</h5>
                                 <small class="text-muted">در انتظار بررسی</small>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                                 <i class="ri-close-circle-line text-danger fs-4"></i>
                             </div>
                             <div>
-                                <h5 class="mb-0">{{ $orders->where('status','rejected')->count() ?? 0 }}</h5>
+                                <h5 class="mb-0">{{ $stats['rejected'] ?? 0 }}</h5>
                                 <small class="text-muted">رد شده</small>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
             <!-- فیلتر و جستجو -->
             <div class="card border-0 shadow-sm mt-3">
                 <div class="card-body py-3">
-                    <div class="row g-2 align-items-center">
+                    <form action="{{ route('orders.index') }}" method="get" class="row g-2 align-items-center">
                         <div class="col-lg-4">
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0">
@@ -95,31 +95,32 @@
                                 </span>
                                 <input type="text" class="form-control border-start-0"
                                        placeholder="جستجو بر اساس نام شاگرد، توضیح، هدف..."
-                                       name="q">
+                                       name="q" value="{{ request('q') }}">
                             </div>
                         </div>
                         <div class="col-lg-8">
                             <div class="d-flex flex-wrap justify-content-lg-end gap-2">
                                 <select class="form-select form-select-sm w-auto" name="type">
                                     <option value="">نوع درخواست</option>
-                                    <option value="workout">برنامه تمرینی</option>
-                                    <option value="nutrition">برنامه تغذیه</option>
+                                    <option value="workout" {{ request('type') === 'workout' ? 'selected' : '' }}>برنامه تمرینی</option>
+                                    <option value="nutrition" {{ request('type') === 'nutrition' ? 'selected' : '' }}>برنامه تغذیه</option>
                                 </select>
                                 <select class="form-select form-select-sm w-auto" name="status">
                                     <option value="">همه وضعیت‌ها</option>
-                                    <option value="pending">در انتظار</option>
-                                    <option value="accepted">تایید شده</option>
-                                    <option value="rejected">رد شده</option>
+                                    <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>در انتظار</option>
+                                    <option value="accepted" {{ request('status') === 'accepted' ? 'selected' : '' }}>تایید شده</option>
+                                    <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>رد شده</option>
                                 </select>
                                 <select class="form-select form-select-sm w-auto" name="priority">
                                     <option value="">اولویت</option>
-                                    <option value="high">بالا</option>
-                                    <option value="normal">معمولی</option>
-                                    <option value="low">کم</option>
+                                    <option value="high" {{ request('priority') === 'high' ? 'selected' : '' }}>بالا</option>
+                                    <option value="normal" {{ request('priority') === 'normal' ? 'selected' : '' }}>معمولی</option>
+                                    <option value="low" {{ request('priority') === 'low' ? 'selected' : '' }}>کم</option>
                                 </select>
+                                <button type="submit" class="btn btn-primary btn-sm">اعمال</button>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
 
@@ -208,6 +209,11 @@
                             </tbody>
                         </table>
                     </div>
+                    @if(isset($orders) && $orders->hasPages())
+                    <div class="card-footer bg-transparent border-0 py-2">
+                        {{ $orders->withQueryString()->links() }}
+                    </div>
+                    @endif
 
                     <!-- موبایل: کارت‌ها -->
                     <div class="d-md-none p-2">
