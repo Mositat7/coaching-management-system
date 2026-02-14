@@ -92,85 +92,52 @@
                         <aside class="chat-sidebar" id="chatSidebar">
                             <div class="chat-sidebar-header">
                                 <h5><i class="ri-chat-3-line text-primary"></i> مکالمات</h5>
+                                @if($membersForNew->isNotEmpty())
+                                <select class="form-select form-select-sm mt-2" id="chatStartNew" style="font-size: 0.9rem;">
+                                    <option value="">شروع چت با عضو...</option>
+                                    @foreach($membersForNew as $m)
+                                    <option value="{{ $m->id }}" data-name="{{ $m->full_name }}">{{ $m->full_name }}</option>
+                                    @endforeach
+                                </select>
+                                @endif
                                 <input type="text" class="chat-search mt-3" placeholder="جستجو در مکالمات..." id="chatSearch" />
                             </div>
                             <div class="chat-list" id="chatList">
-                                <div class="chat-list-item active" data-chat="1">
-                                    <div class="chat-list-avatar">ع</div>
+                                @forelse($conversations as $conv)
+                                <div class="chat-list-item" data-member-id="{{ $conv->member->id }}" data-member-name="{{ $conv->member->full_name }}">
+                                    <div class="chat-list-avatar">{{ mb_substr($conv->member->full_name, 0, 1) }}</div>
                                     <div class="chat-list-body">
-                                        <div class="chat-list-name">علی محمدی</div>
-                                        <div class="chat-list-preview">برنامه غذایی این هفته رو می‌تونم عوض کنم؟</div>
+                                        <div class="chat-list-name">{{ $conv->member->full_name }}</div>
+                                        <div class="chat-list-preview">{{ Str::limit($conv->last_message->body, 35) }}</div>
                                     </div>
-                                    <div class="chat-list-meta">۱۰:۳۲</div>
+                                    <div class="chat-list-meta">{{ $conv->last_message->created_at->diffForHumans(null, true, true) }}</div>
+                                    @if($conv->unread_count > 0)
+                                    <span class="chat-list-unread">{{ $conv->unread_count }}</span>
+                                    @endif
                                 </div>
-                                <div class="chat-list-item" data-chat="2">
-                                    <div class="chat-list-avatar">س</div>
-                                    <div class="chat-list-body">
-                                        <div class="chat-list-name">سارا احمدی</div>
-                                        <div class="chat-list-preview">ممنون از برنامه تمرینی، خیلی راضیم</div>
-                                    </div>
-                                    <div class="chat-list-meta">دیروز</div>
-                                </div>
-                                <div class="chat-list-item" data-chat="3">
-                                    <div class="chat-list-avatar">م</div>
-                                    <div class="chat-list-body">
-                                        <div class="chat-list-name">محمد رضایی</div>
-                                        <div class="chat-list-preview">سوالی درباره تعداد ست‌ها داشتم</div>
-                                    </div>
-                                    <div class="chat-list-meta">۲ روز قبل</div>
-                                    <span class="chat-list-unread">۲</span>
-                                </div>
+                                @empty
+                                <div class="p-3 text-center text-muted small">هنوز مکالمه‌ای ندارید. با انتخاب یک عضو از لیست اعضا می‌توانید چت را شروع کنید.</div>
+                                @endforelse
                             </div>
                         </aside>
 
                         <!-- ناحیه چت فعال -->
                         <main class="chat-main" id="chatMain">
-                            <div class="chat-main-header">
+                            <div class="chat-main-header" id="chatMainHeader">
                                 <span class="chat-main-back" id="chatBack" aria-label="بازگشت به لیست"><i class="ri-arrow-right-line"></i></span>
-                                <div class="chat-main-avatar">ع</div>
+                                <div class="chat-main-avatar" id="chatMainAvatar">—</div>
                                 <div class="chat-main-title">
-                                    <p class="name">علی محمدی</p>
-                                    <p class="status"><i class="ri-record-circle-fill me-1"></i> آنلاین</p>
+                                    <p class="name" id="chatMainName">یک مکالمه انتخاب کنید</p>
+                                    <p class="status text-muted small" id="chatMainStatus">برای مشاهده پیام‌ها روی یک مکالمه کلیک کنید</p>
                                 </div>
                             </div>
                             <div class="chat-messages" id="chatMessages">
-                                <div class="chat-msg them">
-                                    <div class="chat-msg-avatar">ع</div>
-                                    <div>
-                                        <div class="chat-msg-bubble">سلام، می‌خواستم بدونم می‌تونم برنامه غذایی این هفته رو یکم سبک‌تر کنم؟</div>
-                                        <div class="chat-msg-time">۹:۱۵</div>
-                                    </div>
-                                </div>
-                                <div class="chat-msg me">
-                                    <div class="chat-msg-avatar">م</div>
-                                    <div>
-                                        <div class="chat-msg-bubble">سلام علی جان. بله حتماً، می‌تونی یک وعده شام رو حذف کنی یا سبک‌تر بخوری.</div>
-                                        <div class="chat-msg-time">۹:۲۲</div>
-                                    </div>
-                                </div>
-                                <div class="chat-msg them">
-                                    <div class="chat-msg-avatar">ع</div>
-                                    <div>
-                                        <div class="chat-msg-bubble">ممنون. یه سوال دیگه: پروتئین شیک بعد تمرین ضروریه؟</div>
-                                        <div class="chat-msg-time">۹:۴۰</div>
-                                    </div>
-                                </div>
-                                <div class="chat-msg me">
-                                    <div class="chat-msg-avatar">م</div>
-                                    <div>
-                                        <div class="chat-msg-bubble">اگه تا یک ساعت بعد تمرین غذا می‌خوری، لازم نیست. در غیر این صورت یک اسکوپ پروتئین یا یک منبع پروتئین سبک کافیه.</div>
-                                        <div class="chat-msg-time">۹:۴۵</div>
-                                    </div>
-                                </div>
-                                <div class="chat-msg them">
-                                    <div class="chat-msg-avatar">ع</div>
-                                    <div>
-                                        <div class="chat-msg-bubble">عالی، ممنون از راهنماییتون.</div>
-                                        <div class="chat-msg-time">۱۰:۳۲</div>
-                                    </div>
+                                <div class="chat-empty-state" id="chatEmptyState">
+                                    <i class="ri-chat-3-line"></i>
+                                    <p class="mb-0">مکالمه‌ای انتخاب نشده است</p>
                                 </div>
                             </div>
-                            <div class="chat-input-wrap">
+                            <div class="chat-input-wrap" id="chatInputWrap" style="display: none;">
                                 <div class="chat-input-row">
                                     <textarea class="chat-input" id="chatInput" placeholder="پیام خود را بنویسید..." rows="1"></textarea>
                                     <button type="button" class="chat-send" id="chatSend" aria-label="ارسال">
@@ -197,14 +164,81 @@
     var input = document.getElementById('chatInput');
     var sendBtn = document.getElementById('chatSend');
     var search = document.getElementById('chatSearch');
+    var chatMessages = document.getElementById('chatMessages');
+    var chatEmptyState = document.getElementById('chatEmptyState');
+    var chatInputWrap = document.getElementById('chatInputWrap');
+    var chatMainName = document.getElementById('chatMainName');
+    var chatMainAvatar = document.getElementById('chatMainAvatar');
+    var chatMainStatus = document.getElementById('chatMainStatus');
 
-    function isMobile() { return window.getComputedStyle(main).flexDirection === 'column' || window.innerWidth <= 991; }
+    var currentMemberId = null;
+    var currentMemberName = '';
+    var urlMessages = '{{ url("chat/messages") }}';
+    var urlSend = '{{ url("chat/send") }}';
+    var csrfToken = '{{ csrf_token() }}';
 
-    // کلیک روی یک مکالمه
-    list.querySelectorAll('.chat-list-item').forEach(function (item) {
+    function isMobile() { return window.innerWidth <= 991; }
+
+    function escapeHtml(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+    function renderMessage(msg) {
+        var isMe = !!msg.is_from_coach;
+        var letter = isMe ? 'م' : (currentMemberName ? currentMemberName.charAt(0) : '—');
+        var div = document.createElement('div');
+        div.className = 'chat-msg ' + (isMe ? 'me' : 'them');
+        div.innerHTML = '<div class="chat-msg-avatar">' + escapeHtml(letter) + '</div><div><div class="chat-msg-bubble">' + escapeHtml(msg.body) + '</div><div class="chat-msg-time">' + escapeHtml(msg.created_at) + '</div></div>';
+        return div;
+    }
+
+    function loadMessages(memberId, memberName) {
+        currentMemberId = memberId;
+        currentMemberName = memberName || '';
+        chatMainName.textContent = memberName || 'مکالمه';
+        chatMainAvatar.textContent = memberName ? memberName.charAt(0) : '—';
+        chatMainStatus.innerHTML = '<i class="ri-record-circle-fill me-1"></i> آنلاین';
+        chatEmptyState.style.display = 'none';
+        chatInputWrap.style.display = 'block';
+
+        chatMessages.innerHTML = '';
+        chatMessages.appendChild(chatEmptyState);
+        chatEmptyState.style.display = 'none';
+
+        fetch(urlMessages + '/' + memberId, { headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                chatMessages.innerHTML = '';
+                (data.messages || []).forEach(function (msg) {
+                    chatMessages.appendChild(renderMessage(msg));
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            })
+            .catch(function () {
+                chatMessages.innerHTML = '<div class="chat-empty-state"><p class="mb-0 text-danger">خطا در بارگذاری پیام‌ها</p></div>';
+            });
+    }
+
+    var startNewEl = document.getElementById('chatStartNew');
+    if (startNewEl) {
+        startNewEl.addEventListener('change', function () {
+            var opt = this.options[this.selectedIndex];
+            if (opt && opt.value) {
+                loadMessages(opt.value, opt.getAttribute('data-name') || opt.textContent);
+                this.selectedIndex = 0;
+                if (isMobile()) {
+                    sidebar.classList.add('js-hide-list');
+                    main.classList.add('js-open');
+                }
+            }
+        });
+    }
+
+    list.querySelectorAll('.chat-list-item[data-member-id]').forEach(function (item) {
         item.addEventListener('click', function () {
             list.querySelectorAll('.chat-list-item').forEach(function (i) { i.classList.remove('active'); });
             this.classList.add('active');
+            var id = this.getAttribute('data-member-id');
+            var name = this.getAttribute('data-member-name');
+            loadMessages(id, name);
             if (isMobile()) {
                 sidebar.classList.add('js-hide-list');
                 main.classList.add('js-open');
@@ -217,19 +251,29 @@
         sidebar.classList.remove('js-hide-list');
     });
 
-    // ارسال پیام (نمایشی)
     function sendMessage() {
         var text = (input.value || '').trim();
-        if (!text) return;
-        var time = new Date();
-        var timeStr = time.getHours() + ':' + (time.getMinutes() < 10 ? '0' : '') + time.getMinutes();
-        var bubble = document.createElement('div');
-        bubble.className = 'chat-msg me';
-        bubble.innerHTML = '<div class="chat-msg-avatar">م</div><div><div class="chat-msg-bubble">' + text.replace(/</g, '&lt;') + '</div><div class="chat-msg-time">' + timeStr + '</div></div>';
-        document.getElementById('chatMessages').appendChild(bubble);
-        input.value = '';
-        input.style.height = 'auto';
-        document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        if (!text || !currentMemberId) return;
+        var body = new FormData();
+        body.append('member_id', currentMemberId);
+        body.append('body', text);
+        body.append('_token', csrfToken);
+
+        fetch(urlSend, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': csrfToken },
+            body: body
+        })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (data.message) {
+                    chatMessages.appendChild(renderMessage(data.message));
+                    input.value = '';
+                    input.style.height = 'auto';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            })
+            .catch(function () { alert('خطا در ارسال پیام'); });
     }
 
     sendBtn.addEventListener('click', sendMessage);
@@ -237,7 +281,6 @@
         if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
     });
 
-    // اتو ریز textarea
     input.addEventListener('input', function () {
         this.style.height = 'auto';
         this.style.height = Math.min(this.scrollHeight, 120) + 'px';
