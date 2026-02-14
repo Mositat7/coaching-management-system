@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ChatMessage extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'chat_messages';
 
     protected $fillable = [
@@ -15,11 +18,13 @@ class ChatMessage extends Model
         'body',
         'is_from_coach',
         'read_at',
+        'edited_at',
     ];
 
     protected $casts = [
         'is_from_coach' => 'boolean',
         'read_at'       => 'datetime',
+        'edited_at'     => 'datetime',
     ];
 
     public function coach(): BelongsTo
