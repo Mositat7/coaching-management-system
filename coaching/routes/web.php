@@ -88,6 +88,8 @@ Route::middleware('auth.coach')->group(function () {
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
     Route::get('/chat/messages/{member}', [ChatController::class, 'messages'])->name('chat.messages');
     Route::post('/chat/send', [ChatController::class, 'send'])->name('chat.send');
+    Route::put('/chat/message/{id}', [ChatController::class, 'update'])->name('chat.message.update');
+    Route::delete('/chat/message/{id}', [ChatController::class, 'destroy'])->name('chat.message.destroy');
 });
 
 // ======================
@@ -96,3 +98,8 @@ Route::middleware('auth.coach')->group(function () {
 Route::get('/dashboard/member', [\App\Http\Controllers\member\DashboardController::class, 'index'])->name('dashboard.member');
 Route::get('/member/enter', [\App\Http\Controllers\member\MemberEntryController::class, 'enter'])->name('member.enter');
 Route::get('/member/logout', [\App\Http\Controllers\member\MemberEntryController::class, 'logout'])->name('member.logout');
+Route::get('/member/chat', [\App\Http\Controllers\member\MemberChatController::class, 'index'])->name('member.chat');
+Route::get('/member/chat/messages', [\App\Http\Controllers\member\MemberChatController::class, 'messages'])->name('member.chat.messages');
+Route::post('/member/chat/send', [\App\Http\Controllers\member\MemberChatController::class, 'send'])->name('member.chat.send');
+Route::put('/member/chat/message/{id}', [\App\Http\Controllers\member\MemberChatController::class, 'update'])->name('member.chat.message.update');
+Route::delete('/member/chat/message/{id}', [\App\Http\Controllers\member\MemberChatController::class, 'destroy'])->name('member.chat.message.destroy');
