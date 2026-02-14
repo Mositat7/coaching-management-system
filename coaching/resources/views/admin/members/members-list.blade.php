@@ -27,69 +27,64 @@
 
             {{-- Filters & Actions --}}
             <div class="row mb-4">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header border-0">
-                            <div class="row justify-content-between">
-                                <div class="col-lg-8">
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-4">
-                                            <form class="app-search d-none d-md-block me-auto">
-                                                <div class="position-relative">
-                                                    <input autocomplete="off" class="form-control"
-                                                           placeholder="جستجوی نام، موبایل یا کد عضویت"
-                                                           type="search" value=""/>
-                                                    <iconify-icon class="search-widget-icon"
-                                                                  icon="solar:magnifer-broken">
-                                                    </iconify-icon>
-                                                </div>
-                                            </form>
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-3">
+                            <form action="{{ route('members.list') }}" method="get">
+                                <div class="row g-2 align-items-center">
+                                    {{-- جستجو — موبایل فول، از md به بعد در یک ردیف با بقیه --}}
+                                    <div class="col-12 col-md-6 col-xl-3">
+                                        <div class="position-relative">
+                                            <input autocomplete="off" class="form-control form-control-sm" name="search"
+                                                   placeholder="نام، موبایل یا کد..."
+                                                   type="search" value="{{ old('search', $request->search ?? '') }}"
+                                                   style="padding-inline-end: 2.25rem;"/>
+                                            <i class="ri-search-line position-absolute top-50 translate-middle-y text-muted opacity-75" style="right: 0.75rem; left: auto; font-size: 1rem; pointer-events: none;"></i>
                                         </div>
-                                        <div class="col-lg-2">
-                                            <select class="form-select">
-                                                <option value="">وضعیت اشتراک</option>
-                                                <option value="active">فعال</option>
-                                                <option value="expired">منقضی</option>
-                                                <option value="suspended">معلق</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <select class="form-select">
-                                                <option value="">نوع اشتراک</option>
-                                                <option value="monthly">ماهیانه</option>
-                                                <option value="3month">سه ماهه</option>
-                                                <option value="yearly">سالانه</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <select class="form-select">
-                                                <option value="">مربی</option>
-                                                <option value="1">مربی احمدی</option>
-                                                <option value="2">مربی رضایی</option>
-                                            </select>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-xl-2">
+                                        <select class="form-select form-select-sm" name="status">
+                                            <option value="">وضعیت</option>
+                                            <option value="active" {{ ($request->status ?? '') === 'active' ? 'selected' : '' }}>فعال</option>
+                                            <option value="expired" {{ ($request->status ?? '') === 'expired' ? 'selected' : '' }}>منقضی</option>
+                                            <option value="suspended" {{ ($request->status ?? '') === 'suspended' ? 'selected' : '' }}>معلق</option>
+                                            <option value="expiring_soon" {{ ($request->status ?? '') === 'expiring_soon' ? 'selected' : '' }}>نزدیک انقضا</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-xl-2">
+                                        <select class="form-select form-select-sm" name="subscription_type">
+                                            <option value="">نوع اشتراک</option>
+                                            <option value="monthly" {{ ($request->subscription_type ?? '') === 'monthly' ? 'selected' : '' }}>ماهیانه</option>
+                                            <option value="3month" {{ ($request->subscription_type ?? '') === '3month' ? 'selected' : '' }}>سه ماهه</option>
+                                            <option value="6month" {{ ($request->subscription_type ?? '') === '6month' ? 'selected' : '' }}>۶ ماهه</option>
+                                            <option value="yearly" {{ ($request->subscription_type ?? '') === 'yearly' ? 'selected' : '' }}>سالانه</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-xl-2">
+                                        <select class="form-select form-select-sm" name="coach_id">
+                                            <option value="">مربی</option>
+                                            @foreach($coaches ?? [] as $c)
+                                                <option value="{{ $c->id }}" {{ (string)($request->coach_id ?? '') === (string)$c->id ? 'selected' : '' }}>{{ $c->full_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-xl-3">
+                                        <div class="d-flex flex-wrap gap-1 gap-sm-2 justify-content-end flex-nowrap">
+                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                <i class="ri-filter-line me-1"></i>اعمال
+                                            </button>
+                                            @if($request->hasAny(['search', 'status', 'subscription_type', 'coach_id']))
+                                                <a href="{{ route('members.list') }}" class="btn btn-outline-secondary btn-sm">پاک</a>
+                                            @endif
+                                            <button class="btn btn-outline-secondary btn-sm px-2" type="button" title="خروجی"><i class="ri-download-line"></i></button>
+                                            <button class="btn btn-outline-secondary btn-sm px-2" type="button" title="چاپ"><i class="ri-printer-line"></i></button>
+                                            <a href="{{ route('members.add') }}" class="btn btn-success btn-sm text-nowrap">
+                                                <i class="ri-add-line me-1"></i>عضو جدید
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="text-md-end mt-3 mt-md-0">
-                                        <button class="btn btn-outline-primary me-1" type="button">
-                                            <i class="ri-download-line me-1">
-                                            </i>
-                                            خروجی
-                                        </button>
-                                        <button class="btn btn-outline-primary me-1" type="button">
-                                            <i class="ri-printer-line me-1">
-                                            </i>
-                                            چاپ
-                                        </button>
-                                        <a href="{{ route('members.add') }}" class="btn btn-success me-1" type="button">
-                                            <i class="ri-add-line">
-                                            </i>
-                                            عضو جدید
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -103,7 +98,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="flex-grow-1">
                                     <span class="text-muted fw-medium">کل اعضا</span>
-                                    <h4 class="mb-0">۴۸ نفر</h4>
+                                    <h4 class="mb-0">{{ number_format($stats['total'] ?? 0) }} نفر</h4>
                                 </div>
                                 <div class="flex-shrink-0">
                                     <div class="avatar-sm">
@@ -123,7 +118,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="flex-grow-1">
                                     <span class="text-muted fw-medium">اشتراک‌های فعال</span>
-                                    <h4 class="mb-0">۴۲ نفر</h4>
+                                    <h4 class="mb-0">{{ number_format($stats['active'] ?? 0) }} نفر</h4>
                                 </div>
                                 <div class="flex-shrink-0">
                                     <div class="avatar-sm">
@@ -143,7 +138,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="flex-grow-1">
                                     <span class="text-muted fw-medium">منقضی در ۷ روز</span>
-                                    <h4 class="mb-0">۶ نفر</h4>
+                                    <h4 class="mb-0">{{ number_format($stats['expiring_soon'] ?? 0) }} نفر</h4>
                                 </div>
                                 <div class="flex-shrink-0">
                                     <div class="avatar-sm">
@@ -163,7 +158,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="flex-grow-1">
                                     <span class="text-muted fw-medium">حضور امروز</span>
-                                    <h4 class="mb-0">۱۵ نفر</h4>
+                                    <h4 class="mb-0">{{ number_format($stats['today_attendance'] ?? 0) }} نفر</h4>
                                 </div>
                                 <div class="flex-shrink-0">
                                     <div class="avatar-sm">
@@ -250,470 +245,92 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {{-- Member 1 --}}
+                                    @forelse($members as $member)
                                     <tr>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" id="memberCheck1" type="checkbox"/>
-                                                <label class="form-check-label" for="memberCheck1">
-                                                    &nbsp;
-                                                </label>
+                                                <input class="form-check-input member-checkbox" type="checkbox" value="{{ $member->id }}" name="members[]"/>
+                                                <label class="form-check-label">&nbsp;</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center gap-2">
                                                 <div>
-                                                    <img alt="" class="avatar-sm rounded-circle"
-                                                         src="assets/images/users/avatar-2.jpg"/>
+                                                    <img alt="" class="avatar-sm rounded-circle" src="{{ $member->avatar_url }}"/>
                                                 </div>
                                                 <div>
-                                                    <a class="text-dark fw-medium fs-15" href="{{ route('members.details') }}">
-                                                        باربد باباخانی
+                                                    <a class="text-dark fw-medium fs-15" href="{{ route('members.details', $member) }}">
+                                                        {{ $member->full_name }}
                                                     </a>
-                                                    <p class="text-muted mb-0 fs-12">
-                                                        MB-1001
-                                                    </p>
+                                                    <p class="text-muted mb-0 fs-12">{{ $member->code }}</p>
                                                 </div>
                                             </div>
                                         </td>
+                                        <td>{{ $member->mobile }}</td>
                                         <td>
-                                            ۰۹۰۱۰۰۱۰۰۱۱
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-soft-primary">مربی احمدی</span>
+                                            @if($member->coach)
+                                                <span class="badge bg-soft-primary">{{ $member->coach->full_name }}</span>
+                                            @else
+                                                <span class="text-muted">—</span>
+                                            @endif
                                         </td>
                                         <td>
                                             <div>
-                                                <span class="fw-medium">VIP</span>
-                                                <p class="text-muted mb-0 fs-12">۳ ماهه</p>
+                                                <span class="fw-medium">{{ $member->subscription_type_label }}</span>
+                                                <p class="text-muted mb-0 fs-12">اشتراک</p>
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="badge bg-success">
-                                                <i class="ri-checkbox-circle-line align-middle me-1"></i>
-                                                فعال
+                                            @php
+                                                $statusConfig = [
+                                                    'active' => ['class' => 'bg-success', 'icon' => 'ri-checkbox-circle-line', 'label' => 'فعال'],
+                                                    'expired' => ['class' => 'bg-danger', 'icon' => 'ri-close-circle-line', 'label' => 'منقضی'],
+                                                    'suspended' => ['class' => 'bg-secondary', 'icon' => 'ri-pause-circle-line', 'label' => 'معلق'],
+                                                    'expiring_soon' => ['class' => 'bg-warning', 'icon' => 'ri-alarm-warning-line', 'label' => 'نزدیک انقضا'],
+                                                ];
+                                                $cfg = $statusConfig[$member->subscription_status] ?? ['class' => 'bg-secondary', 'icon' => 'ri-information-line', 'label' => $member->subscription_status];
+                                            @endphp
+                                            <span class="badge {{ $cfg['class'] }}">
+                                                <i class="ri {{ $cfg['icon'] }} align-middle me-1"></i>{{ $cfg['label'] }}
                                             </span>
                                         </td>
                                         <td>
                                             <div>
-                                                <span class="fw-medium">۱۴۰۳/۰۴/۱۵</span>
-                                                <p class="text-muted mb-0 fs-12">۱۵ روز دیگر</p>
+                                                <span class="fw-medium">{{ $member->subscription_expires_at_shamsi ?? '—' }}</span>
+                                                <p class="mb-0 fs-12 {{ $member->subscription_status === 'expired' ? 'text-danger' : ($member->subscription_status === 'expiring_soon' ? 'text-danger' : 'text-muted') }}">{{ $member->expiry_label ?? '—' }}</p>
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <span class="fw-medium">۲۴</span>
+                                                <span class="fw-medium">{{ $member->attendance_sessions }}</span>
                                                 <p class="text-muted mb-0 fs-12">جلسه</p>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex gap-1">
-                                                <a class="btn btn-light btn-sm" href="{{ route('members.details') }}"
-                                                   data-bs-toggle="tooltip" title="مشاهده جزئیات">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:eye-broken">
-                                                    </iconify-icon>
+                                                <a class="btn btn-light btn-sm" href="{{ route('members.details', $member) }}" data-bs-toggle="tooltip" title="مشاهده جزئیات">
+                                                    <iconify-icon class="align-middle fs-16" icon="solar:eye-broken"></iconify-icon>
                                                 </a>
-                                                <a class="btn btn-soft-primary btn-sm" href="#"
-                                                   data-bs-toggle="tooltip" title="ویرایش">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:pen-2-broken">
-                                                    </iconify-icon>
+                                                <a class="btn btn-soft-primary btn-sm" href="#" data-bs-toggle="tooltip" title="ویرایش">
+                                                    <iconify-icon class="align-middle fs-16" icon="solar:pen-2-broken"></iconify-icon>
                                                 </a>
-                                                <a class="btn btn-soft-success btn-sm" href="#"
-                                                   data-bs-toggle="tooltip" title="ثبت پرداخت">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:wallet-broken">
-                                                    </iconify-icon>
+                                                <a class="btn btn-soft-success btn-sm" href="#" data-bs-toggle="tooltip" title="ثبت پرداخت">
+                                                    <iconify-icon class="align-middle fs-16" icon="solar:wallet-broken"></iconify-icon>
                                                 </a>
-                                                <a class="btn btn-soft-info btn-sm" href="#"
-                                                   data-bs-toggle="tooltip" title="ارسال پیام">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:chat-line-broken">
-                                                    </iconify-icon>
+                                                <a class="btn btn-soft-info btn-sm" href="{{ route('chat.index') }}?member={{ $member->id }}" data-bs-toggle="tooltip" title="ارسال پیام">
+                                                    <iconify-icon class="align-middle fs-16" icon="solar:chat-line-broken"></iconify-icon>
                                                 </a>
+                                                <button type="button" class="btn btn-soft-secondary btn-sm btn-copy-entry-link" data-entry-url="{{ $member->entry_url }}" data-bs-toggle="tooltip" title="کپی لینک ورود به پنل شاگرد">
+                                                    <iconify-icon class="align-middle fs-16" icon="solar:link-round-broken"></iconify-icon>
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
-
-                                    {{-- Member 2 --}}
+                                    @empty
                                     <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" id="memberCheck2" type="checkbox"/>
-                                                <label class="form-check-label" for="memberCheck2">
-                                                    &nbsp;
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <div>
-                                                    <img alt="" class="avatar-sm rounded-circle"
-                                                         src="assets/images/users/avatar-3.jpg"/>
-                                                </div>
-                                                <div>
-                                                    <a class="text-dark fw-medium fs-15" href="{{ route('members.details') }}">
-                                                        شیرین رضایی
-                                                    </a>
-                                                    <p class="text-muted mb-0 fs-12">
-                                                        MB-1002
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            ۰۹۰۱۰۰۱۰۰۱۲
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-soft-success">مربی رضایی</span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">ماهیانه</span>
-                                                <p class="text-muted mb-0 fs-12">۱ ماهه</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-success">
-                                                <i class="ri-checkbox-circle-line align-middle me-1"></i>
-                                                فعال
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">۱۴۰۳/۰۳/۰۵</span>
-                                                <p class="text-danger mb-0 fs-12">۵ روز دیگر</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">۱۸</span>
-                                                <p class="text-muted mb-0 fs-12">جلسه</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-1">
-                                                <a class="btn btn-light btn-sm" href="{{ route('members.details') }}">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:eye-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-primary btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:pen-2-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-warning btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:bell-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-info btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:chat-line-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                            </div>
-                                        </td>
+                                        <td colspan="9" class="text-center text-muted py-4">عضوی یافت نشد.</td>
                                     </tr>
-
-                                    {{-- Member 3 --}}
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" id="memberCheck3" type="checkbox"/>
-                                                <label class="form-check-label" for="memberCheck3">
-                                                    &nbsp;
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <div>
-                                                    <img alt="" class="avatar-sm rounded-circle"
-                                                         src="assets/images/users/avatar-4.jpg"/>
-                                                </div>
-                                                <div>
-                                                    <a class="text-dark fw-medium fs-15" href="{{ route('members.details') }}">
-                                                        ایلیا میرزایی
-                                                    </a>
-                                                    <p class="text-muted mb-0 fs-12">
-                                                        MB-1003
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            ۰۹۰۱۰۰۱۰۰۱۳
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-soft-primary">مربی احمدی</span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">سه ماهه</span>
-                                                <p class="text-muted mb-0 fs-12">۳ ماهه</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-warning">
-                                                <i class="ri-alarm-warning-line align-middle me-1"></i>
-                                                نزدیک انقضا
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">۱۴۰۳/۰۲/۲۸</span>
-                                                <p class="text-danger mb-0 fs-12">۲ روز دیگر</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">۳۲</span>
-                                                <p class="text-muted mb-0 fs-12">جلسه</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-1">
-                                                <a class="btn btn-light btn-sm" href="{{ route('members.details') }}">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:eye-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-primary btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:pen-2-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-success btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:wallet-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-danger btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:bell-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    {{-- Member 4 --}}
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" id="memberCheck4" type="checkbox"/>
-                                                <label class="form-check-label" for="memberCheck4">
-                                                    &nbsp;
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <div>
-                                                    <img alt="" class="avatar-sm rounded-circle"
-                                                         src="assets/images/users/avatar-5.jpg"/>
-                                                </div>
-                                                <div>
-                                                    <a class="text-dark fw-medium fs-15" href="{{ route('members.details') }}">
-                                                        نسترن سلطانی
-                                                    </a>
-                                                    <p class="text-muted mb-0 fs-12">
-                                                        MB-1004
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            ۰۹۰۱۰۰۱۰۰۱۴
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-soft-success">مربی رضایی</span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">ماهیانه</span>
-                                                <p class="text-muted mb-0 fs-12">۱ ماهه</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-danger">
-                                                <i class="ri-close-circle-line align-middle me-1"></i>
-                                                منقضی
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">۱۴۰۳/۰۲/۲۵</span>
-                                                <p class="text-danger mb-0 fs-12">۳ روز قبل</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">۱۲</span>
-                                                <p class="text-muted mb-0 fs-12">جلسه</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-1">
-                                                <a class="btn btn-light btn-sm" href="{{ route('members.details') }}">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:eye-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-primary btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:pen-2-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-success btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:wallet-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-info btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:chat-line-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    {{-- Member 5 --}}
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" id="memberCheck5" type="checkbox"/>
-                                                <label class="form-check-label" for="memberCheck5">
-                                                    &nbsp;
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <div>
-                                                    <img alt="" class="avatar-sm rounded-circle"
-                                                         src="assets/images/users/avatar-6.jpg"/>
-                                                </div>
-                                                <div>
-                                                    <a class="text-dark fw-medium fs-15" href="{{ route('members.details') }}">
-                                                        زهرا عطایی
-                                                    </a>
-                                                    <p class="text-muted mb-0 fs-12">
-                                                        MB-1005
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            ۰۹۰۱۰۰۱۰۰۱۵
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-soft-primary">مربی احمدی</span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">VIP</span>
-                                                <p class="text-muted mb-0 fs-12">۶ ماهه</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-success">
-                                                <i class="ri-checkbox-circle-line align-middle me-1"></i>
-                                                فعال
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">۱۴۰۳/۰۶/۱۵</span>
-                                                <p class="text-muted mb-0 fs-12">۴۵ روز دیگر</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">۲۸</span>
-                                                <p class="text-muted mb-0 fs-12">جلسه</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-1">
-                                                <a class="btn btn-light btn-sm" href="{{ route('members.details') }}">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:eye-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-primary btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:pen-2-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-info btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:chat-line-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    {{-- Member 6 --}}
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" id="memberCheck6" type="checkbox"/>
-                                                <label class="form-check-label" for="memberCheck6">
-                                                    &nbsp;
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <div>
-                                                    <img alt="" class="avatar-sm rounded-circle"
-                                                         src="assets/images/users/avatar-7.jpg"/>
-                                                </div>
-                                                <div>
-                                                    <a class="text-dark fw-medium fs-15" href="{{ route('members.details') }}">
-                                                        امیرارسلان رهنما
-                                                    </a>
-                                                    <p class="text-muted mb-0 fs-12">
-                                                        MB-1006
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            ۰۹۰۱۰۰۱۰۰۱۶
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-soft-success">مربی رضایی</span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">ماهیانه</span>
-                                                <p class="text-muted mb-0 fs-12">۱ ماهه</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-secondary">
-                                                <i class="ri-pause-circle-line align-middle me-1"></i>
-                                                معلق
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">۱۴۰۳/۰۴/۱۰</span>
-                                                <p class="text-warning mb-0 fs-12">۱۰ روز دیگر</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="fw-medium">۸</span>
-                                                <p class="text-muted mb-0 fs-12">جلسه</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-1">
-                                                <a class="btn btn-light btn-sm" href="{{ route('members.details') }}">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:eye-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-primary btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:pen-2-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                                <a class="btn btn-soft-warning btn-sm" href="#">
-                                                    <iconify-icon class="align-middle fs-16" icon="solar:play-circle-broken">
-                                                    </iconify-icon>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
+                                    @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -722,39 +339,19 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-6">
                                     <div class="text-muted">
-                                        نمایش ۱ تا ۶ از ۴۸ عضو
+                                        @if(isset($members) && $members->total() > 0)
+                                            نمایش {{ $members->firstItem() }} تا {{ $members->lastItem() }} از {{ number_format($members->total()) }} عضو
+                                        @else
+                                            هیچ عضوی یافت نشد.
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <nav aria-label="Page navigation example" class="float-lg-end">
-                                        <ul class="pagination justify-content-end mb-0">
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0);">
-                                                    قبلی
-                                                </a>
-                                            </li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="javascript:void(0);">
-                                                    1
-                                                </a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0);">
-                                                    2
-                                                </a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0);">
-                                                    3
-                                                </a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0);">
-                                                    بعدی
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
+                                    @if(isset($members) && $members->hasPages())
+                                        <nav aria-label="صفحه‌بندی" class="float-lg-end">
+                                            {{ $members->withQueryString()->links() }}
+                                        </nav>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -797,7 +394,7 @@
         // Bulk selection functionality
         document.addEventListener('DOMContentLoaded', function() {
             const selectAllCheckbox = document.getElementById('customCheckAll');
-            const memberCheckboxes = document.querySelectorAll('input[id^="memberCheck"]');
+            const memberCheckboxes = document.querySelectorAll('input.member-checkbox');
             const bulkActionsDiv = document.getElementById('bulkActions');
             const selectedCountSpan = document.getElementById('selectedCount');
             const clearSelectionBtn = document.getElementById('clearSelection');
@@ -839,6 +436,22 @@
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
             var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+
+            // Copy member entry link to clipboard
+            document.querySelectorAll('.btn-copy-entry-link').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var url = this.getAttribute('data-entry-url');
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(url).then(function() {
+                            var t = bootstrap.Tooltip.getInstance(btn);
+                            if (t) { t.setContent({ '.tooltip-inner': 'لینک کپی شد!' }); t.show(); }
+                            setTimeout(function() { if (t) t.hide(); }, 1500);
+                        });
+                    } else {
+                        prompt('لینک ورود به پنل شاگرد (کپی کنید):', url);
+                    }
+                });
             });
         });
     </script>
