@@ -65,8 +65,12 @@ Route::middleware('auth.coach')->group(function () {
     Route::get('/Workouts-show/{plan}', [WorkoutsController::class, 'show'])->name('Workouts.show');
     
     // منطق عمومی مدیریت برنامه‌ها
-    Route::get('/Plan-list', [PlanController::class, 'list'])->name('plans.list');
-    Route::get('/Plan-assign', [PlanController::class, 'assign'])->name('plans.assign');
+    // Route::get('/Plan-list', [PlanController::class, 'list'])->name('plans.list');
+    // Route::get('/Plan-assign', [PlanController::class, 'assign'])->name('plans.assign');
+    Route::get('/assign', [PlanController::class, 'assign'])->name('plans.assign');
+    Route::get('/list', [PlanController::class, 'list'])->name('palns.list');
+    // Route::get('/library', [PlanController::class, 'library'])->name('library');
+    Route::post('/send', [PlanController::class, 'send'])->name('plans.send'); // برای ارسال برنامه
     Route::get('/Plan-library', [PlanController::class, 'library'])->name('plans.library');
     
     // بخش عضوها
