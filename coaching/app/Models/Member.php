@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\Jalali;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model
@@ -33,6 +34,11 @@ class Member extends Model
     public function coach(): BelongsTo
     {
         return $this->belongsTo(Coach::class);
+    }
+
+    public function programRequests(): HasMany
+    {
+        return $this->hasMany(ProgramRequest::class)->orderByDesc('created_at');
     }
 
     /**

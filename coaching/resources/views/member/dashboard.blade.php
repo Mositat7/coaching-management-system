@@ -79,11 +79,211 @@
     .alert-member { border-radius: 12px; border: none; }
     .empty-state { padding: 2.5rem 1rem; text-align: center; color: #64748b; }
     .empty-state i { font-size: 3rem; opacity: .4; }
+    /* درخواست برنامه — UI/UX + ریسپانسیو */
+    .request-program-card {
+        background: var(--member-card);
+        border: 1px solid var(--member-border);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(0,0,0,.06);
+    }
+    .request-program-header {
+        background: linear-gradient(135deg, rgba(99, 102, 241, .09) 0%, rgba(79, 70, 229, .05) 100%);
+        padding: 1.5rem 1.5rem;
+        border-bottom: 1px solid var(--member-border);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    .request-program-header .icon-box {
+        width: 52px; height: 52px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--member-primary), var(--member-primary-dark));
+        color: #fff;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: 0 6px 16px -4px rgba(99, 102, 241, .35);
+        flex-shrink: 0;
+    }
+    .request-program-header h5 { margin: 0; font-weight: 700; font-size: 1.1rem; color: var(--member-text, #1e293b); }
+    .request-program-header p { margin: .3rem 0 0; font-size: .875rem; color: var(--member-text-muted, #64748b); }
+    .request-program-body { padding: 1.5rem; }
+    .request-program-desc {
+        font-size: .9rem;
+        line-height: 1.65;
+        color: var(--member-text-muted, #64748b);
+        margin-bottom: 1.5rem;
+        padding: 1rem 1.25rem;
+        background: var(--member-bg, #f8fafc);
+        border-radius: 14px;
+        border: 1px solid var(--member-border);
+    }
+    /* فرم */
+    .request-form-card {
+        background: var(--member-card);
+        border: 1px solid var(--member-border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 12px rgba(0,0,0,.04);
+    }
+    .request-form-card label { font-weight: 600; font-size: .875rem; color: var(--member-text, #1e293b); margin-bottom: .4rem; }
+    .request-form-card .form-select, .request-form-card textarea {
+        border-radius: 12px;
+        border: 1px solid var(--member-border);
+        font-size: .95rem;
+        transition: border-color .2s, box-shadow .2s;
+    }
+    .request-form-card .form-select:focus, .request-form-card textarea:focus {
+        border-color: var(--member-primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, .12);
+        outline: none;
+    }
+    .request-form-card textarea { min-height: 96px; resize: vertical; max-height: 180px; }
+    .request-form-card .btn-submit-request {
+        padding: .75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: .95rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: .4rem;
+        transition: transform .15s, box-shadow .2s;
+    }
+    .request-form-card .btn-submit-request:hover { transform: translateY(-1px); box-shadow: 0 6px 20px -4px rgba(99, 102, 241, .4); }
+    .request-form-card .btn-submit-request:active { transform: translateY(0); }
+    /* انتخاب نوع برنامه با کارت */
+    .request-type-label { font-size: .9rem; font-weight: 600; margin-bottom: .75rem; display: block; color: var(--member-text, #1e293b); }
+    .request-type-options { display: flex; flex-wrap: wrap; gap: .75rem; }
+    .request-type-option {
+        flex: 1;
+        min-width: 140px;
+        position: relative;
+        cursor: pointer;
+        border: 2px solid var(--member-border);
+        border-radius: 14px;
+        padding: 1rem 1.25rem;
+        transition: all .2s ease;
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+    }
+    .request-type-option:hover { border-color: var(--member-primary); background: rgba(99, 102, 241, .05); }
+    .request-type-option input { position: absolute; opacity: 0; pointer-events: none; }
+    .request-type-option input:checked + .request-type-option-inner { border-color: var(--member-primary); background: rgba(99, 102, 241, .08); box-shadow: 0 0 0 1px var(--member-primary); }
+    .request-type-option-inner { border-radius: 12px; padding: .75rem 1rem; display: flex; align-items: center; gap: .75rem; width: 100%; border: 2px solid transparent; transition: all .2s; }
+    .request-type-option .req-option-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+    .request-type-option.workout .req-option-icon { background: rgba(99, 102, 241, .12); color: var(--member-primary); }
+    .request-type-option.nutrition .req-option-icon { background: rgba(34, 197, 94, .12); color: #16a34a; }
+    .request-type-option .req-option-text strong { display: block; font-size: .95rem; }
+    .request-type-option .req-option-text span { font-size: .8rem; color: var(--member-text-muted); }
+    .request-form-card .form-group-desc { margin-top: 1.25rem; }
+    .request-form-card .form-group-desc label { display: block; margin-bottom: .5rem; }
+    body.theme-dark .request-type-label { color: var(--member-text); }
+    body.theme-dark .request-type-option { border-color: var(--member-border); }
+    body.theme-dark .request-type-option:hover { border-color: var(--member-primary); }
+    body.theme-dark .request-type-option input:checked + .request-type-option-inner { border-color: var(--member-primary); background: rgba(99, 102, 241, .12); }
+    /* عنوان لیست */
+    .request-list-title { font-size: 1rem; font-weight: 600; color: var(--member-text, #1e293b); margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .request-list-title i { font-size: 1.1rem; color: var(--member-primary); }
+    /* لیست درخواست‌ها */
+    .request-list { list-style: none; padding: 0; margin: 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--member-border); background: var(--member-card); }
+    .request-list-item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: .75rem 1rem;
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--member-border);
+        transition: background .2s ease;
+    }
+    .request-list-item:last-child { border-bottom: none; }
+    .request-list-item:hover { background: var(--member-bg, #f8fafc); }
+    .request-list-item .req-type-icon {
+        width: 48px; height: 48px;
+        border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.4rem;
+        flex-shrink: 0;
+    }
+    .request-list-item.workout .req-type-icon { background: rgba(99, 102, 241, .12); color: var(--member-primary); }
+    .request-list-item.nutrition .req-type-icon { background: rgba(34, 197, 94, .12); color: #16a34a; }
+    .request-list-item .req-body { flex: 1; min-width: 0; }
+    .request-list-item .req-body strong { display: block; font-size: .95rem; margin-bottom: .2rem; }
+    .request-list-item .req-body p { font-size: .85rem; color: var(--member-text-muted); margin: 0; line-height: 1.45; }
+    .request-list-item .req-meta-wrap { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+    .request-list-item .req-meta { font-size: .8rem; color: var(--member-text-muted); }
+    .req-status-badge { font-size: .75rem; font-weight: 600; padding: .4rem .8rem; border-radius: 20px; white-space: nowrap; }
+    .req-status-badge.pending { background: rgba(234, 179, 8, .18); color: #b45309; }
+    .req-status-badge.in_progress { background: rgba(99, 102, 241, .18); color: var(--member-primary); }
+    .req-status-badge.done { background: rgba(34, 197, 94, .18); color: #15803d; }
+    /* حالت خالی */
+    .request-empty-state { padding: 2rem 1.25rem; text-align: center; background: var(--member-bg, #f8fafc); border-radius: 16px; border: 1px dashed var(--member-border); }
+    .request-empty-state i { font-size: 2.75rem; opacity: .35; color: var(--member-primary); display: block; margin-bottom: .75rem; }
+    .request-empty-state p { font-size: .9rem; color: var(--member-text-muted); margin: 0; line-height: 1.5; }
+    @media (max-width: 768px) {
+        .request-program-body { padding: 1.25rem; }
+        .request-program-desc { padding: .875rem 1rem; font-size: .875rem; margin-bottom: 1.25rem; }
+        .request-form-card { padding: 1.25rem; }
+        .request-form-card .btn-submit-request { width: 100%; }
+        .request-list-item { padding: .875rem 1rem; gap: .5rem .75rem; }
+        .request-list-item .req-body { order: 1; width: 100%; }
+        .request-list-item .req-type-icon { width: 42px; height: 42px; font-size: 1.25rem; }
+        .request-list-item .req-meta-wrap { order: 2; width: 100%; margin-right: calc(42px + .75rem); }
+    }
+    @media (max-width: 576px) {
+        .request-program-header { padding: 1.25rem 1rem; }
+        .request-program-header .icon-box { width: 46px; height: 46px; font-size: 1.35rem; }
+        .request-program-header h5 { font-size: 1rem; }
+        .request-list-item .req-meta-wrap { margin-right: 0; }
+    }
+    /* تم دارک — بخش درخواست برنامه */
+    body.theme-dark .request-program-card,
+    body.theme-dark .request-form-card,
+    body.theme-dark .request-list { background: var(--member-card); border-color: var(--member-border); }
+    body.theme-dark .request-program-card { box-shadow: 0 4px 20px rgba(0,0,0,.2); }
+    body.theme-dark .request-program-header { background: linear-gradient(135deg, rgba(99, 102, 241, .15) 0%, rgba(79, 70, 229, .1) 100%); border-bottom-color: var(--member-border); }
+    body.theme-dark .request-program-header h5 { color: var(--member-text); }
+    body.theme-dark .request-program-header p { color: var(--member-text-muted); }
+    body.theme-dark .request-program-desc { background: var(--member-bg); border-color: var(--member-border); color: var(--member-text-muted); }
+    body.theme-dark .request-form-card { box-shadow: 0 2px 12px rgba(0,0,0,.15); }
+    body.theme-dark .request-form-card label { color: var(--member-text); }
+    body.theme-dark .request-form-card .form-select,
+    body.theme-dark .request-form-card .form-control { background: var(--member-bg); color: var(--member-text); border-color: var(--member-border); }
+    body.theme-dark .request-form-card .form-control::placeholder { color: var(--member-text-muted); opacity: .8; }
+    body.theme-dark .request-form-card .form-select:focus,
+    body.theme-dark .request-form-card .form-control:focus { background: var(--member-bg); border-color: var(--member-primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, .25); color: var(--member-text); }
+    body.theme-dark .request-list-title { color: var(--member-text); }
+    body.theme-dark .request-list-title i { color: var(--member-primary); }
+    body.theme-dark .request-list-item { border-bottom-color: var(--member-border); }
+    body.theme-dark .request-list-item:hover { background: var(--member-bg); }
+    body.theme-dark .request-list-item .req-body strong { color: var(--member-text); }
+    body.theme-dark .request-list-item .req-body p { color: var(--member-text-muted); }
+    body.theme-dark .request-list-item .req-meta { color: var(--member-text-muted); }
+    body.theme-dark .req-status-badge.pending { background: rgba(234, 179, 8, .25); color: #facc15; }
+    body.theme-dark .req-status-badge.in_progress { background: rgba(99, 102, 241, .3); color: #a5b4fc; }
+    body.theme-dark .req-status-badge.done { background: rgba(34, 197, 94, .25); color: #4ade80; }
+    body.theme-dark .request-empty-state { background: var(--member-bg); border-color: var(--member-border); }
+    body.theme-dark .request-empty-state i { color: var(--member-primary); opacity: .5; }
+    body.theme-dark .request-empty-state p { color: var(--member-text-muted); }
 </style>
 @endsection
 
 @section('content')
 <div class="container-fluid member-dash">
+
+    @if(session('success'))
+    <div class="alert alert-success alert-member d-flex align-items-center mb-4" role="alert">
+        <i class="ri-checkbox-circle-fill me-2 fs-5"></i>
+        {{ session('success') }}
+    </div>
+    @endif
+    @if(session('error'))
+    <div class="alert alert-danger alert-member d-flex align-items-center mb-4" role="alert">
+        <i class="ri-error-warning-fill me-2 fs-5"></i>
+        {{ session('error') }}
+    </div>
+    @endif
 
     {{-- Hero: خوش‌آمد + آواتار + وضعیت اشتراک --}}
     <div class="hero-member p-4 p-md-5 mb-4">
@@ -235,16 +435,85 @@
         </div>
     </div>
 
-    {{-- برنامه امروز + یادآوری --}}
+    {{-- درخواست برنامه + یادآوری --}}
     <div class="row g-4">
         <div class="col-lg-8">
-            <div class="card-member">
-                <div class="p-4 border-bottom border-secondary border-opacity-10">
-                    <h5 class="mb-0 fw-semibold">برنامه امروز</h5>
+            <div class="request-program-card">
+                <div class="request-program-header">
+                    <div class="icon-box">
+                        <i class="ri-file-list-3-line"></i>
+                    </div>
+                    <div>
+                        <h5>درخواست برنامه</h5>
+                        <p class="mb-0">برنامه تمرینی یا تغذیه رو از مربیت درخواست کن</p>
+                    </div>
                 </div>
-                <div class="empty-state">
-                    <i class="ri-file-list-3-line d-block mb-3"></i>
-                    <p class="mb-0">وقتی مربیت برنامه‌ای برات ثبت کنه، اینجا نمایش داده می‌شه.</p>
+                <div class="request-program-body">
+                    <p class="request-program-desc">
+                        نوع برنامه و در صورت تمایل توضیحات (هدف، محدودیت، زمان) را وارد کن. درخواست ثبت می‌شود و مربی در اسرع وقت آن را بررسی و برنامه را آماده می‌کند.
+                    </p>
+                    <form action="{{ route('member.program-request.store') }}" method="post" class="request-form-card mb-4" id="programRequestForm">
+                        @csrf
+                        <label class="request-type-label">نوع برنامه</label>
+                        <div class="request-type-options">
+                            <label class="request-type-option workout">
+                                <input type="radio" name="type" value="workout" {{ old('type', '') === 'workout' ? 'checked' : '' }} required>
+                                <span class="request-type-option-inner">
+                                    <span class="req-option-icon"><i class="ri-run-line"></i></span>
+                                    <span class="req-option-text">
+                                        <strong>برنامه تمرینی</strong>
+                                        <span>ورزش و حرکات</span>
+                                    </span>
+                                </span>
+                            </label>
+                            <label class="request-type-option nutrition">
+                                <input type="radio" name="type" value="nutrition" {{ old('type') === 'nutrition' ? 'checked' : '' }}>
+                                <span class="request-type-option-inner">
+                                    <span class="req-option-icon"><i class="ri-restaurant-line"></i></span>
+                                    <span class="req-option-text">
+                                        <strong>برنامه تغذیه</strong>
+                                        <span>رژیم و وعده‌ها</span>
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        @error('type')<small class="text-danger d-block mt-1">{{ $message }}</small>@enderror
+                        <div class="form-group-desc">
+                            <label for="req-body" class="form-label">توضیحات (اختیاری)</label>
+                            <textarea name="body" id="req-body" class="form-control" placeholder="مثلاً: هدف کاهش وزن، ۳ روز در هفته، بدون باشگاه">{{ old('body') }}</textarea>
+                            @error('body')<small class="text-danger">{{ $message }}</small>@enderror
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary btn-submit-request">
+                                <i class="ri-send-plane-line me-1"></i>ثبت درخواست
+                            </button>
+                        </div>
+                    </form>
+                    <h6 class="request-list-title"><i class="ri-list-check-2"></i>درخواست‌های من</h6>
+                    @if(isset($programRequests) && $programRequests->isNotEmpty())
+                        <ul class="request-list">
+                            @foreach($programRequests as $req)
+                            <li class="request-list-item {{ $req->type }}">
+                                <div class="req-type-icon">
+                                    @if($req->type === 'workout')<i class="ri-run-line"></i>@else<i class="ri-restaurant-line"></i>@endif
+                                </div>
+                                <div class="req-body">
+                                    <strong>{{ $req->type_label }}</strong>
+                                    @if($req->body)<p class="mb-0">{{ Str::limit($req->body, 55) }}</p>@endif
+                                </div>
+                                <div class="req-meta-wrap">
+                                    <span class="req-status-badge {{ $req->status }}">{{ $req->status_label }}</span>
+                                    <span class="req-meta">{{ $req->created_at->diffForHumans() }}</span>
+                                </div>
+                            </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <div class="request-empty-state">
+                            <i class="ri-file-list-3-line"></i>
+                            <p>هنوز درخواستی ثبت نکردی. با فرم بالا اولین درخواستت رو بفرست.</p>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

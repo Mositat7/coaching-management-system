@@ -24,12 +24,15 @@ class DashboardController extends Controller
             return view('member.guest');
         }
 
-        $member = Member::with('coach')->find($memberId);
+        $member = Member::with(['coach', 'programRequests'])->find($memberId);
         if (! $member) {
             Session::forget('member_id');
             return view('member.guest');
         }
 
-        return view('member.dashboard', ['member' => $member]);
+        return view('member.dashboard', [
+            'member'          => $member,
+            'programRequests' => $member->programRequests()->limit(10)->get(),
+        ]);
     }
 }

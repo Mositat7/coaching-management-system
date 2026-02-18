@@ -34,7 +34,7 @@
                                 <div class="row g-2 align-items-center">
                                     {{-- جستجو — موبایل فول، از md به بعد در یک ردیف با بقیه --}}
                                     <div class="col-12 col-md-6 col-xl-3">
-                                        <div class="position-relative">
+                                                <div class="position-relative">
                                             <input autocomplete="off" class="form-control form-control-sm" name="search"
                                                    placeholder="نام، موبایل یا کد..."
                                                    type="search" value="{{ old('search', $request->search ?? '') }}"
@@ -49,24 +49,24 @@
                                             <option value="expired" {{ ($request->status ?? '') === 'expired' ? 'selected' : '' }}>منقضی</option>
                                             <option value="suspended" {{ ($request->status ?? '') === 'suspended' ? 'selected' : '' }}>معلق</option>
                                             <option value="expiring_soon" {{ ($request->status ?? '') === 'expiring_soon' ? 'selected' : '' }}>نزدیک انقضا</option>
-                                        </select>
-                                    </div>
+                                            </select>
+                                        </div>
                                     <div class="col-6 col-md-4 col-xl-2">
                                         <select class="form-select form-select-sm" name="subscription_type">
-                                            <option value="">نوع اشتراک</option>
+                                                <option value="">نوع اشتراک</option>
                                             <option value="monthly" {{ ($request->subscription_type ?? '') === 'monthly' ? 'selected' : '' }}>ماهیانه</option>
                                             <option value="3month" {{ ($request->subscription_type ?? '') === '3month' ? 'selected' : '' }}>سه ماهه</option>
                                             <option value="6month" {{ ($request->subscription_type ?? '') === '6month' ? 'selected' : '' }}>۶ ماهه</option>
                                             <option value="yearly" {{ ($request->subscription_type ?? '') === 'yearly' ? 'selected' : '' }}>سالانه</option>
-                                        </select>
-                                    </div>
+                                            </select>
+                                        </div>
                                     <div class="col-6 col-md-4 col-xl-2">
                                         <select class="form-select form-select-sm" name="coach_id">
-                                            <option value="">مربی</option>
+                                                <option value="">مربی</option>
                                             @foreach($coaches ?? [] as $c)
                                                 <option value="{{ $c->id }}" {{ (string)($request->coach_id ?? '') === (string)$c->id ? 'selected' : '' }}>{{ $c->full_name }}</option>
                                             @endforeach
-                                        </select>
+                                            </select>
                                     </div>
                                     <div class="col-6 col-md-6 col-xl-3">
                                         <div class="d-flex flex-wrap gap-1 gap-sm-2 justify-content-end flex-nowrap">
@@ -350,7 +350,7 @@
                                     @if(isset($members) && $members->hasPages())
                                         <nav aria-label="صفحه‌بندی" class="float-lg-end">
                                             {{ $members->withQueryString()->links() }}
-                                        </nav>
+                                    </nav>
                                     @endif
                                 </div>
                             </div>

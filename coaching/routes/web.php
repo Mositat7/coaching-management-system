@@ -81,8 +81,10 @@ Route::middleware('auth.coach')->group(function () {
     Route::get('/Coach-add', [CoachController::class, 'add'])->name('Coach.add');
     Route::post('/Coach-store', [CoachController::class, 'store'])->name('Coach.store');
     Route::delete('/Coach-delete/{id}', [CoachController::class, 'destroy'])->name('Coach.destroy');
-// سفارشات
+// سفارشات و درخواست‌های برنامه از پنل شاگرد
     Route::get('/Orders', [OrdersController::class, 'index'])->name('orders.index');
+    Route::get('/Orders/program-requests-count', [OrdersController::class, 'programRequestsCount'])->name('orders.program-requests.count');
+    Route::put('/Orders/program-request/{id}', [OrdersController::class, 'updateProgramRequest'])->name('orders.program-request.update');
 
     // چت / پیام‌ها (ارتباط شاگرد با مدیر)
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
@@ -103,3 +105,4 @@ Route::get('/member/chat/messages', [\App\Http\Controllers\member\MemberChatCont
 Route::post('/member/chat/send', [\App\Http\Controllers\member\MemberChatController::class, 'send'])->name('member.chat.send');
 Route::put('/member/chat/message/{id}', [\App\Http\Controllers\member\MemberChatController::class, 'update'])->name('member.chat.message.update');
 Route::delete('/member/chat/message/{id}', [\App\Http\Controllers\member\MemberChatController::class, 'destroy'])->name('member.chat.message.destroy');
+Route::post('/member/program-request', [\App\Http\Controllers\member\ProgramRequestController::class, 'store'])->name('member.program-request.store');
